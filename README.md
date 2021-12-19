@@ -22,3 +22,9 @@
 
 ![umld](https://github.com/MP-Project-Ghadier/client/blob/main/Untitled%20Diagram.drawio.png?raw=true)
 
+---
+# Links
+- [trello](https://trello.com/b/tkoa9kQQ/mp-project-ghadier)
+- [deploy](https://id.heroku.com/login)
+- [presentation](www.nothing.com)
+- [server_Repo](https://github.com/MP-Project-Ghadier/server)
