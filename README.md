@@ -21,8 +21,6 @@
 ### Installing Dependencies
 
 #### Node js
-
-Node.js
 You can install it here: [Node js docs](https://nodejs.org/en/)
 
 #### NPM Dependencies
