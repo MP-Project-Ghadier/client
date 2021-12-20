@@ -21,6 +21,7 @@
 ### Installing Dependencies
 
 #### Node js
+
 You can install it here: [Node js docs](https://nodejs.org/en/)
 
 #### NPM Dependencies
@@ -57,6 +58,28 @@ To run the server, in you terminal:
 npm start
 ```
 
+---
+
+## Website Wireframe
+### Homepage
+![home](https://github.com/MP-Project-Ghadier/client/blob/main/home.png?raw=true)
+### Research
+![research](https://github.com/MP-Project-Ghadier/client/blob/main/research.png?raw=true)
+### Events
+![events](https://github.com/MP-Project-Ghadier/client/blob/main/events.png?raw=true)
+### Sign up
+![signup](https://github.com/MP-Project-Ghadier/client/blob/main/sign%20up.png?raw=true)
+### Login
+![login](https://github.com/MP-Project-Ghadier/client/blob/main/login.png?raw=true)
+### Community
+![community](https://github.com/MP-Project-Ghadier/client/blob/main/community.png?raw=true)
+### Center
+![center](https://github.com/MP-Project-Ghadier/client/blob/main/center.png?raw=true)
+### Profile
+![profile](https://github.com/MP-Project-Ghadier/client/blob/main/profile.png?raw=true)
+
+---
+
 ## Router Routes
 
 | Path                  | Component         | Permissions | Behavior                                              |
@@ -79,6 +102,8 @@ npm start
 | `/dashboard/posts`    | DashboardPosts    | admin only  | Shows all posts in site                               |
 | `/dashboard/research` | DashboardResearch | admin only  | Shows all research in site                            |
 | `/dashboard/event`    | DashboardEvents   | admin only  | Shows all events in site                              |
+
+---
 
 ## Components
 
