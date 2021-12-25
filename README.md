@@ -62,21 +62,21 @@ npm start
 
 ## Website Wireframe
 ### Homepage
-![home](https://github.com/MP-Project-Ghadier/client/blob/main/home.png?raw=true)
+![home](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/home.png)
 ### Research
-![research](https://github.com/MP-Project-Ghadier/client/blob/main/research.png?raw=true)
+![research](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/research.png)
 ### Events
-![events](https://github.com/MP-Project-Ghadier/client/blob/main/events.png?raw=true)
+![events](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/events.png)
 ### Sign up
-![signup](https://github.com/MP-Project-Ghadier/client/blob/main/sign%20up.png?raw=true)
+![signup](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/sign%20up.png)
 ### Login
-![login](https://github.com/MP-Project-Ghadier/client/blob/main/login.png?raw=true)
+![login](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/login.png)
 ### Community
-![community](https://github.com/MP-Project-Ghadier/client/blob/main/community.png?raw=true)
+![community](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/community.png)
 ### Center
-![center](https://github.com/MP-Project-Ghadier/client/blob/main/center.png?raw=true)
+![center](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/center.png)
 ### Profile
-![profile](https://github.com/MP-Project-Ghadier/client/blob/main/profile.png?raw=true)
+![profile](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/profile.png)
 
 ---
 
@@ -127,7 +127,7 @@ npm start
 
 # UML Diagram:
 
-![umld](https://github.com/MP-Project-Ghadier/client/blob/main/Untitled%20Diagram.drawio.png?raw=true)
+![umld](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/Untitled%20Diagram.drawio.png)
 
 ---
 
