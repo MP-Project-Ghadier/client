@@ -15,7 +15,6 @@ import {
   Center,
   InputRightElement,
   InputGroup,
-  Box,
 } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 
@@ -54,13 +53,13 @@ const Login = () => {
         token: result.data.token,
         userId: result.data.result._id,
         userEmail: result.data.result.email,
-        userName: result.data.result.userName,
+        userName: result.data.result.name,
         userAvatar: result.data.result.avatar,
       };
       console.log("result", result.status);
       if (result.status === 200) {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Login Successfully",
           showConfirmButton: false,
@@ -76,7 +75,6 @@ const Login = () => {
           icon: "error",
           title: "Oops...",
           text: "Your email or password is wrong, Try again",
-          footer: '<a href="">Why do I have this issue?</a>',
         });
       }
       if (error.response.status === 404) {
@@ -84,7 +82,6 @@ const Login = () => {
           icon: "error",
           title: "Oops...",
           text: "Please fill email and password fields",
-          footer: '<a href="">Why do I have this issue?</a>',
         });
       }
     }

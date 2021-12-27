@@ -9,7 +9,6 @@ import {
   FormLabel,
   Input,
   Button,
-  Divider,
   Box,
   Heading,
   Stack,
@@ -18,7 +17,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import PasswordChecklist from "react-password-checklist";
-
+import "../../assests/style.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const NewUser = () => {
@@ -36,7 +35,15 @@ const NewUser = () => {
         password,
       });
       console.log(result);
-      if (result.status === 200) navigate("/verifyEmail");
+      if (result.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Email sent successfully, Check your email.",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
     } catch (error) {
       console.log(error.response);
       if (error.response.status === 409) {
@@ -44,7 +51,6 @@ const NewUser = () => {
           icon: "error",
           title: "Oops...",
           text: "This email is already exist!",
-          footer: '<a href="">Why do I have this issue?</a>',
         });
       }
       if (error.response.status === 400) {
@@ -52,7 +58,6 @@ const NewUser = () => {
           icon: "error",
           title: "Oops...",
           text: "Please fill name, email and password fields",
-          footer: '<a href="">Why do I have this issue?</a>',
         });
       }
       console.log(error);
@@ -80,6 +85,7 @@ const NewUser = () => {
             {/* should be 2 options user || specialist */}
 
             <Button
+              className="btnM"
               m="8px"
               colorScheme="green"
               onClick={() => navigate("/newUser")}
