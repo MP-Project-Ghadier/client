@@ -1,4 +1,5 @@
 const initialState = {
+  role: null,
   token: null,
   userId: null,
   userEmail: null,
@@ -11,11 +12,14 @@ const logInReducer = (state = initialState, action) => {
 
   switch (type) {
     case "LOGIN":
-      const { token, userId, userEmail, userName } = payload;
+      const { role, token, userId, userEmail, userName, userAvatar } = payload;
+      localStorage.setItem("role", role);
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
       localStorage.setItem("userName", userName);
       localStorage.setItem("userEmail", userEmail);
+      localStorage.setItem("userAvatar", userAvatar);
+
       //what we need to do
       // console.log(`token ${token}, userId ${userId}`);
       return { token }; // this is the change we need to return when this case is called
@@ -31,19 +35,21 @@ const logInReducer = (state = initialState, action) => {
       };
 
     default:
+      const roleStorage = localStorage.getItem("role");
       const tokenStorage = localStorage.getItem("token");
       const userIdStorage = localStorage.getItem("userId");
       const userEmailStorage = localStorage.getItem("userEmail");
-      const userNamelStorage = localStorage.getItem("userName");
-      const userAvatarlStorage = localStorage.getItem("userAvatar");
+      const userNameStorage = localStorage.getItem("userName");
+      const userAvatarStorage = localStorage.getItem("userAvatar");
 
       if (tokenStorage)
         return {
+          role: roleStorage,
           token: tokenStorage,
           userId: userIdStorage,
           userEmail: userEmailStorage,
-          userName: userNamelStorage,
-          userAvatar: userAvatarlStorage,
+          userName: userNameStorage,
+          userAvatar: userAvatarStorage,
         };
       else return state; //default = initial state
   }
