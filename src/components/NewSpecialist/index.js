@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import LoginGoogle from "../LoginGoogle/index";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 import {
@@ -10,7 +8,6 @@ import {
   FormLabel,
   Input,
   Button,
-  Divider,
   Box,
   Heading,
   Stack,
@@ -27,7 +24,6 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const signUpAsSpecialist = async () => {
@@ -38,8 +34,15 @@ const Register = () => {
         password,
       });
       console.log(result);
-      if (result.status === 200) navigate("/verifyEmail");
-      else setMessage("there is somthing wrong!");
+      if (result.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Email sent successfully, Check your email.",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
     } catch (error) {
       // console.log(error.response.status);
       if (error.response.status === 409) {
@@ -47,7 +50,6 @@ const Register = () => {
           icon: "error",
           title: "Oops...",
           text: "This email is already exist!",
-          footer: '<a href="">Why do I have this issue?</a>',
         });
       }
       if (error.response.status === 400) {
@@ -55,7 +57,6 @@ const Register = () => {
           icon: "error",
           title: "Oops...",
           text: "Please fill name, email and password fields",
-          footer: '<a href="">Why do I have this issue?</a>',
         });
       }
       console.log(error);
