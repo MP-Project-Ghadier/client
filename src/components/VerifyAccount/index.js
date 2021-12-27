@@ -7,8 +7,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const VerifyEmail = () => {
   const navigate = useNavigate();
   //   userRouter.get("/verifyAccount/:id", verifyAccount);
-  const confirmAccount = async (id) => {
-    const result = await axios.put(`${BASE_URL}/verifyEmail/${id}`, {});
+  //this 
+  const confirmAccount = async (token) => {
+    const result = await axios.get(`${BASE_URL}/verifyEmail/${token}`);
     console.log(result);
     console.log("here");
   };

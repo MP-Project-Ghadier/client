@@ -50,13 +50,14 @@ const Login = () => {
       );
 
       const data = {
+        role: result.data.role,
         token: result.data.token,
         userId: result.data.result._id,
         userEmail: result.data.result.email,
         userName: result.data.result.name,
         userAvatar: result.data.result.avatar,
       };
-      console.log("result", result.status);
+      // console.log("result", result.status);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -66,8 +67,10 @@ const Login = () => {
           timer: 1500,
         });
       }
+      console.log(data);
       dispatch(login(data));
-      navigate("/");
+      
+      // navigate("/");
     } catch (error) {
       // console.log(error.response.status);
       if (error.response.status === 400) {
@@ -146,7 +149,6 @@ const Login = () => {
           </Center>
           <LoginGoogle />
         </Stack>
-        {/* <Stack boxShadow="2xl" p="6" rounded="md" bg="white"></Stack> */}
       </Center>
     </>
   );
