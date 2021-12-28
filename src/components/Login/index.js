@@ -15,7 +15,11 @@ import {
   Center,
   InputRightElement,
   InputGroup,
+  Link,
+  Text,
 } from "@chakra-ui/react";
+import { ImEye } from "react-icons/im";
+
 import Swal from "sweetalert2";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -69,7 +73,7 @@ const Login = () => {
       }
       console.log(data);
       dispatch(login(data));
-      
+
       // navigate("/");
     } catch (error) {
       // console.log(error.response.status);
@@ -96,9 +100,10 @@ const Login = () => {
         <Stack
           boxShadow="2xl"
           p="6"
+          m="80px"
           rounded="md"
           bg="white"
-          w="60%"
+          w="50%"
           justifyContent="center"
           textAlign="center"
         >
@@ -135,18 +140,29 @@ const Login = () => {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {" "}
-                  show
+                  <ImEye />
                 </Button>
               </InputRightElement>
             </InputGroup>
           </FormControl>
           <Divider height="20px" />
+
           <Center>
             <Button m="8px" onClick={signIn}>
               {" "}
               Sign in
             </Button>
           </Center>
+
+          <Link m="8px" color="#2B6CB0" href="/resetPass">
+            Forget your password?
+          </Link>
+          <Text fontSize="md">
+            Don't Have an Account?
+            <Link m="8px" color="#2B6CB0" href="/newUser">
+              Sign Up
+            </Link>
+          </Text>
           <LoginGoogle />
         </Stack>
       </Center>
