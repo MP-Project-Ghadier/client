@@ -15,6 +15,8 @@ import {
   InputGroup,
   Center,
 } from "@chakra-ui/react";
+import { ImEye } from "react-icons/im";
+
 import PasswordChecklist from "react-password-checklist";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -69,9 +71,10 @@ const Register = () => {
         <Stack
           boxShadow="2xl"
           p="6"
+          m="80px"
           rounded="md"
           bg="white"
-          w="60%"
+          w="50%"
           justifyContent="center"
           textAlign="center"
         >
@@ -142,7 +145,8 @@ const Register = () => {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {" "}
-                      show
+                    < ImEye />
+
                     </Button>
                   </InputRightElement>
                 </InputGroup>

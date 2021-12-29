@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Heading, Stack, Box, Center, Button } from "@chakra-ui/react";
 import axios from "axios";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
-  //   userRouter.get("/verifyAccount/:id", verifyAccount);
-  //this 
-  const confirmAccount = async (token) => {
+  const { token } = useParams();
+  console.log(token);
+  //   userRouter.get("/verifyAccount/:token", verifyAccount);
+  const confirmAccount = async () => {
     const result = await axios.get(`${BASE_URL}/verifyEmail/${token}`);
-    console.log(result);
-    console.log("here");
+    // console.log(result);
   };
 
   useEffect(() => {
@@ -28,8 +28,8 @@ const VerifyEmail = () => {
             </Heading>
             <Center>
               {" "}
-              <Button m="20px" onClick={() => navigate("/")}>
-                Home
+              <Button m="20px" onClick={() => navigate("/login")}>
+                Login
               </Button>
             </Center>
           </Box>
