@@ -9,6 +9,8 @@ import ForgetPass from "./components/ForgetPass";
 import ResetPass from "./components/ResetPass";
 import Researches from "./components/Researches";
 import OneResearch from "./components/OneResearch";
+import Events from "./components/Events";
+import OneEvent from "./components/OneEvent";
 // import Navbar from "./components/Navbar";
 
 const App = () => {
@@ -22,9 +24,11 @@ const App = () => {
         <Route exact path="/verifyEmail/:token" element={<VerifyEmail />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/forgetPass" element={<ForgetPass />} />
-        <Route exact path="/resetPass/:id" element={<ResetPass />} />{" "}
+        <Route exact path="/resetPass/:id" element={<ResetPass />} />
         <Route exact path="/researches" element={<Researches />} />
         <Route exact path="/research/:id" element={<OneResearch />} />
+        <Route exact path="/events" element={<Events />} />
+        <Route exact path="/event/:id" element={<OneEvent />} />
       </Routes>
       {/* </Navbar> */}
     </>
