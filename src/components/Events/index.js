@@ -3,32 +3,25 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  Center,
-  Heading,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Researches = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [researches, setResearches] = useState(null);
+  const [events, setEvents] = useState(null);
 
   const state = useSelector((state) => {
     return {
       logInReducer: state.logInReducer,
     };
   });
-  // postRouter.post("/newResearch", authentication, authorization, newResearch);
-  const newResearch = async () => {
+  // postRouter.post("/newEvent", authentication, authorization, newEvent);
+  const newEvent = async () => {
     try {
       const result = await axios.post(
-        `${BASE_URL}/newResearch`,
+        `${BASE_URL}/newEvent`,
         {
           title: title,
           desc: desc,
@@ -39,28 +32,27 @@ const Researches = () => {
           },
         }
       );
+      allEvents();
       console.log(result);
-      allResearches();
     } catch (error) {
       console.log(error);
     }
   };
   const puplish = () => {
     Swal.fire({
-      title: "Do you want to puplish a new research?",
+      title: "Do you want to puplish a new event?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Puplish",
       denyButtonText: `Don't Puplish`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        newResearch();
+        newEvent();
         setTitle("");
         setDesc("");
         Swal.fire("Puplished!", "", "success");
       } else if (result.isDenied) {
-        Swal.fire("The research is not puplished", "", "info");
+        Swal.fire("The event is not puplished", "", "info");
         setTitle("");
         setDesc("");
       } else {
@@ -70,36 +62,38 @@ const Researches = () => {
     });
   };
 
-  //   postRouter.get("/getResearch", authentication, getResearch);
-  const allResearches = async () => {
+  //  postRouter.get("/getEvent", authentication, getEvent);
+
+  const allEvents = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/getResearch`, {
+      const result = await axios.get(`${BASE_URL}/getEvent`, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
       //   console.log(result.data);
-      setResearches(result.data);
+      setEvents(result.data);
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  const oneResearch = (id) => {
-    navigate(`/research/${id}`);
+  const oneEvent = (id) => {
+    navigate(`/event/${id}`);
   };
 
   useEffect(() => {
-    allResearches();
+    allEvents();
   }, []);
+
   return (
     <>
       <Box m="20">
         <Heading as="h3" size="lg" textAlign="center">
-          All Researches
+          All Events
         </Heading>
-        {researches && researches.length
-          ? researches.map((ele) => {
+        {events && events.length
+          ? events.map((ele) => {
               //   console.log(ele);
               return (
                 <Center key={ele._id}>
@@ -111,7 +105,7 @@ const Researches = () => {
                     boxShadow="base"
                     rounded="md"
                     onClick={() => {
-                      oneResearch(ele._id);
+                      oneEvent(ele._id);
                     }}
                   >
                     <Heading
@@ -131,37 +125,37 @@ const Researches = () => {
               );
             })
           : ""}{" "}
+        <Box m="20px">
+          <Heading as="h3" size="lg">
+            New Event
+          </Heading>
+          <Heading as="h4" size="md">
+            Title
+          </Heading>
+          <Input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          ></Input>
+
+          <Heading as="h4" size="md">
+            Description
+          </Heading>
+          <Input
+            placeholder="Description"
+            value={desc}
+            onChange={(e) => {
+              setDesc(e.target.value);
+            }}
+          ></Input>
+          <Button onClick={puplish}>Puplish</Button>
+        </Box>
       </Box>
       {/* <Box>
         <Heading as='h3' size='lg'> Type of research</Heading>
       </Box> */}
-      <Box m="20px">
-        <Heading as="h3" size="lg">
-          New Research
-        </Heading>
-        <Heading as="h4" size="md">
-          Title
-        </Heading>
-        <Input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        ></Input>
-
-        <Heading as="h4" size="md">
-          Description
-        </Heading>
-        <Input
-          placeholder="Description"
-          value={desc}
-          onChange={(e) => {
-            setDesc(e.target.value);
-          }}
-        ></Input>
-        <Button onClick={puplish}>Puplish</Button>
-      </Box>
     </>
   );
 };

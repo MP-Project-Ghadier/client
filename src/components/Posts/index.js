@@ -3,32 +3,25 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import {
-  Box,
-  Button,
-  Center,
-  Heading,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Researches = () => {
+const Posts = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [researches, setResearches] = useState(null);
+  const [posts, setPosts] = useState(null);
 
   const state = useSelector((state) => {
     return {
       logInReducer: state.logInReducer,
     };
   });
-  // postRouter.post("/newResearch", authentication, authorization, newResearch);
-  const newResearch = async () => {
+  //postRouter.post("/newPost", authentication, newPost); //by any user
+  const newPost = async () => {
     try {
       const result = await axios.post(
-        `${BASE_URL}/newResearch`,
+        `${BASE_URL}/newPost`,
         {
           title: title,
           desc: desc,
@@ -39,8 +32,8 @@ const Researches = () => {
           },
         }
       );
+      allPosts();
       console.log(result);
-      allResearches();
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +48,7 @@ const Researches = () => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        newResearch();
+        newPost();
         setTitle("");
         setDesc("");
         Swal.fire("Puplished!", "", "success");
@@ -70,36 +63,37 @@ const Researches = () => {
     });
   };
 
-  //   postRouter.get("/getResearch", authentication, getResearch);
-  const allResearches = async () => {
+  //   postRouter.get("/getPosts", authentication, getPosts);
+
+  const allPosts = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/getResearch`, {
+      const result = await axios.get(`${BASE_URL}/getPosts`, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
       //   console.log(result.data);
-      setResearches(result.data);
+      setPosts(result.data);
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  const oneResearch = (id) => {
-    navigate(`/research/${id}`);
+  const onePost = (id) => {
+    navigate(`/post/${id}`);
   };
 
   useEffect(() => {
-    allResearches();
+    allPosts();
   }, []);
   return (
     <>
       <Box m="20">
         <Heading as="h3" size="lg" textAlign="center">
-          All Researches
+          All Posts
         </Heading>
-        {researches && researches.length
-          ? researches.map((ele) => {
+        {posts && posts.length
+          ? posts.map((ele) => {
               //   console.log(ele);
               return (
                 <Center key={ele._id}>
@@ -111,7 +105,7 @@ const Researches = () => {
                     boxShadow="base"
                     rounded="md"
                     onClick={() => {
-                      oneResearch(ele._id);
+                      onePost(ele._id);
                     }}
                   >
                     <Heading
@@ -132,12 +126,9 @@ const Researches = () => {
             })
           : ""}{" "}
       </Box>
-      {/* <Box>
-        <Heading as='h3' size='lg'> Type of research</Heading>
-      </Box> */}
       <Box m="20px">
         <Heading as="h3" size="lg">
-          New Research
+          New Post
         </Heading>
         <Heading as="h4" size="md">
           Title
@@ -166,4 +157,4 @@ const Researches = () => {
   );
 };
 
-export default Researches;
+export default Posts;
