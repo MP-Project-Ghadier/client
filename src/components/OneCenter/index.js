@@ -22,10 +22,10 @@ import Swal from "sweetalert2";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const OneEvent = () => {
+const OneCenter = () => {
   const navigate = useNavigate();
   let postId = useParams().id;
-  const [event, setEvent] = useState([]);
+  const [center, setCenter] = useState([]);
   const [userName, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -35,20 +35,21 @@ const OneEvent = () => {
   const state = useSelector((state) => {
     return state;
   });
-  // postRouter.get("/getResearchById/:id", authentication, getResearchById);
-  const oneEvent = async () => {
+
+  //postRouter.get("/getCenterById/:id", authentication, getCenterById);
+  const oneCenter = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/getEventById/${postId}`, {
+      const result = await axios.get(`${BASE_URL}/getCenterById/${postId}`, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      //   console.log(result.data);
+      // console.log(result.data.img);
       setImg(result.data.img);
-      setEvent(result.data);
+      setCenter(result.data);
       setUsername(result.data.user.name);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
 
@@ -68,7 +69,7 @@ const OneEvent = () => {
         }
       );
       console.log(result.data);
-      setEvent(result.data);
+      setCenter(result.data);
       setUsername(result.data.user.name);
       if (result.status === 200) {
         Swal.fire({
@@ -104,7 +105,7 @@ const OneEvent = () => {
           },
         }
       );
-      console.log(result.data);
+      // console.log(result.data);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -113,7 +114,7 @@ const OneEvent = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/events");
+        navigate("/centers");
       }
     } catch (error) {
       console.log(error.response);
@@ -127,12 +128,13 @@ const OneEvent = () => {
     }
   };
   useEffect(() => {
-    oneEvent();
+    oneCenter();
   }, []);
+
   return (
     <>
-      {event && (
-        <Center key={event._id}>
+      {center && (
+        <Center key={center._id}>
           <Box
             p="5"
             maxW="50%"
@@ -153,21 +155,19 @@ const OneEvent = () => {
                 <MenuItem onClick={() => deletePost()}>Delete Event</MenuItem>
               </MenuList>
             </Menu>
-            <Heading textAlign="center" m={5}>
-              {event.title}
-            </Heading>
+            <Heading textAlign="center">{center.title}</Heading>
             <Center>
-              <Image src={img} alt={title} boxSize="360px" m={10} />
+              <Image src={img} alt={title}  boxSize='360px'/>
             </Center>
 
             <Text p="5" m="5">
-              {event.desc}
+              {center.desc}
             </Text>
           </Box>
           {isEdit ? (
             <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">
               <Heading as="h3" size="lg">
-                Edit Event
+                Edit Center
               </Heading>
               <Heading as="h4" size="md">
                 Title
@@ -201,4 +201,4 @@ const OneEvent = () => {
   );
 };
 
-export default OneEvent;
+export default OneCenter;

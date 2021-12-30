@@ -3,16 +3,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { Box, Button, Center, Heading, Input, Text, Image } from "@chakra-ui/react";
+import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 import { storage } from "../firebase";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Researches = () => {
+const Centers = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [events, setEvents] = useState(null);
+  const [centers, setCenters] = useState(null);
   const [img, setImg] = useState(null);
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
@@ -53,16 +53,15 @@ const Researches = () => {
       }
     );
   };
-
-  // postRouter.post("/newEvent", authentication, authorization, newEvent);
-  const newEvent = async () => {
+  //postRouter.post("/newCenter", authentication, authorization, newCenter);
+  const newCenter = async () => {
     try {
       const result = await axios.post(
-        `${BASE_URL}/newEvent`,
+        `${BASE_URL}/newCenter`,
         {
           title: title,
           desc: desc,
-          img: url
+          img: url,
         },
         {
           headers: {
@@ -70,27 +69,28 @@ const Researches = () => {
           },
         }
       );
-      allEvents();
+      //       allCenters();
       console.log(result);
     } catch (error) {
       console.log(error.response);
     }
   };
+
   const puplish = () => {
     Swal.fire({
-      title: "Do you want to puplish a new event?",
+      title: "Do you want to puplish a new center?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Puplish",
       denyButtonText: `Don't Puplish`,
     }).then((result) => {
       if (result.isConfirmed) {
-        newEvent();
+        newCenter();
         setTitle("");
         setDesc("");
         Swal.fire("Puplished!", "", "success");
       } else if (result.isDenied) {
-        Swal.fire("The event is not puplished", "", "info");
+        Swal.fire("The center is not puplished", "", "info");
         setTitle("");
         setDesc("");
       } else {
@@ -100,38 +100,36 @@ const Researches = () => {
     });
   };
 
-  //  postRouter.get("/getEvent", authentication, getEvent);
+  //postRouter.get("/getCenter", authentication, getCenter);
 
-  const allEvents = async () => {
+  const allCenters = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/getEvent`, {
+      const result = await axios.get(`${BASE_URL}/getCenter`, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      //   console.log(result.data);
-      setEvents(result.data);
+      console.log(result.data);
+      setCenters(result.data);
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  const oneEvent = (id) => {
-    navigate(`/event/${id}`);
+  const oneCenter = (id) => {
+    navigate(`/center/${id}`);
   };
-
   useEffect(() => {
-    allEvents();
+    allCenters();
   }, []);
-
   return (
     <>
       <Box m="20">
         <Heading as="h3" size="lg" textAlign="center">
-          All Events
+          All Centers
         </Heading>
-        {events && events.length
-          ? events.map((ele) => {
+        {centers && centers.length
+          ? centers.map((ele) => {
               //   console.log(ele);
               return (
                 <Center key={ele._id}>
@@ -143,7 +141,7 @@ const Researches = () => {
                     boxShadow="base"
                     rounded="md"
                     onClick={() => {
-                      oneEvent(ele._id);
+                      oneCenter(ele._id);
                     }}
                   >
                     <Heading
@@ -156,8 +154,8 @@ const Researches = () => {
                     >
                       {ele.title}
                     </Heading>
-                    <Text m={3}>{ele.user.name}</Text>
-                    <Text m={3}>{ele.createdAt}</Text>
+                    <Text>{ele.user.name}</Text>
+                    <Text>{ele.createdAt}</Text>
                   </Box>
                 </Center>
               );
@@ -165,7 +163,7 @@ const Researches = () => {
           : ""}{" "}
         <Box m="20px">
           <Heading as="h3" size="lg">
-            New Event
+            New Center
           </Heading>
           <Heading as="h4" size="md">
             Title
@@ -194,7 +192,7 @@ const Researches = () => {
               <Button onClick={handleUpload}>upload</Button>
               <progress value={progress} max="100" />
             </div>
-            <Image alt={title} src={url} />
+            <img alt={title} src={url} />
 
             <Button onClick={puplish}>Puplish</Button>
           </div>
@@ -204,4 +202,4 @@ const Researches = () => {
   );
 };
 
-export default Researches;
+export default Centers;

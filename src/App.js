@@ -14,6 +14,8 @@ import OneEvent from "./components/OneEvent";
 import Posts from "./components/Posts";
 import OnePost from "./components/OnePost";
 import Comments from "./components/Comments";
+import Centers from "./components/Centers";
+import OneCenter from "./components/OneCenter";
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
         <Route exact path="/posts" element={<Posts />} />
         <Route exact path="/post/:id" element={<OnePost />} />
         <Route exact path="/post/:id" element={<Comments />} />
+        <Route exact path="/centers" element={<Centers />} />
+        <Route exact path="/center/:id" element={<OneCenter />} />
       </Routes>
     </>
   );
