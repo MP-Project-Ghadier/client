@@ -18,7 +18,6 @@ const Researches = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [researches, setResearches] = useState(null);
-  const [source, setSource] = useState("");
 
   const state = useSelector((state) => {
     return {
@@ -41,6 +40,7 @@ const Researches = () => {
         }
       );
       console.log(result);
+      allResearches();
     } catch (error) {
       console.log(error);
     }

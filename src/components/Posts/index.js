@@ -6,22 +6,22 @@ import { useSelector } from "react-redux";
 import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Researches = () => {
+const Posts = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [events, setEvents] = useState(null);
+  const [posts, setPosts] = useState(null);
 
   const state = useSelector((state) => {
     return {
       logInReducer: state.logInReducer,
     };
   });
-  // postRouter.post("/newEvent", authentication, authorization, newEvent);
-  const newEvent = async () => {
+  //postRouter.post("/newPost", authentication, newPost); //by any user
+  const newPost = async () => {
     try {
       const result = await axios.post(
-        `${BASE_URL}/newEvent`,
+        `${BASE_URL}/newPost`,
         {
           title: title,
           desc: desc,
@@ -32,7 +32,7 @@ const Researches = () => {
           },
         }
       );
-      allEvents();
+      allPosts();
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -40,19 +40,20 @@ const Researches = () => {
   };
   const puplish = () => {
     Swal.fire({
-      title: "Do you want to puplish a new event?",
+      title: "Do you want to puplish a new research?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Puplish",
       denyButtonText: `Don't Puplish`,
     }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        newEvent();
+        newPost();
         setTitle("");
         setDesc("");
         Swal.fire("Puplished!", "", "success");
       } else if (result.isDenied) {
-        Swal.fire("The event is not puplished", "", "info");
+        Swal.fire("The research is not puplished", "", "info");
         setTitle("");
         setDesc("");
       } else {
@@ -62,38 +63,37 @@ const Researches = () => {
     });
   };
 
-  //  postRouter.get("/getEvent", authentication, getEvent);
+  //   postRouter.get("/getPosts", authentication, getPosts);
 
-  const allEvents = async () => {
+  const allPosts = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/getEvent`, {
+      const result = await axios.get(`${BASE_URL}/getPosts`, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
       //   console.log(result.data);
-      setEvents(result.data);
+      setPosts(result.data);
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  const oneEvent = (id) => {
-    navigate(`/event/${id}`);
+  const onePost = (id) => {
+    navigate(`/post/${id}`);
   };
 
   useEffect(() => {
-    allEvents();
+    allPosts();
   }, []);
-
   return (
     <>
       <Box m="20">
         <Heading as="h3" size="lg" textAlign="center">
-          All Events
+          All Posts
         </Heading>
-        {events && events.length
-          ? events.map((ele) => {
+        {posts && posts.length
+          ? posts.map((ele) => {
               //   console.log(ele);
               return (
                 <Center key={ele._id}>
@@ -105,7 +105,7 @@ const Researches = () => {
                     boxShadow="base"
                     rounded="md"
                     onClick={() => {
-                      oneEvent(ele._id);
+                      onePost(ele._id);
                     }}
                   >
                     <Heading
@@ -125,39 +125,36 @@ const Researches = () => {
               );
             })
           : ""}{" "}
-        <Box m="20px">
-          <Heading as="h3" size="lg">
-            New Event
-          </Heading>
-          <Heading as="h4" size="md">
-            Title
-          </Heading>
-          <Input
-            placeholder="Title"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          ></Input>
-
-          <Heading as="h4" size="md">
-            Description
-          </Heading>
-          <Input
-            placeholder="Description"
-            value={desc}
-            onChange={(e) => {
-              setDesc(e.target.value);
-            }}
-          ></Input>
-          <Button onClick={puplish}>Puplish</Button>
-        </Box>
       </Box>
-      {/* <Box>
-        <Heading as='h3' size='lg'> Type of research</Heading>
-      </Box> */}
+      <Box m="20px">
+        <Heading as="h3" size="lg">
+          New Post
+        </Heading>
+        <Heading as="h4" size="md">
+          Title
+        </Heading>
+        <Input
+          placeholder="Title"
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        ></Input>
+
+        <Heading as="h4" size="md">
+          Description
+        </Heading>
+        <Input
+          placeholder="Description"
+          value={desc}
+          onChange={(e) => {
+            setDesc(e.target.value);
+          }}
+        ></Input>
+        <Button onClick={puplish}>Puplish</Button>
+      </Box>
     </>
   );
 };
 
-export default Researches;
+export default Posts;

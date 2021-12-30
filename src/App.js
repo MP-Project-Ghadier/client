@@ -11,12 +11,13 @@ import Researches from "./components/Researches";
 import OneResearch from "./components/OneResearch";
 import Events from "./components/Events";
 import OneEvent from "./components/OneEvent";
-// import Navbar from "./components/Navbar";
+import Posts from "./components/Posts";
+import OnePost from "./components/OnePost";
+import Comments from "./components/Comments";
 
 const App = () => {
   return (
     <>
-      {/* <Navbar> */}
       <Routes>
         <Route exact path="/newSpicalist" element={<NewSpecialist />} />
         <Route exact path="/newUser" element={<NewUser />} />
@@ -29,8 +30,10 @@ const App = () => {
         <Route exact path="/research/:id" element={<OneResearch />} />
         <Route exact path="/events" element={<Events />} />
         <Route exact path="/event/:id" element={<OneEvent />} />
+        <Route exact path="/posts" element={<Posts />} />
+        <Route exact path="/post/:id" element={<OnePost />} />
+        <Route exact path="/post/:id" element={<Comments />} />
       </Routes>
-      {/* </Navbar> */}
     </>
   );
 };
