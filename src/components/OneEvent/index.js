@@ -15,6 +15,7 @@ import {
   MenuItem,
   Input,
   Button,
+  Image,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
@@ -29,6 +30,7 @@ const OneEvent = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [isEdit, setEdit] = useState(false);
+  const [img, setImg] = useState("");
 
   const state = useSelector((state) => {
     return state;
@@ -42,6 +44,7 @@ const OneEvent = () => {
         },
       });
       //   console.log(result.data);
+      setImg(result.data.img);
       setEvent(result.data);
       setUsername(result.data.user.name);
     } catch (error) {
@@ -147,12 +150,16 @@ const OneEvent = () => {
               />
               <MenuList>
                 <MenuItem onClick={() => setEdit(true)}>Edit Events</MenuItem>
-                <MenuItem onClick={() => deletePost()}>
-                  Delete Event
-                </MenuItem>
+                <MenuItem onClick={() => deletePost()}>Delete Event</MenuItem>
               </MenuList>
             </Menu>
-            <Heading textAlign="center">{event.title}</Heading>
+            <Heading textAlign="center" m={5}>
+              {event.title}
+            </Heading>
+            <Center>
+              <Image src={img} alt={title} boxSize="360px" m={10} />
+            </Center>
+
             <Text p="5" m="5">
               {event.desc}
             </Text>

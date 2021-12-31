@@ -3,7 +3,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  Input,
+  Text,
+  Image,
+} from "@chakra-ui/react";
+import { storage } from "../firebase";
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Researches = () => {
@@ -11,12 +21,47 @@ const Researches = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [events, setEvents] = useState(null);
+  const [img, setImg] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [url, setUrl] = useState("");
 
   const state = useSelector((state) => {
     return {
       logInReducer: state.logInReducer,
     };
   });
+
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImg(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/${img.name}`).put(img);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(img.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+          });
+      }
+    );
+  };
+
   // postRouter.post("/newEvent", authentication, authorization, newEvent);
   const newEvent = async () => {
     try {
@@ -25,6 +70,7 @@ const Researches = () => {
         {
           title: title,
           desc: desc,
+          img: url,
         },
         {
           headers: {
@@ -35,7 +81,7 @@ const Researches = () => {
       allEvents();
       console.log(result);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
   const puplish = () => {
@@ -90,7 +136,7 @@ const Researches = () => {
     <>
       <Box m="20">
         <Heading as="h3" size="lg" textAlign="center">
-          All Events
+        News & Events
         </Heading>
         {events && events.length
           ? events.map((ele) => {
@@ -118,44 +164,52 @@ const Researches = () => {
                     >
                       {ele.title}
                     </Heading>
-                    <Text>{ele.user.name}</Text>
-                    <Text>{ele.createdAt}</Text>
+                    <Text m={3}>{ele.user.name}</Text>
+                    <Text m={3}>{ele.createdAt}</Text>
                   </Box>
                 </Center>
               );
             })
           : ""}{" "}
-        <Box m="20px">
-          <Heading as="h3" size="lg">
-            New Event
-          </Heading>
-          <Heading as="h4" size="md">
-            Title
-          </Heading>
-          <Input
-            placeholder="Title"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          ></Input>
+        <Center>
+          <Box m="20px" textAlign="center" >
+            <Heading as="h3" size="lg">
+              New Event
+            </Heading>
+            <Heading as="h4" size="md">
+              Title
+            </Heading>
+            <Input
+              placeholder="Title"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            ></Input>
 
-          <Heading as="h4" size="md">
-            Description
-          </Heading>
-          <Input
-            placeholder="Description"
-            value={desc}
-            onChange={(e) => {
-              setDesc(e.target.value);
-            }}
-          ></Input>
-          <Button onClick={puplish}>Puplish</Button>
-        </Box>
+            <Heading as="h4" size="md">
+              Description
+            </Heading>
+            <Input
+              placeholder="Description"
+              value={desc}
+              onChange={(e) => {
+                setDesc(e.target.value);
+              }}
+            ></Input>
+            <div>
+              <Input type="file" name="newPost" onChange={handleChange} />
+              <div>
+                <Button onClick={handleUpload}>upload</Button>
+                <progress value={progress} max="100" />
+              </div>
+              <Image alt={title} src={url} />
+
+              <Button onClick={puplish}>Puplish</Button>
+            </div>
+          </Box>
+        </Center>
       </Box>
-      {/* <Box>
-        <Heading as='h3' size='lg'> Type of research</Heading>
-      </Box> */}
     </>
   );
 };

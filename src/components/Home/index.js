@@ -1,11 +1,16 @@
 import React from "react";
+import About from "../About";
+import Footer from "../Footer";
 import Navbar from "../Navbar";
+import Slideshow from "../Slideshow";
 
 const Home = () => {
   return (
     <>
+      <Slideshow />
       <Navbar />
-      <h1>Home</h1>
+      <About />
+      <Footer/>
     </>
   );
 };
