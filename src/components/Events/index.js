@@ -3,7 +3,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { Box, Button, Center, Heading, Input, Text, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  Input,
+  Text,
+  Image,
+} from "@chakra-ui/react";
 import { storage } from "../firebase";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -62,7 +70,7 @@ const Researches = () => {
         {
           title: title,
           desc: desc,
-          img: url
+          img: url,
         },
         {
           headers: {
@@ -128,7 +136,7 @@ const Researches = () => {
     <>
       <Box m="20">
         <Heading as="h3" size="lg" textAlign="center">
-          All Events
+        News & Events
         </Heading>
         {events && events.length
           ? events.map((ele) => {
@@ -163,42 +171,44 @@ const Researches = () => {
               );
             })
           : ""}{" "}
-        <Box m="20px">
-          <Heading as="h3" size="lg">
-            New Event
-          </Heading>
-          <Heading as="h4" size="md">
-            Title
-          </Heading>
-          <Input
-            placeholder="Title"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          ></Input>
+        <Center>
+          <Box m="20px" textAlign="center" >
+            <Heading as="h3" size="lg">
+              New Event
+            </Heading>
+            <Heading as="h4" size="md">
+              Title
+            </Heading>
+            <Input
+              placeholder="Title"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            ></Input>
 
-          <Heading as="h4" size="md">
-            Description
-          </Heading>
-          <Input
-            placeholder="Description"
-            value={desc}
-            onChange={(e) => {
-              setDesc(e.target.value);
-            }}
-          ></Input>
-          <div>
-            <Input type="file" name="newPost" onChange={handleChange} />
+            <Heading as="h4" size="md">
+              Description
+            </Heading>
+            <Input
+              placeholder="Description"
+              value={desc}
+              onChange={(e) => {
+                setDesc(e.target.value);
+              }}
+            ></Input>
             <div>
-              <Button onClick={handleUpload}>upload</Button>
-              <progress value={progress} max="100" />
-            </div>
-            <Image alt={title} src={url} />
+              <Input type="file" name="newPost" onChange={handleChange} />
+              <div>
+                <Button onClick={handleUpload}>upload</Button>
+                <progress value={progress} max="100" />
+              </div>
+              <Image alt={title} src={url} />
 
-            <Button onClick={puplish}>Puplish</Button>
-          </div>
-        </Box>
+              <Button onClick={puplish}>Puplish</Button>
+            </div>
+          </Box>
+        </Center>
       </Box>
     </>
   );

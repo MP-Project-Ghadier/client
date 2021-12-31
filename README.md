@@ -48,6 +48,8 @@ npm i
 
 - [react-icons](https://react-icons.github.io/react-icons/)
 
+- [flaticon](https://www.freepik.com)
+
 ---
 
 ## Running the server
@@ -61,21 +63,37 @@ npm start
 ---
 
 ## Website Wireframe
+
 ### Homepage
+
 ![home](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/home.png)
+
 ### Research
+
 ![research](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/research.png)
+
 ### Events
+
 ![events](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/events.png)
+
 ### Sign up
+
 ![signup](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/sign%20up.png)
+
 ### Login
+
 ![login](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/login.png)
+
 ### Community
+
 ![community](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/community.png)
+
 ### Center
+
 ![center](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/center.png)
+
 ### Profile
+
 ![profile](https://github.com/MP-Project-Ghadier/client/blob/main/ReadmeFiles/profile.png)
 
 ---
