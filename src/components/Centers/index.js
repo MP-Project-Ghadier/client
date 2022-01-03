@@ -217,8 +217,9 @@ const Centers = () => {
         )}
 
       </Box>
-      <Footer />
-
+      <Box mt="3rem">
+        <Footer />
+      </Box>
     </>
     
   );

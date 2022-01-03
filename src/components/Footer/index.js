@@ -10,29 +10,29 @@ import "../../assests/style.css";
 const Footer = () => {
   return (
     <>
-      <Box
-        position="absolute"
-        display="flex"
-        justifyContent="center"
-        textAlign="center"
-        bgColor="#1A365D"
-        h="5.5rem"
-        w="100vw"
-      >
-        <Text fontSize="xl" color="white" m="1rem" pos="absolute">
-          ©{new Date().getFullYear()} Autism Hub. All Rights Reserved
-        </Text>
+      <Box position="fixed" w="100%">
         <Box
           display="flex"
           justifyContent="center"
-          w="100%"
-          m="3rem"
-          color="white"
+          textAlign="center"
+          bgColor="#1A365D"
+          h="5.5rem"
         >
-          <TiSocialTwitter cursor="pointer" fontSize="35px" />
-          <TiSocialYoutube cursor="pointer" fontSize="35px" />
-          <TiSocialFacebook cursor="pointer" fontSize="35px" />
-          <TiSocialInstagram cursor="pointer" fontSize="35px" />
+          <Text fontSize="xl" color="white" m="1rem" pos="absolute">
+            ©{new Date().getFullYear()} Autism Hub. All Rights Reserved
+          </Text>
+          <Box
+            display="flex"
+            justifyContent="center"
+            w="100%"
+            m="3rem"
+            color="white"
+          >
+            <TiSocialTwitter cursor="pointer" fontSize="35px" />
+            <TiSocialYoutube cursor="pointer" fontSize="35px" />
+            <TiSocialFacebook cursor="pointer" fontSize="35px" />
+            <TiSocialInstagram cursor="pointer" fontSize="35px" />
+          </Box>
         </Box>
       </Box>
     </>

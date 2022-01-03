@@ -193,8 +193,9 @@ const OneResearch = () => {
           )}
         </Center>
       )}
-      <Footer />
-    </>
+      <Box mt="3rem">
+        <Footer />
+      </Box>    </>
   );
 };
 

@@ -17,6 +17,7 @@ import {
   InputGroup,
   Link,
   Text,
+  Box,
 } from "@chakra-ui/react";
 import { ImEye } from "react-icons/im";
 
@@ -29,16 +30,15 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const state = useSelector((state) => {
     return {
       logInReducer: state.logInReducer,
     };
   });
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const signIn = async () => {
     try {
@@ -72,11 +72,10 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+        navigate(`/`);
       }
       // console.log(data);
       dispatch(login(data));
-
     } catch (error) {
       // console.log(error.response.status);
       if (error.response.status === 400) {
@@ -152,24 +151,25 @@ const Login = () => {
 
           <Center>
             <Button m="8px" onClick={signIn}>
-              {" "}
               Sign in
             </Button>
           </Center>
 
-          <Link m="8px" color="#2B6CB0" href="/resetPass">
+          <Link m="8px" color="#2B6CB0" href="/forgetPass">
             Forget your password?
           </Link>
           <Text fontSize="md">
             Don't Have an Account?
-            <Link m="8px" color="#2B6CB0" href="/newUser">
+            <Link m="8px" color="#2B6CB0" href="/newAccount">
               Sign Up
             </Link>
           </Text>
           <LoginGoogle />
         </Stack>
       </Center>
-      <Footer />
+      <Box mt="3rem">
+        <Footer />
+      </Box>{" "}
     </>
   );
 };

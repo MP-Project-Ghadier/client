@@ -40,6 +40,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
+
   const signUpAsSpecialist = async () => {
     try {
       const result = await axios.post(`${BASE_URL}/newSpecialist`, {
@@ -113,6 +114,7 @@ const Register = () => {
       console.log(error);
     }
   };
+  
   return (
     <>
       <Center>
@@ -326,8 +328,9 @@ const Register = () => {
         </Stack>
       </Center>
 
-      <Footer />
-    </>
+      <Box mt="3rem">
+        <Footer />
+      </Box>    </>
   );
 };
 

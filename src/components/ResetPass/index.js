@@ -8,15 +8,19 @@ import {
   Button,
   InputRightElement,
   InputGroup,
+  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { ImEye } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ResetPass = () => {
+  const navigate = useNavigate()
   const { id } = useParams();
   const [code, setCode] = useState(0);
   const [password, setPassword] = useState("");
@@ -26,7 +30,7 @@ const ResetPass = () => {
 
   const resetPass = async () => {
     try {
-      const result = await axios.post(`${BASE_URL}/resetPass/${id}"`, {
+      const result = await axios.post(`${BASE_URL}/resetPass/${id}`, {
         code: code,
         password: password,
       });
@@ -35,10 +39,11 @@ const ResetPass = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Email sent successfully, Check your email.",
+          title: "Your password has been changed successfully!",
           showConfirmButton: false,
           timer: 2500,
         });
+        navigate("/login")
       }
     } catch (error) {
       console.log(error.response);
@@ -88,6 +93,9 @@ const ResetPass = () => {
           <Button onClick={resetPass}>Save</Button>
         </Stack>
       </Center>
+      <Box mt="3rem">
+        <Footer />
+      </Box>
     </>
   );
 };

@@ -7,12 +7,6 @@ import {
   Box,
   Text,
   IconButton,
-  // ButtonGroup,
-  // Flex,
-  // useEditableControls,
-  // Editable,
-  // EditablePreview,
-  // EditableInput,
   Input,
   Button,
 } from "@chakra-ui/react";
@@ -186,8 +180,9 @@ const Profile = () => {
           </div>
         </Box>
       </Center>
-      <Footer />
-    </>
+      <Box mt="3rem">
+        <Footer />
+      </Box>    </>
   );
 };
 

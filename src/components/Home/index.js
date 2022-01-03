@@ -10,7 +10,7 @@ const Home = () => {
       <Slideshow />
       <Navbar />
       <About />
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -170,8 +170,9 @@ const Posts = () => {
           </Box>
         )}
       </Box>
-
-      <Footer />
+      <Box mt="3rem">
+        <Footer />
+      </Box>
     </>
   );
 };

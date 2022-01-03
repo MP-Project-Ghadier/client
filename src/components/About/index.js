@@ -35,30 +35,31 @@ const About = () => {
           pos="relative"
           m="1rem"
         />
-        <Text
-          fontSize="5xl"
+        <Box
           pos="absolute"
-          top="60rem"
+          top="70rem"
           right="2rem"
           m="1rem"
           p="1rem"
+          w="50rem"
         >
-          Community of Autism Families<Text> And Specialists</Text>
-          <Text fontSize="2xl">
-            An organization that brings together autism
-            <Text>
-              families‘s experiences and multi-discipline expertise in
-              counselling services,
-            </Text>
+          <Text fontSize="5xl">Community of Autism Families</Text>
+          <Text fontSize="5xl">And Specialists</Text>
+          <Text fontSize="3xl">
+            An organization that brings together autism families‘s experiences
+            and multi-discipline expertise in counselling services,
+          </Text>
+          <Text fontSize="3xl">
             awareness programs and last researches, news and events about
             autism.
           </Text>
-        </Text>
+        </Box>
       </Box>
       <Box>
-        <Image src={kid2} opacity="0.7" zIndex="hide" />
-        <Text
-          fontSize="5xl"
+        <Box>
+          <Image src={kid2} opacity="0.7" zIndex="hide" />
+        </Box>
+        <Box
           pos="absolute"
           top="123rem"
           right="0"
@@ -66,20 +67,18 @@ const About = () => {
           p="1rem"
           bg=" rgba(255, 255, 255, 0.5)"
         >
-          What is Autism?
-          <Text fontSize="2xl">
-            Autism, or Autism Spectrum Disorder,
-            <Text>
-              is a known brain development condition
-              <Text>that manifests itself as difficulty</Text>
+          <Text fontSize="5xl">What is Autism?</Text>
+          <Box>
+            <Text fontSize="2xl">Autism, or Autism Spectrum Disorder,</Text>
+            <Text fontSize="2xl">is a known brain development condition</Text>
+            <Text fontSize="2xl">that manifests itself as difficulty</Text>
+            <Text fontSize="2xl">
+              in communicating or socializing with others
             </Text>
-            in communicating or socializing with others
-            <Text>
-              and can affect an individual and
-              <Text> their family throughout their life.</Text>
-            </Text>
-          </Text>
-        </Text>
+            <Text fontSize="2xl">and can affect an individual and</Text>
+            <Text fontSize="2xl">their family throughout their life.</Text>
+          </Box>
+        </Box>
       </Box>
       <Box
         w="100%"
@@ -165,7 +164,7 @@ const About = () => {
               </Center>
               <Text color="#1A365D" fontSize="xl">
                 Male
-              </Text>{" "}
+              </Text>
               <Text color="#1A365D" fontSize="xl">
                 79%
               </Text>
@@ -183,7 +182,7 @@ const About = () => {
               </Center>
               <Text color="#1A365D" fontSize="xl">
                 Female
-              </Text>{" "}
+              </Text>
               <Text color="#1A365D" fontSize="xl">
                 21%
               </Text>
@@ -220,7 +219,7 @@ const About = () => {
                 </Center>
                 <Text color="#1A365D" fontSize="xl">
                   Enrolled
-                </Text>{" "}
+                </Text>
                 <Text color="#1A365D" fontSize="xl">
                   56%
                 </Text>
@@ -238,7 +237,7 @@ const About = () => {
                 </Center>
                 <Text color="#1A365D" fontSize="xl">
                   Not enrolled
-                </Text>{" "}
+                </Text>
                 <Text color="#1A365D" fontSize="xl">
                   44%
                 </Text>

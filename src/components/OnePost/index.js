@@ -207,8 +207,12 @@ const OnePost = () => {
           )}
         </Center>
       )}
-      <Comments />
-      <Footer />
+      <Box m="1rem">
+        <Comments />
+      </Box>
+      <Box mt="3rem">
+        <Footer />
+      </Box>
     </>
   );
 };
