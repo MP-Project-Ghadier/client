@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Input, Heading, Stack, Center, Text, Button } from "@chakra-ui/react";
+import { Input, Heading, Stack, Center, Text, Button,Box } from "@chakra-ui/react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import Footer from "../Footer";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ForgetPass = () => {
@@ -47,6 +47,9 @@ const ForgetPass = () => {
           <Button onClick={forgetPass}>Send</Button>
         </Stack>
       </Center>
+      <Box mt="3rem">
+        <Footer />
+      </Box>
     </>
   );
 };

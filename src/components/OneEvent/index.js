@@ -115,7 +115,7 @@ const OneEvent = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/events");
+        navigate("/news&events");
       }
     } catch (error) {
       console.log(error.response);
@@ -137,12 +137,12 @@ const OneEvent = () => {
       {event && (
         <Center key={event._id}>
           <Box
-            p="5"
             maxW="50%"
             borderWidth="1px"
             boxShadow="2xl"
             p="6"
             rounded="md"
+            mb="3rem"
           >
             <Menu>
               <MenuButton
@@ -200,8 +200,9 @@ const OneEvent = () => {
           )}
         </Center>
       )}
-      <Footer />
-    </>
+      <Box mt="3rem">
+        <Footer />
+      </Box>    </>
   );
 };
 

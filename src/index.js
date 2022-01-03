@@ -14,6 +14,5 @@ ReactDOM.render(
       </BrowserRouter>
     </ChakraProvider>
   </Provider>,
-
   document.getElementById("root")
 );

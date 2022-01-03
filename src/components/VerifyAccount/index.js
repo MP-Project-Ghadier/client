@@ -46,8 +46,9 @@ const VerifyEmail = () => {
           </Box>
         </Stack>
       </Center>
-      <Footer />
-    </>
+      <Box mt="3rem">
+        <Footer />
+      </Box>    </>
   );
 };
 

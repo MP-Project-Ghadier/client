@@ -150,42 +150,42 @@ const Events = () => {
           memorable humanitarian impression.
         </Text>
         <>
-        {events && events.length
-          ? events.map((ele) => {
-              console.log(ele);
-              return (
-                <Center key={ele._id}>
-                  <Box
-                    w="100vh"
-                    p="5"
-                    m="5"
-                    borderRadius="md"
-                    boxShadow="base"
-                    rounded="md"
-                    onClick={() => {
-                      oneEvent(ele._id);
-                    }}
-                  >
-                    <Image w={320} src={ele.img} />
-                    <Text m={3}>{ele.createdAt}</Text>
-                    <Box>
-                      <Heading
-                        mt="2"
-                        fontSize="xl"
-                        fontWeight="semibold"
-                        lineHeight="short"
-                        textAlign="center"
-                        pb="3"
-                      >
-                        {ele.title}
-                      </Heading>
+          {events && events.length
+            ? events.map((ele) => {
+                console.log(ele);
+                return (
+                  <Center key={ele._id}>
+                    <Box
+                      w="100vh"
+                      p="5"
+                      m="5"
+                      borderRadius="md"
+                      boxShadow="base"
+                      rounded="md"
+                      onClick={() => {
+                        oneEvent(ele._id);
+                      }}
+                    >
+                      <Image w={320} src={ele.img} />
+                      <Text m={3}>{ele.createdAt}</Text>
+                      <Box>
+                        <Heading
+                          mt="2"
+                          fontSize="xl"
+                          fontWeight="semibold"
+                          lineHeight="short"
+                          textAlign="center"
+                          pb="3"
+                        >
+                          {ele.title}
+                        </Heading>
+                      </Box>
                     </Box>
-                  </Box>
-                </Center>
-              );
-            })
-          : ""}
-          </>
+                  </Center>
+                );
+              })
+            : ""}
+        </>
         {state.logInReducer.role === "Admin" ? (
           <Center>
             <Box m="20px" textAlign="center">
@@ -229,8 +229,9 @@ const Events = () => {
           ""
         )}
       </Box>
-      <Footer />
-    </>
+      <Box mt="3rem">
+        <Footer />
+      </Box>    </>
   );
 };
 

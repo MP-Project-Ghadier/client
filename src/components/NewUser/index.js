@@ -189,6 +189,9 @@ const NewUser = () => {
           </Box>
         </Stack>
       </Center>
+      <Box mt="3rem">
+        <Footer />
+      </Box>
     </>
   );
 };
