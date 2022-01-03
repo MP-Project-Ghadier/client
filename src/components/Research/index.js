@@ -4,66 +4,29 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
-import { storage } from "../firebase";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
-
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Centers = () => {
+const Researches = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [centers, setCenters] = useState(null);
-  const [img, setImg] = useState(null);
-  const [progress, setProgress] = useState(0);
-  const [url, setUrl] = useState("");
+  const [researches, setResearches] = useState(null);
 
   const state = useSelector((state) => {
     return {
       logInReducer: state.logInReducer,
     };
   });
-
-  const handleChange = (e) => {
-    if (e.target.files[0]) {
-      setImg(e.target.files[0]);
-    }
-  };
-
-  const handleUpload = () => {
-    const uploadTask = storage.ref(`images/${img.name}`).put(img);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(img.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrl(url);
-          });
-      }
-    );
-  };
-  //postRouter.post("/newCenter", authentication, authorization, newCenter);
-  const newCenter = async () => {
+  // postRouter.post("/newResearch", authentication, authorization, newResearch);
+  const newResearch = async () => {
     try {
       const result = await axios.post(
-        `${BASE_URL}/newCenter`,
+        `${BASE_URL}/newResearch`,
         {
           title: title,
           desc: desc,
-          img: url,
         },
         {
           headers: {
@@ -71,28 +34,28 @@ const Centers = () => {
           },
         }
       );
-      //       allCenters();
       console.log(result);
+      allResearches();
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
-
   const puplish = () => {
     Swal.fire({
-      title: "Do you want to puplish a new center?",
+      title: "Do you want to puplish a new research?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Puplish",
       denyButtonText: `Don't Puplish`,
     }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        newCenter();
+        newResearch();
         setTitle("");
         setDesc("");
         Swal.fire("Puplished!", "", "success");
       } else if (result.isDenied) {
-        Swal.fire("The center is not puplished", "", "info");
+        Swal.fire("The research is not puplished", "", "info");
         setTitle("");
         setDesc("");
       } else {
@@ -102,47 +65,47 @@ const Centers = () => {
     });
   };
 
-  //postRouter.get("/getCenter", authentication, getCenter);
-
-  const allCenters = async () => {
+  //   postRouter.get("/getResearch", authentication, getResearch);
+  const allResearches = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/getCenter`, {
+      const result = await axios.get(`${BASE_URL}/getResearch`, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      console.log(result.data);
-      setCenters(result.data);
+      //   console.log(result.data);
+      setResearches(result.data);
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  const oneCenter = (id) => {
-    navigate(`/center/${id}`);
+  const oneResearch = (id) => {
+    navigate(`/research/${id}`);
   };
+
   useEffect(() => {
-    allCenters();
+    allResearches();
   }, []);
   return (
     <>
       <Navbar />
       <Box m="40" h="40vh">
         <Heading as="h3" size="lg" m={3}>
-          Centers
+          Research Studies
         </Heading>
         <Text fontSize="xl" m={3}>
           The prevalence of autism is growing worldwide. Owing to parents being
           the primary caregivers in most situations, their ability to recognize
           the signs and symptoms of autism and respond appropriately is of
           paramount importance in aiming to provide the best healthcare to
-          autistic individuals. We try to collect all centers to help families
-          find the nearest center to diagnosing and provide the health care to
-          autistic individuals.
+          autistic individuals. We try to collect latest research studies about
+          Autism and share it here with our community for help families to be
+          more aware about Autism.
         </Text>
         <>
-          {centers && centers.length
-            ? centers.map((ele) => {
+          {researches && researches.length
+            ? researches.map((ele) => {
                 //   console.log(ele);
                 return (
                   <Center key={ele._id}>
@@ -154,7 +117,7 @@ const Centers = () => {
                       boxShadow="base"
                       rounded="md"
                       onClick={() => {
-                        oneCenter(ele._id);
+                        oneResearch(ele._id);
                       }}
                     >
                       <Heading
@@ -175,53 +138,42 @@ const Centers = () => {
               })
             : ""}
         </>
-        {state.logInReducer.role === "Admin" ? (
-          <Box m="20px">
-            <Heading as="h3" size="lg">
-              New Center
-            </Heading>
-            <Heading as="h4" size="md">
-              Title
-            </Heading>
-            <Input
-              placeholder="Title"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            ></Input>
-
-            <Heading as="h4" size="md">
-              Description
-            </Heading>
-            <Input
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-            ></Input>
-            <div>
-              <Input type="file" name="newPost" onChange={handleChange} />
-              <div>
-                <Button onClick={handleUpload}>upload</Button>
-                <progress value={progress} max="100" />
-              </div>
-              <img alt={title} src={url} />
-
-              <Button onClick={puplish}>Puplish</Button>
-            </div>
-          </Box>
-        ) : (
-          ""
-        )}
-
       </Box>
-      <Footer />
+      {state.logInReducer.role === "Admin" ||
+      state.logInReducer.role === "Specialist" ? (
+        <Box m="20px">
+          <Heading as="h3" size="lg">
+            New Research
+          </Heading>
+          <Heading as="h4" size="md">
+            Title
+          </Heading>
+          <Input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          ></Input>
 
+          <Heading as="h4" size="md">
+            Description
+          </Heading>
+          <Input
+            placeholder="Description"
+            value={desc}
+            onChange={(e) => {
+              setDesc(e.target.value);
+            }}
+          ></Input>
+          <Button onClick={puplish}>Puplish</Button>
+        </Box>
+      ) : (
+        ""
+      )}
+      <Footer />
     </>
-    
   );
 };
 
-export default Centers;
+export default Researches;

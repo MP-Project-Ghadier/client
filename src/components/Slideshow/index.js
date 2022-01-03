@@ -61,9 +61,8 @@ const Slideshow = () => {
         rounded="md"
         bg=" rgba(255, 255, 255, 0.5)"
       >
-        <Text fontSize="5xl">
-          Autism isn't a Disability, <Text>It is a Different Ability</Text>
-        </Text>
+        <Text fontSize="5xl">Autism isn't a Disability, </Text>
+        <Text fontSize="5xl">It is a Different Ability</Text>
       </Box>
     </>
   );

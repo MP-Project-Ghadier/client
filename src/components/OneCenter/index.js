@@ -19,6 +19,8 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -133,6 +135,7 @@ const OneCenter = () => {
 
   return (
     <>
+      <Navbar />
       {center && (
         <Center key={center._id}>
           <Box
@@ -157,7 +160,7 @@ const OneCenter = () => {
             </Menu>
             <Heading textAlign="center">{center.title}</Heading>
             <Center>
-              <Image src={img} alt={title}  boxSize='360px'/>
+              <Image src={img} alt={title} boxSize="360px" />
             </Center>
 
             <Text p="5" m="5">
@@ -197,6 +200,7 @@ const OneCenter = () => {
           )}
         </Center>
       )}
+      <Footer />
     </>
   );
 };

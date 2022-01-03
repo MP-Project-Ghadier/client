@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import LoginGoogle from "../LoginGoogle/index";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 import {
   FormControl,
@@ -20,6 +22,9 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  useColorMode,
+  Text,
+  Link,
 } from "@chakra-ui/react";
 import { ImEye } from "react-icons/im";
 
@@ -33,7 +38,8 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const { colorMode, toggleColorMode } = useColorMode();
+  const isDark = colorMode === "dark";
   const signUpAsSpecialist = async () => {
     try {
       const result = await axios.post(`${BASE_URL}/newSpecialist`, {
@@ -110,25 +116,27 @@ const Register = () => {
   return (
     <>
       <Center>
+        <Navbar />
+
         <Stack
           boxShadow="2xl"
           p="6"
-          m="80px"
+          m="160px"
           rounded="md"
           bg="white"
           w="50%"
           justifyContent="center"
           textAlign="center"
         >
-\          <Box>
-            <Heading m="25" p="15">Create New Account</Heading>
-
+          <Box>
+            <Heading m="15" p="15" color="black">
+              Create New Account
+            </Heading>
             {/* should be 2 options user || specialist */}
-
             <Tabs isFitted variant="enclosed">
               <TabList mb="1em">
-                <Tab>User</Tab>
-                <Tab>Specialist</Tab>
+                <Tab color="black">User</Tab>
+                <Tab color="black">Specialist</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -137,7 +145,7 @@ const Register = () => {
                       Sign up as a User
                     </Heading>
                     <FormControl isRequired>
-                      <FormLabel m="8px">Your Name</FormLabel>
+                      <FormLabel m="8px" >Your Name</FormLabel>
                       <Input
                         type="name"
                         placeholder="name"
@@ -149,7 +157,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px">Your Email</FormLabel>
+                      <FormLabel m="8px" >Your Email</FormLabel>
                       <Input
                         type="email"
                         placeholder="email"
@@ -161,7 +169,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px">Your Password</FormLabel>
+                      <FormLabel m="8px" >Your Password</FormLabel>
                       <InputGroup>
                         <Input
                           type={showPassword ? "text" : "password"}
@@ -179,7 +187,6 @@ const Register = () => {
                             size="sm"
                             onClick={() => setShowPassword(!showPassword)}
                           >
-                            {" "}
                             <ImEye />
                           </Button>
                         </InputRightElement>
@@ -211,9 +218,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <Center>
-                      {" "}
-                      <Button id="signupSubmitButton" onClick={signUp}>
-                        {" "}
+                      <Button id="signupSubmitButton" onClick={signUp} >
                         Sign Up
                       </Button>
                     </Center>
@@ -226,7 +231,7 @@ const Register = () => {
                       Sign up as a Spicalist
                     </Heading>
                     <FormControl isRequired>
-                      <FormLabel m="8px">Your Name</FormLabel>
+                      <FormLabel m="8px" >Your Name</FormLabel>
                       <Input
                         type="name"
                         placeholder="name"
@@ -238,7 +243,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px">Your Email</FormLabel>
+                      <FormLabel m="8px" >Your Email</FormLabel>
                       <Input
                         type="email"
                         placeholder="email"
@@ -250,7 +255,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px">Your Password</FormLabel>
+                      <FormLabel m="8px" >Your Password</FormLabel>
                       <InputGroup>
                         <Input
                           type={showPassword ? "text" : "password"}
@@ -268,8 +273,7 @@ const Register = () => {
                             size="sm"
                             onClick={() => setShowPassword(!showPassword)}
                           >
-                            {" "}
-                            <ImEye />
+                        <ImEye />
                           </Button>
                         </InputRightElement>
                       </InputGroup>
@@ -299,12 +303,10 @@ const Register = () => {
                       />
                     </FormControl>
                     <Center>
-                      {" "}
                       <Button
                         id="signupSubmitButton"
                         onClick={signUpAsSpecialist}
                       >
-                        {" "}
                         Sign Up
                       </Button>
                     </Center>
@@ -312,9 +314,19 @@ const Register = () => {
                 </TabPanel>
               </TabPanels>
             </Tabs>
+            <Box>
+              <Text fontSize="2xl">
+                You Already Have an Account?
+                <Link href="/login" color="#2C5282" fontSize="2xl" ml="1">
+                  Login
+                </Link>
+              </Text>
+            </Box>
           </Box>
         </Stack>
       </Center>
+
+      <Footer />
     </>
   );
 };

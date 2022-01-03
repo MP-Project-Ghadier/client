@@ -13,10 +13,12 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Researches = () => {
+const Events = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -134,17 +136,27 @@ const Researches = () => {
 
   return (
     <>
-      <Box m="20">
-        <Heading as="h3" size="lg" textAlign="center">
-        News & Events
+      <Navbar />
+      <Box m="40" h="40vh">
+        <Heading as="h3" size="lg" m={3}>
+          News & Events
         </Heading>
+        <Text fontSize="xl" m={3}>
+          Stay updated about our various activities, events, milestones and
+          achievements. At the Society for Autism Families, we are passionate
+          about spreading and showcasing our news updates, our sponsored events,
+          as well as our professional works and publications to keep interested
+          individuals informed about our growing programmes that mark a
+          memorable humanitarian impression.
+        </Text>
+        <>
         {events && events.length
           ? events.map((ele) => {
-              //   console.log(ele);
+              console.log(ele);
               return (
                 <Center key={ele._id}>
                   <Box
-                    w="70%"
+                    w="100vh"
                     p="5"
                     m="5"
                     borderRadius="md"
@@ -154,64 +166,72 @@ const Researches = () => {
                       oneEvent(ele._id);
                     }}
                   >
-                    <Heading
-                      mt="2"
-                      fontSize="xl"
-                      fontWeight="semibold"
-                      lineHeight="short"
-                      textAlign="center"
-                      pb="3"
-                    >
-                      {ele.title}
-                    </Heading>
-                    <Text m={3}>{ele.user.name}</Text>
+                    <Image w={320} src={ele.img} />
                     <Text m={3}>{ele.createdAt}</Text>
+                    <Box>
+                      <Heading
+                        mt="2"
+                        fontSize="xl"
+                        fontWeight="semibold"
+                        lineHeight="short"
+                        textAlign="center"
+                        pb="3"
+                      >
+                        {ele.title}
+                      </Heading>
+                    </Box>
                   </Box>
                 </Center>
               );
             })
-          : ""}{" "}
-        <Center>
-          <Box m="20px" textAlign="center" >
-            <Heading as="h3" size="lg">
-              New Event
-            </Heading>
-            <Heading as="h4" size="md">
-              Title
-            </Heading>
-            <Input
-              placeholder="Title"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            ></Input>
+          : ""}
+          </>
+        {state.logInReducer.role === "Admin" ? (
+          <Center>
+            <Box m="20px" textAlign="center">
+              <Heading as="h3" size="lg">
+                New Event
+              </Heading>
+              <Heading as="h4" size="md">
+                Title
+              </Heading>
+              <Input
+                placeholder="Title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              ></Input>
 
-            <Heading as="h4" size="md">
-              Description
-            </Heading>
-            <Input
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-            ></Input>
-            <div>
-              <Input type="file" name="newPost" onChange={handleChange} />
+              <Heading as="h4" size="md">
+                Description
+              </Heading>
+              <Input
+                placeholder="Description"
+                value={desc}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+              ></Input>
               <div>
-                <Button onClick={handleUpload}>upload</Button>
-                <progress value={progress} max="100" />
-              </div>
-              <Image alt={title} src={url} />
+                <Input type="file" name="newPost" onChange={handleChange} />
+                <div>
+                  <Button onClick={handleUpload}>upload</Button>
+                  <progress value={progress} max="100" />
+                </div>
+                <Image alt={title} src={url} />
 
-              <Button onClick={puplish}>Puplish</Button>
-            </div>
-          </Box>
-        </Center>
+                <Button onClick={puplish}>Puplish</Button>
+              </div>
+            </Box>
+          </Center>
+        ) : (
+          ""
+        )}
       </Box>
+      <Footer />
     </>
   );
 };
 
-export default Researches;
+export default Events;

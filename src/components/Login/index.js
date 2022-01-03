@@ -21,6 +21,8 @@ import {
 import { ImEye } from "react-icons/im";
 
 import Swal from "sweetalert2";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -52,7 +54,7 @@ const Login = () => {
           },
         }
       );
-
+      console.log(result);
       const data = {
         role: result.data.role,
         token: result.data.token,
@@ -70,11 +72,11 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/");
       }
-      console.log(data);
+      // console.log(data);
       dispatch(login(data));
 
-      // navigate("/");
     } catch (error) {
       // console.log(error.response.status);
       if (error.response.status === 400) {
@@ -96,11 +98,12 @@ const Login = () => {
 
   return (
     <>
+      <Navbar />
       <Center>
         <Stack
           boxShadow="2xl"
           p="6"
-          m="80px"
+          mb="40px"
           rounded="md"
           bg="white"
           w="50%"
@@ -166,6 +169,7 @@ const Login = () => {
           <LoginGoogle />
         </Stack>
       </Center>
+      <Footer />
     </>
   );
 };
