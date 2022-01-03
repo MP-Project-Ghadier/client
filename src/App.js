@@ -6,11 +6,11 @@ import VerifyEmail from "./components/VerifyAccount";
 import Profile from "./components/Profile";
 import ForgetPass from "./components/ForgetPass";
 import ResetPass from "./components/ResetPass";
-import Researches from "./components/Researches";
+import Research from "./components/Research";
 import OneResearch from "./components/OneResearch";
 import Events from "./components/Events";
 import OneEvent from "./components/OneEvent";
-import Posts from "./components/Posts";
+import Community from "./components/Community";
 import OnePost from "./components/OnePost";
 import Comments from "./components/Comments";
 import Centers from "./components/Centers";
@@ -25,14 +25,14 @@ const App = () => {
           <Route exact path="/newAccount" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/verifyEmail/:token" element={<VerifyEmail />} />
-          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/profile/:id" element={<Profile />} />
           <Route exact path="/forgetPass" element={<ForgetPass />} />
           <Route exact path="/resetPass/:id" element={<ResetPass />} />
-          <Route exact path="/researches" element={<Researches />} />
+          <Route exact path="/research" element={<Research />} />
           <Route exact path="/research/:id" element={<OneResearch />} />
           <Route exact path="/news&events" element={<Events />} />
           <Route exact path="/event/:id" element={<OneEvent />} />
-          <Route exact path="/community" element={<Posts />} />
+          <Route exact path="/community" element={<Community />} />
           <Route exact path="/post/:id" element={<OnePost />} />
           <Route exact path="/post/:id" element={<Comments />} />
           <Route exact path="/centers" element={<Centers />} />

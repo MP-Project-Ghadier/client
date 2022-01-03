@@ -6,19 +6,21 @@ import {
   TiSocialYoutube,
   TiSocialInstagram,
 } from "react-icons/ti";
+import "../../assests/style.css";
 const Footer = () => {
   return (
     <>
       <Box
+        position="absolute"
         display="flex"
         justifyContent="center"
         textAlign="center"
         bgColor="#1A365D"
-        h="6rem"
+        h="5.5rem"
+        w="100vw"
       >
         <Text fontSize="xl" color="white" m="1rem" pos="absolute">
-          ©{new Date().getFullYear()} Unity of Autism Families & Specialists.
-          All Rights Reserved
+          ©{new Date().getFullYear()} Autism Hub. All Rights Reserved
         </Text>
         <Box
           display="flex"

@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -128,6 +130,7 @@ const OneResearch = () => {
   }, []);
   return (
     <>
+      <Navbar />
       {research && (
         <Center key={research._id}>
           <Box
@@ -190,6 +193,7 @@ const OneResearch = () => {
           )}
         </Center>
       )}
+      <Footer />
     </>
   );
 };

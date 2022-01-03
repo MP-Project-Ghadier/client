@@ -21,6 +21,9 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import { IoIosTrash } from "react-icons/io";
 import Comments from "../Comments";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const OnePost = () => {
@@ -111,7 +114,7 @@ const OnePost = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/posts");
+        navigate("/community");
       }
     } catch (error) {
       console.log(error.response);
@@ -131,6 +134,7 @@ const OnePost = () => {
 
   return (
     <>
+      <Navbar />
       {post && (
         <Center key={post._id} m={10}>
           <Box
@@ -204,6 +208,7 @@ const OnePost = () => {
         </Center>
       )}
       <Comments />
+      <Footer />
     </>
   );
 };

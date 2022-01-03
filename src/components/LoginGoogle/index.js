@@ -17,9 +17,10 @@ const LoginGoogle = () => {
         tokenId: response.tokenId,
       })
       .then((result) => {
-        console.log("responseSuccessGoogle", result);
-        console.log("user", result.data.result);
-        console.log("token", result.data.token);
+        // console.log("responseSuccessGoogle", result);
+        // console.log("user", result.data.result);
+        // console.log("token", result.data.token);
+        console.log("here", response);
         dispatch(
           login({
             token: response.tokenId,
@@ -36,7 +37,7 @@ const LoginGoogle = () => {
       });
   };
   const responseErrorGoogle = (response) => {
-    console.log(response);
+    // console.log(response);
   };
 
   return (
