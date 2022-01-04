@@ -36,35 +36,52 @@ const Posts = () => {
         }
       );
       allPosts();
-      console.log(result);
+      console.log(result.status);
+      if (result.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
+      if (error.response.status === 404) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "There is something wrong...",
+        });
+      }
     }
   };
-  const puplish = () => {
-    Swal.fire({
-      title: "Do you want to puplish a new research?",
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Puplish",
-      denyButtonText: `Don't Puplish`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        newPost();
-        setTitle("");
-        setDesc("");
-        Swal.fire("Puplished!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("The post is not puplished", "", "info");
-        setTitle("");
-        setDesc("");
-      } else {
-        setTitle("");
-        setDesc("");
-      }
-    });
-  };
+
+  // const puplish = () => {
+  //   Swal.fire({
+  //     title: "Do you want to puplish a new research?",
+  //     showDenyButton: true,
+  //     showCancelButton: true,
+  //     confirmButtonText: "Puplish",
+  //     denyButtonText: `Don't Puplish`,
+  //   }).then((result) => {
+  //     /* Read more about isConfirmed, isDenied below */
+  //     if (result.isConfirmed) {
+  //       newPost();
+  //       setTitle("");
+  //       setDesc("");
+  //       Swal.fire("Puplished!", "", "success");
+  //     } else if (result.isDenied) {
+  //       Swal.fire("The post is not puplished", "", "info");
+  //       setTitle("");
+  //       setDesc("");
+  //     } else {
+  //       setTitle("");
+  //       setDesc("");
+  //     }
+  //   });
+  // };
 
   //   postRouter.get("/getPosts", authentication, getPosts);
 
@@ -75,7 +92,7 @@ const Posts = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      //   console.log(result.data);
+      console.log(result.data);
       setPosts(result.data);
     } catch (error) {
       console.log(error.response);
@@ -166,7 +183,7 @@ const Posts = () => {
                 setDesc(e.target.value);
               }}
             ></Input>
-            <Button onClick={puplish}>Puplish</Button>
+            <Button onClick={newPost}>Puplish</Button>
           </Box>
         )}
       </Box>

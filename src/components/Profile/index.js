@@ -56,7 +56,6 @@ const Profile = () => {
   // we need to get user by email as what I did before, insted of params
   // user posts in profile
 
-
   //userRouter.put("/updateProfile", authentication, updateProfile);
   const editProfile = async () => {
     try {
@@ -142,47 +141,52 @@ const Profile = () => {
             </Box>
           </Box>
         </Box>
-        <Box m="20px" textAlign="center">
-          <Text as="h3" size="lg">
-            Update Profile
-          </Text>
-          <Text as="h4" size="md">
-            Name
-          </Text>
-          <Input
-            placeholder="name"
-            onChange={(e) => {
-              setProfile({ ...profile, name: e.target.value });
-            }}
-          ></Input>
+        {edit ? (
+          <Box m="20px" textAlign="center">
+            <Text as="h3" size="lg">
+              Update Profile
+            </Text>
+            <Text as="h4" size="md">
+              Name
+            </Text>
+            <Input
+              placeholder="name"
+              onChange={(e) => {
+                setProfile({ ...profile, name: e.target.value });
+              }}
+            ></Input>
 
-          <Text as="h4" size="md">
-            New Password
-          </Text>
-          <Input
-            placeholder="password"
-            onChange={(e) => {
-              setProfile({ ...profile, password: e.target.value });
-            }}
-          ></Input>
-          <Text as="h4" size="md">
-            New Avatar
-          </Text>
-          <div>
-            <Input type="file" name="newAvatar" onChange={handleChange} />
+            <Text as="h4" size="md">
+              New Password
+            </Text>
+            <Input
+              placeholder="password"
+              onChange={(e) => {
+                setProfile({ ...profile, password: e.target.value });
+              }}
+            ></Input>
+            <Text as="h4" size="md">
+              New Avatar
+            </Text>
             <div>
-              <Button onClick={handleUpload}>upload</Button>
-              <progress value={progress} max="100" />
-            </div>
-            {/* <Image alt={profile.userName} src={profile.avatar} /> */}
+              <Input type="file" name="newAvatar" onChange={handleChange} />
+              <div>
+                <Button onClick={handleUpload}>upload</Button>
+                <progress value={progress} max="100" />
+              </div>
+              {/* <Image alt={profile.userName} src={profile.avatar} /> */}
 
-            <Button onClick={editProfile}>Save Changes</Button>
-          </div>
-        </Box>
+              <Button onClick={editProfile}>Save Changes</Button>
+            </div>
+          </Box>
+        ) : (
+          ""
+        )}
       </Center>
       <Box mt="3rem">
         <Footer />
-      </Box>    </>
+      </Box>{" "}
+    </>
   );
 };
 
