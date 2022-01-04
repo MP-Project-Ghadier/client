@@ -20,7 +20,6 @@ import {
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -137,12 +136,12 @@ const OneEvent = () => {
       {event && (
         <Center key={event._id}>
           <Box
-            maxW="50%"
-            borderWidth="1px"
-            boxShadow="2xl"
+            m="20px"
+            w="50rem"
+            boxShadow="base"
             p="6"
             rounded="md"
-            mb="3rem"
+            textAlign="center"
           >
             {state.logInReducer.role == "Admin" ? (
               <Menu>
@@ -205,9 +204,6 @@ const OneEvent = () => {
           )}
         </Center>
       )}
-      <Box mt="3rem">
-        <Footer />
-      </Box>{" "}
     </>
   );
 };

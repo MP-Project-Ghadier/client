@@ -17,13 +17,11 @@ import {
   InputGroup,
   Link,
   Text,
-  Box,
 } from "@chakra-ui/react";
 import { ImEye } from "react-icons/im";
 
 import Swal from "sweetalert2";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -54,14 +52,11 @@ const Login = () => {
           },
         }
       );
-      console.log(result);
+      // console.log(result);
       const data = {
         role: result.data.role,
         token: result.data.token,
         userId: result.data.result._id,
-        userEmail: result.data.result.email,
-        userName: result.data.result.name,
-        userAvatar: result.data.result.avatar,
       };
       // console.log("result", result.status);
       if (result.status === 200) {
@@ -104,7 +99,6 @@ const Login = () => {
           p="6"
           mb="40px"
           rounded="md"
-          bg="white"
           w="50%"
           justifyContent="center"
           textAlign="center"
@@ -167,9 +161,6 @@ const Login = () => {
           <LoginGoogle />
         </Stack>
       </Center>
-      <Box mt="3rem">
-        <Footer />
-      </Box>{" "}
     </>
   );
 };

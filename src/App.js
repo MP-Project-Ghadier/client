@@ -16,7 +16,7 @@ import Comments from "./components/Comments";
 import Centers from "./components/Centers";
 import OneCenter from "./components/OneCenter";
 import Register from "./components/Register";
-import DashboardAccounts from "./components/DashboardAccounts";
+import Dashboard from "./components/Dashboard";
 const App = () => {
   return (
     <>
@@ -37,7 +37,7 @@ const App = () => {
           <Route exact path="/post/:id" element={<Comments />} />
           <Route exact path="/centers" element={<Centers />} />
           <Route exact path="/center/:id" element={<OneCenter />} />
-          <Route exact path="/dashboardAccounts" element={<DashboardAccounts />} />
+          <Route exact path="/Dashboard" element={<Dashboard />} />
 
       </Routes>
     </>

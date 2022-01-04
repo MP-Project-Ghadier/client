@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../assests/imgs/logo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -42,13 +42,18 @@ const Navbar = () => {
     password: "",
     avatar: "",
   });
+
   const getUser = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/profile/${id}`, {
-        headers: {
-          Authorization: `Bearer ${state.logInReducer.token}`,
-        },
-      });
+      const result = await axios.get(
+        `${BASE_URL}/profile/${state.logInReducer.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${state.logInReducer.token}`,
+          },
+        }
+      );
+      // console.log(result.data);
       setProfile(result.data);
     } catch (error) {
       console.log(error.response);
@@ -56,9 +61,7 @@ const Navbar = () => {
   };
 
   const state = useSelector((state) => {
-    return {
-      logInReducer: state.logInReducer,
-    };
+    return state;
   });
 
   const logout = () => {
@@ -75,7 +78,10 @@ const Navbar = () => {
     }
   };
   window.addEventListener("scroll", changeBackground);
-  
+
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <>
       <Box>
@@ -157,7 +163,7 @@ const Navbar = () => {
                     Centers
                   </Button>
                 </Box>
-                {state.logInReducer.token == null ? (
+                {state.logInReducer.token == "" ? (
                   <Box>
                     <Button
                       as="a"
@@ -194,16 +200,12 @@ const Navbar = () => {
                                 alt="avatarImg"
                                 borderRadius="50%"
                                 boxSize="60px"
-                                src={state.logInReducer.userAvatar}
+                                src={profile.avatar}
                                 m="0.2rem"
                               />
                               <Box m="0.5rem">
-                                <Text fontSize="lg">
-                                  {state.logInReducer.userName}
-                                </Text>
-                                <Text fontSize="lg">
-                                  {state.logInReducer.userEmail}
-                                </Text>
+                                <Text fontSize="lg">{profile.name}</Text>
+                                <Text fontSize="lg">{profile.email}</Text>
                               </Box>
                             </Flex>
                           </PopoverHeader>

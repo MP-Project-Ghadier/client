@@ -73,12 +73,10 @@ const NewUser = () => {
           p="6"
           m="80px"
           rounded="md"
-          bg="white"
           w="50%"
           justifyContent="center"
           textAlign="center"
         >
-          {" "}
           <Box>
             <Heading>Create New Account</Heading>
             <Heading as="h5" size="sm" m="15px" color="red">
@@ -178,9 +176,7 @@ const NewUser = () => {
                 />
               </FormControl>
               <Center>
-                {" "}
                 <Button id="signupSubmitButton" onClick={signUp}>
-                  {" "}
                   Sign Up
                 </Button>
               </Center>
@@ -189,9 +185,6 @@ const NewUser = () => {
           </Box>
         </Stack>
       </Center>
-      <Box mt="3rem">
-        <Footer />
-      </Box>
     </>
   );
 };

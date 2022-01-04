@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 import { storage } from "../firebase";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -167,7 +166,7 @@ const Centers = () => {
                       >
                         {ele.title}
                       </Heading>
-                      <Text>{ele.user.name}</Text>
+                      {/* <Text>{ele.user.name}</Text> */}
                       <Text>{ele.createdAt}</Text>
                     </Box>
                   </Center>
@@ -207,7 +206,7 @@ const Centers = () => {
                 <Button onClick={handleUpload}>upload</Button>
                 <progress value={progress} max="100" />
               </div>
-              <img alt={title} src={url} />
+              {/* <img alt={title} src={url} /> */}
 
               <Button onClick={puplish}>Puplish</Button>
             </div>
@@ -215,13 +214,8 @@ const Centers = () => {
         ) : (
           ""
         )}
-
-      </Box>
-      <Box mt="3rem">
-        <Footer />
       </Box>
     </>
-    
   );
 };
 

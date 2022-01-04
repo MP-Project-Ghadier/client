@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import LoginGoogle from "../LoginGoogle/index";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 import {
   FormControl,
@@ -48,7 +47,7 @@ const Register = () => {
         email,
         password,
       });
-      console.log(result);
+      // console.log(result);
       if (result.status === 201) {
         Swal.fire({
           position: "center",
@@ -114,7 +113,7 @@ const Register = () => {
       console.log(error);
     }
   };
-  
+
   return (
     <>
       <Center>
@@ -125,20 +124,19 @@ const Register = () => {
           p="6"
           m="160px"
           rounded="md"
-          bg="white"
           w="50%"
           justifyContent="center"
           textAlign="center"
         >
           <Box>
-            <Heading m="15" p="15" color="black">
+            <Heading m="15" p="15">
               Create New Account
             </Heading>
             {/* should be 2 options user || specialist */}
             <Tabs isFitted variant="enclosed">
               <TabList mb="1em">
-                <Tab color="black">User</Tab>
-                <Tab color="black">Specialist</Tab>
+                <Tab >User</Tab>
+                <Tab >Specialist</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -147,7 +145,7 @@ const Register = () => {
                       Sign up as a User
                     </Heading>
                     <FormControl isRequired>
-                      <FormLabel m="8px" >Your Name</FormLabel>
+                      <FormLabel m="8px">Your Name</FormLabel>
                       <Input
                         type="name"
                         placeholder="name"
@@ -159,7 +157,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px" >Your Email</FormLabel>
+                      <FormLabel m="8px">Your Email</FormLabel>
                       <Input
                         type="email"
                         placeholder="email"
@@ -171,7 +169,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px" >Your Password</FormLabel>
+                      <FormLabel m="8px">Your Password</FormLabel>
                       <InputGroup>
                         <Input
                           type={showPassword ? "text" : "password"}
@@ -220,7 +218,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <Center>
-                      <Button id="signupSubmitButton" onClick={signUp} >
+                      <Button id="signupSubmitButton" onClick={signUp}>
                         Sign Up
                       </Button>
                     </Center>
@@ -233,7 +231,7 @@ const Register = () => {
                       Sign up as a Spicalist
                     </Heading>
                     <FormControl isRequired>
-                      <FormLabel m="8px" >Your Name</FormLabel>
+                      <FormLabel m="8px">Your Name</FormLabel>
                       <Input
                         type="name"
                         placeholder="name"
@@ -245,7 +243,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px" >Your Email</FormLabel>
+                      <FormLabel m="8px">Your Email</FormLabel>
                       <Input
                         type="email"
                         placeholder="email"
@@ -257,7 +255,7 @@ const Register = () => {
                       />
                     </FormControl>
                     <FormControl isRequired>
-                      <FormLabel m="8px" >Your Password</FormLabel>
+                      <FormLabel m="8px">Your Password</FormLabel>
                       <InputGroup>
                         <Input
                           type={showPassword ? "text" : "password"}
@@ -275,7 +273,7 @@ const Register = () => {
                             size="sm"
                             onClick={() => setShowPassword(!showPassword)}
                           >
-                        <ImEye />
+                            <ImEye />
                           </Button>
                         </InputRightElement>
                       </InputGroup>
@@ -319,18 +317,18 @@ const Register = () => {
             <Box>
               <Text fontSize="2xl">
                 You Already Have an Account?
-                <Link href="/login" color="#2C5282" fontSize="2xl" ml="1">
+                <Button
+                ml="1rem"
+                  onClick={() => navigate("/login")}
+                >
                   Login
-                </Link>
+                </Button>
               </Text>
             </Box>
           </Box>
         </Stack>
       </Center>
-
-      <Box mt="3rem">
-        <Footer />
-      </Box>    </>
+    </>
   );
 };
 

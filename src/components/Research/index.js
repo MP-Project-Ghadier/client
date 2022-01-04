@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Researches = () => {
@@ -103,43 +102,7 @@ const Researches = () => {
           Autism and share it here with our community for help families to be
           more aware about Autism.
         </Text>
-        <>
-          {researches && researches.length
-            ? researches.map((ele) => {
-                //   console.log(ele);
-                return (
-                  <Center key={ele._id}>
-                    <Box
-                      w="70%"
-                      p="5"
-                      m="5"
-                      borderRadius="md"
-                      boxShadow="base"
-                      rounded="md"
-                      onClick={() => {
-                        oneResearch(ele._id);
-                      }}
-                    >
-                      <Heading
-                        mt="2"
-                        fontSize="xl"
-                        fontWeight="semibold"
-                        lineHeight="short"
-                        textAlign="center"
-                        pb="3"
-                      >
-                        {ele.title}
-                      </Heading>
-                      <Text>{ele.user.name}</Text>
-                      <Text>{ele.createdAt}</Text>
-                    </Box>
-                  </Center>
-                );
-              })
-            : ""}
-        </>
-      </Box>
-      {state.logInReducer.role === "Admin" ||
+        {state.logInReducer.role === "Admin" ||
       state.logInReducer.role === "Specialist" ? (
         <Box m="20px">
           <Heading as="h3" size="lg">
@@ -171,9 +134,44 @@ const Researches = () => {
       ) : (
         ""
       )}
-      <Box mt="3rem">
-        <Footer />
-      </Box>    </>
+        <>
+          {researches && researches.length
+            ? researches.map((ele) => {
+                //   console.log(ele);
+                return (
+                  <Center key={ele._id}>
+                    <Box
+                      w="70%"
+                      p="5"
+                      m="5"
+                      borderRadius="md"
+                      boxShadow="base"
+                      rounded="md"
+                      onClick={() => {
+                        oneResearch(ele._id);
+                      }}
+                    >
+                      <Heading
+                        mt="2"
+                        fontSize="xl"
+                        fontWeight="semibold"
+                        lineHeight="short"
+                        textAlign="center"
+                        pb="3"
+                      >
+                        {ele.title}
+                      </Heading>
+                      {/* <Text>{ele.user.name}</Text> */}
+                      <Text>{ele.createdAt}</Text>
+                    </Box>
+                  </Center>
+                );
+              })
+            : ""}
+        </>
+      </Box>
+      
+    </>
   );
 };
 

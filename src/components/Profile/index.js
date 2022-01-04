@@ -13,7 +13,6 @@ import {
 import { EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 import axios from "axios";
 import { storage } from "../firebase";
 
@@ -141,7 +140,7 @@ const Profile = () => {
             </Box>
           </Box>
         </Box>
-        {edit ? (
+
           <Box m="20px" textAlign="center">
             <Text as="h3" size="lg">
               Update Profile
@@ -179,13 +178,8 @@ const Profile = () => {
               <Button onClick={editProfile}>Save Changes</Button>
             </div>
           </Box>
-        ) : (
-          ""
-        )}
+
       </Center>
-      <Box mt="3rem">
-        <Footer />
-      </Box>{" "}
     </>
   );
 };

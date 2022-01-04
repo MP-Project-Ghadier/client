@@ -246,7 +246,7 @@ const About = () => {
           </Box>
         </Box>
       </Box>
-      <Box m="70">
+      <Box m="70" mb="3rem">
         <Table variant="simple">
           <Thead>
             <Tr>

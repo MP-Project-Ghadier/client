@@ -15,18 +15,15 @@ import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { ImEye } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ResetPass = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const [code, setCode] = useState(0);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  // userRouter.post("/resetPass/:id", resetPass);
 
   const resetPass = async () => {
     try {
@@ -34,7 +31,7 @@ const ResetPass = () => {
         code: code,
         password: password,
       });
-      console.log(result.stat);
+      // console.log(result.stat);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -43,7 +40,7 @@ const ResetPass = () => {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/login")
+        navigate("/login");
       }
     } catch (error) {
       console.log(error.response);
@@ -85,7 +82,6 @@ const ResetPass = () => {
                 size="sm"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {" "}
                 <ImEye />
               </Button>
             </InputRightElement>
@@ -93,9 +89,6 @@ const ResetPass = () => {
           <Button onClick={resetPass}>Save</Button>
         </Stack>
       </Center>
-      <Box mt="3rem">
-        <Footer />
-      </Box>
     </>
   );
 };
