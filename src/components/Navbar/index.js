@@ -152,7 +152,7 @@ const Navbar = () => {
                     aria-label="Centers"
                     my={5}
                     w="100%"
-                    onClick={() => navigate("/research")}
+                    onClick={() => navigate("/centers")}
                   >
                     Centers
                   </Button>
