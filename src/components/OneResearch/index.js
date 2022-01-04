@@ -141,20 +141,27 @@ const OneResearch = () => {
             p="6"
             rounded="md"
           >
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label="Options"
-                icon={<GiHamburgerMenu />}
-                variant="outline"
-              />
-              <MenuList>
-                <MenuItem onClick={() => setEdit(true)}>Edit Research</MenuItem>
-                <MenuItem onClick={() => deletePost()}>
-                  Delete Research
-                </MenuItem>
-              </MenuList>
-            </Menu>
+            {state.logInReducer.role == "Admin" ? (
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<GiHamburgerMenu />}
+                  variant="outline"
+                />
+                <MenuList>
+                  <MenuItem onClick={() => setEdit(true)}>
+                    Edit Research
+                  </MenuItem>
+                  <MenuItem onClick={() => deletePost()}>
+                    Delete Research
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              ""
+            )}
+
             <Heading textAlign="center">{research.title}</Heading>
             <Text p="5" m="5">
               {research.desc}
@@ -195,7 +202,8 @@ const OneResearch = () => {
       )}
       <Box mt="3rem">
         <Footer />
-      </Box>    </>
+      </Box>{" "}
+    </>
   );
 };
 

@@ -146,18 +146,23 @@ const OneCenter = () => {
             p="6"
             rounded="md"
           >
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label="Options"
-                icon={<GiHamburgerMenu />}
-                variant="outline"
-              />
-              <MenuList>
-                <MenuItem onClick={() => setEdit(true)}>Edit Events</MenuItem>
-                <MenuItem onClick={() => deletePost()}>Delete Event</MenuItem>
-              </MenuList>
-            </Menu>
+            {state.logInReducer.role == "Admin" ? (
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<GiHamburgerMenu />}
+                  variant="outline"
+                />
+                <MenuList>
+                  <MenuItem onClick={() => setEdit(true)}>Edit Events</MenuItem>
+                  <MenuItem onClick={() => deletePost()}>Delete Event</MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              ""
+            )}
+
             <Heading textAlign="center">{center.title}</Heading>
             <Center>
               <Image src={img} alt={title} boxSize="360px" />
@@ -202,7 +207,8 @@ const OneCenter = () => {
       )}
       <Box mt="3rem">
         <Footer />
-      </Box>    </>
+      </Box>{" "}
+    </>
   );
 };
 

@@ -20,7 +20,7 @@ const LoginGoogle = () => {
         // console.log("responseSuccessGoogle", result);
         // console.log("user", result.data.result);
         // console.log("token", result.data.token);
-        console.log("here", response);
+        // console.log("here", response);
         dispatch(
           login({
             token: response.tokenId,
