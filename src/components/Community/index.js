@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -119,7 +118,42 @@ const Posts = () => {
           you are not a member yet.Feel free to register and share us your
           interests and concerns
         </Text>
+        {state.logInReducer.token == null ? (
+          ""
+        ) : (
+          <Center>
 
+          <Box m="20px" w="50rem" boxShadow='base' p='6' rounded='md'textAlign="center">
+            <Heading as="h3" size="lg" m="0.5rem">
+              New Post
+            </Heading>
+            <Heading as="h4" size="md" m="0.5rem">
+              Title
+            </Heading>
+            <Input
+            m="0.5rem"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            ></Input>
+
+            <Heading as="h4" size="md" m="0.5rem">
+              Description
+            </Heading>
+            <Input
+            m="0.5rem"
+              placeholder="Description"
+              value={desc}
+              onChange={(e) => {
+                setDesc(e.target.value);
+              }}
+            ></Input>
+            <Button onClick={newPost} m="0.5rem">Puplish</Button>
+          </Box>
+          </Center>
+        )}
         <>
           {posts && posts.length
             ? posts.map((ele) => {
@@ -155,40 +189,6 @@ const Posts = () => {
               })
             : ""}
         </>
-        {state.logInReducer.token == null ? (
-          ""
-        ) : (
-          <Box m="20px">
-            <Heading as="h3" size="lg">
-              New Post
-            </Heading>
-            <Heading as="h4" size="md">
-              Title
-            </Heading>
-            <Input
-              placeholder="Title"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            ></Input>
-
-            <Heading as="h4" size="md">
-              Description
-            </Heading>
-            <Input
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-            ></Input>
-            <Button onClick={newPost}>Puplish</Button>
-          </Box>
-        )}
-      </Box>
-      <Box mt="3rem">
-        <Footer />
       </Box>
     </>
   );

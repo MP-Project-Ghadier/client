@@ -19,7 +19,6 @@ import {
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -66,7 +65,7 @@ const OneResearch = () => {
           },
         }
       );
-      console.log(result.data);
+      // console.log(result.data);
       setResearch(result.data);
       setUsername(result.data.user.name);
       if (result.status === 200) {
@@ -200,9 +199,6 @@ const OneResearch = () => {
           )}
         </Center>
       )}
-      <Box mt="3rem">
-        <Footer />
-      </Box>{" "}
     </>
   );
 };

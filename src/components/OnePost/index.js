@@ -15,14 +15,12 @@ import {
   MenuItem,
   Input,
   Button,
-  Image,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import { IoIosTrash } from "react-icons/io";
 import Comments from "../Comments";
 import Navbar from "../Navbar";
-import Footer from "../Footer";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -138,12 +136,12 @@ const OnePost = () => {
       {post && (
         <Center key={post._id} m={10}>
           <Box
-            p="5"
-            maxW="80%"
-            borderWidth="1px"
-            boxShadow="2xl"
+            m="20px"
+            w="50rem"
+            boxShadow="base"
             p="6"
             rounded="md"
+            textAlign="center"
           >
             <Text
               mt={2}
@@ -209,9 +207,6 @@ const OnePost = () => {
       )}
       <Box m="1rem">
         <Comments />
-      </Box>
-      <Box mt="3rem">
-        <Footer />
       </Box>
     </>
   );
