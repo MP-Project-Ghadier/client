@@ -148,46 +148,16 @@ const Events = () => {
           individuals informed about our growing programmes that mark a
           memorable humanitarian impression.
         </Text>
-        <>
-          {events && events.length
-            ? events.map((ele) => {
-                console.log(ele);
-                return (
-                  <Center key={ele._id}>
-                    <Box
-                      w="100vh"
-                      p="5"
-                      m="5"
-                      borderRadius="md"
-                      boxShadow="base"
-                      rounded="md"
-                      onClick={() => {
-                        oneEvent(ele._id);
-                      }}
-                    >
-                      <Image w={320} src={ele.img} />
-                      <Text m={3}>{ele.createdAt}</Text>
-                      <Box>
-                        <Heading
-                          mt="2"
-                          fontSize="xl"
-                          fontWeight="semibold"
-                          lineHeight="short"
-                          textAlign="center"
-                          pb="3"
-                        >
-                          {ele.title}
-                        </Heading>
-                      </Box>
-                    </Box>
-                  </Center>
-                );
-              })
-            : ""}
-        </>
         {state.logInReducer.role === "Admin" ? (
           <Center>
-            <Box m="20px" textAlign="center">
+            <Box
+              m="20px"
+              w="50rem"
+              boxShadow="base"
+              p="6"
+              rounded="md"
+              textAlign="center"
+            >
               <Heading as="h3" size="lg">
                 New Event
               </Heading>
@@ -227,12 +197,46 @@ const Events = () => {
         ) : (
           ""
         )}
+        <>
+          {events && events.length
+            ? events.map((ele) => {
+                console.log(ele);
+                return (
+                  <Center key={ele._id}>
+                    <Box
+                      w="100vh"
+                      p="5"
+                      m="5"
+                      borderRadius="md"
+                      boxShadow="base"
+                      rounded="md"
+                      onClick={() => {
+                        oneEvent(ele._id);
+                      }}
+                    >
+                      <Image w={320} src={ele.img} />
+                      <Text m={3}>{ele.createdAt}</Text>
+                      <Box>
+                        <Heading
+                          mt="2"
+                          fontSize="xl"
+                          fontWeight="semibold"
+                          lineHeight="short"
+                          textAlign="center"
+                          pb="3"
+                        >
+                          {ele.title}
+                        </Heading>
+                      </Box>
+                    </Box>
+                  </Center>
+                );
+              })
+            : ""}
+        </>
       </Box>
-
     </>
-
   );
-  
 };
 
 export default Events;

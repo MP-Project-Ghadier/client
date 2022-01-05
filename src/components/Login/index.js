@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import LoginGoogle from "../LoginGoogle/index";
+// import LoginGoogle from "../LoginGoogle/index";
 import { login } from "../../reducers/login";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -52,11 +52,11 @@ const Login = () => {
           },
         }
       );
-      // console.log(result);
+
       const data = {
         role: result.data.role,
         token: result.data.token,
-        userId: result.data.result._id,
+        user: result.data.result,
       };
       // console.log("result", result.status);
       if (result.status === 200) {
@@ -158,7 +158,7 @@ const Login = () => {
               Sign Up
             </Link>
           </Text>
-          <LoginGoogle />
+          {/* <LoginGoogle /> */}
         </Stack>
       </Center>
     </>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import LoginGoogle from "../LoginGoogle/index";
+// import LoginGoogle from "../LoginGoogle/index";
 import Navbar from "../Navbar";
 
 import {
@@ -222,7 +222,7 @@ const Register = () => {
                         Sign Up
                       </Button>
                     </Center>
-                    <LoginGoogle />
+                    {/* <LoginGoogle /> */}
                   </>
                 </TabPanel>
                 <TabPanel>

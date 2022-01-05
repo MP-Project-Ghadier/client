@@ -1,7 +1,7 @@
 const initialState = {
   role: "",
   token: "",
-  userId: "",
+  user: null,
 };
 
 const logInReducer = (state = initialState, action) => {
@@ -9,33 +9,32 @@ const logInReducer = (state = initialState, action) => {
 
   switch (type) {
     case "LOGIN":
-      const { role, token, userId} = payload;
+      const { role, token, user} = payload;
       localStorage.setItem("role", role);
       localStorage.setItem("token", token);
-      localStorage.setItem("userId", userId);
+      localStorage.setItem("user", JSON.stringify(user));
 
       //what we need to do
       // console.log(`token ${token}, userId ${userId}`);
-      return { role, token, userId }; // this is the change we need to return when this case is called
+      return { role, token, user }; // this is the change we need to return when this case is called
 
     case "LOGOUT":
       localStorage.clear();
-      return {
-        role: "",
-        token: "",
-        userId: "",
-      };
+      return payload;
+
+    case "USER_INFO":
+        return payload;
 
     default:
       const roleStorage = localStorage.getItem("role");
       const tokenStorage = localStorage.getItem("token");
-      const userIdStorage = localStorage.getItem("userId");
+      const userStorage = localStorage.getItem("user");
 
       if (tokenStorage)
         return {
           role: roleStorage,
           token: tokenStorage,
-          userId: userIdStorage,
+          user: JSON.parse(userStorage),
         };
       else return state; //default = initial state
   }
@@ -54,6 +53,13 @@ export const login = (data) => {
 export const logout = (data) => {
   return {
     type: "LOGOUT",
-    payload: data,
+    payload:data,
+  };
+};
+
+export const updateUserInfo = (data) => {
+  return {
+    type: "USER_INFO",
+    payload:data,
   };
 };

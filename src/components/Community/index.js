@@ -57,33 +57,6 @@ const Posts = () => {
     }
   };
 
-  // const puplish = () => {
-  //   Swal.fire({
-  //     title: "Do you want to puplish a new research?",
-  //     showDenyButton: true,
-  //     showCancelButton: true,
-  //     confirmButtonText: "Puplish",
-  //     denyButtonText: `Don't Puplish`,
-  //   }).then((result) => {
-  //     /* Read more about isConfirmed, isDenied below */
-  //     if (result.isConfirmed) {
-  //       newPost();
-  //       setTitle("");
-  //       setDesc("");
-  //       Swal.fire("Puplished!", "", "success");
-  //     } else if (result.isDenied) {
-  //       Swal.fire("The post is not puplished", "", "info");
-  //       setTitle("");
-  //       setDesc("");
-  //     } else {
-  //       setTitle("");
-  //       setDesc("");
-  //     }
-  //   });
-  // };
-
-  //   postRouter.get("/getPosts", authentication, getPosts);
-
   const allPosts = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getPosts`, {
@@ -91,7 +64,7 @@ const Posts = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      console.log(result.data);
+      // console.log(result.data);
       setPosts(result.data);
     } catch (error) {
       console.log(error.response);

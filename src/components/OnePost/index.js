@@ -154,18 +154,20 @@ const OnePost = () => {
               {/* <h1>Posted By:</h1> */}
               {userName}
             </Text>
-            <Menu>
-              <MenuButton
-                as={IconButton}
-                aria-label="Options"
-                icon={<GiHamburgerMenu />}
-                variant="outline"
-              />
-              <MenuList>
-                <MenuItem onClick={() => setEdit(true)}>Edit Post</MenuItem>
-                <MenuItem onClick={() => deletePost()}>Delete Post</MenuItem>
-              </MenuList>
-            </Menu>
+            <Box display="flex" flexDirection="row-reverse">
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<GiHamburgerMenu />}
+                  variant="outline"
+                />
+                <MenuList>
+                  <MenuItem onClick={() => setEdit(true)}>Edit Post</MenuItem>
+                  <MenuItem onClick={() => deletePost()}>Delete Post</MenuItem>
+                </MenuList>
+              </Menu>
+            </Box>
             <Heading textAlign="center">{post.title}</Heading>
             <Text p="5" m="5">
               {post.desc}

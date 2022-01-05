@@ -102,7 +102,7 @@ const Dashboard = () => {
       <Navbar />
       <Center>
         <Box w="80%" mt="5rem">
-          <Heading textAlign="center">Specialist</Heading>
+          <Heading textAlign="center">Specialists</Heading>
           <Center>
             {users && users.length
               ? users.map((elem, i) => {
@@ -112,7 +112,6 @@ const Dashboard = () => {
                         <Flex
                           alignItems="center"
                           justifyContent="center"
-                          bg="white"
                           rounded="xl"
                           shadow="lg"
                           borderWidth="1px"
@@ -189,7 +188,7 @@ const Dashboard = () => {
               : ""}
           </Center>
           <Divider m="2rem" />
-          <Heading textAlign="center">User</Heading>
+          <Heading textAlign="center">Users</Heading>
           <Center>
             {users && users.length
               ? users.map((elem) => {
@@ -199,7 +198,6 @@ const Dashboard = () => {
                         <Flex
                           alignItems="center"
                           justifyContent="center"
-                          bg="white"
                           rounded="xl"
                           shadow="lg"
                           borderWidth="1px"

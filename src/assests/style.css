@@ -48,3 +48,10 @@
 .navbar.active {
   background-color: gray;
 }
+
+/* manageLink */
+.manageLink{
+  text-align: center;
+  color: #2B6CB0  ;
+  margin: 1rem;
+}

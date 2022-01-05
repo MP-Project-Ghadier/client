@@ -3,7 +3,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Input,
+  Text,
+  Image,
+} from "@chakra-ui/react";
 import { storage } from "../firebase";
 import Navbar from "../Navbar";
 
@@ -15,6 +24,7 @@ const Centers = () => {
   const [desc, setDesc] = useState("");
   const [centers, setCenters] = useState(null);
   const [img, setImg] = useState(null);
+  const [location, setLocation] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
 
@@ -31,6 +41,7 @@ const Centers = () => {
   };
 
   const handleUpload = () => {
+    console.log(img, "<=====");
     const uploadTask = storage.ref(`images/${img.name}`).put(img);
     uploadTask.on(
       "state_changed",
@@ -63,6 +74,7 @@ const Centers = () => {
           title: title,
           desc: desc,
           img: url,
+          location: location,
         },
         {
           headers: {
@@ -70,7 +82,7 @@ const Centers = () => {
           },
         }
       );
-      //       allCenters();
+      allCenters();
       console.log(result);
     } catch (error) {
       console.log(error.response);
@@ -110,7 +122,7 @@ const Centers = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      console.log(result.data);
+      // console.log(result.data);
       setCenters(result.data);
     } catch (error) {
       console.log(error.response);
@@ -139,6 +151,76 @@ const Centers = () => {
           find the nearest center to diagnosing and provide the health care to
           autistic individuals.
         </Text>
+        <Center>
+          {state.logInReducer.role === "Admin" ? (
+            <Box
+              m="20px"
+              w="50rem"
+              boxShadow="base"
+              p="6"
+              rounded="md"
+              textAlign="center"
+            >
+              <Heading as="h3" size="lg">
+                New Center
+              </Heading>
+              <Heading as="h4" size="md">
+                Title
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              ></Input>
+
+              <Heading as="h4" size="md">
+                Description
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Description"
+                value={desc}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+              ></Input>
+
+              <Heading as="h4" size="md">
+                Location
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Description"
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                }}
+              ></Input>
+              <div>
+                <input
+                  type="file"
+                  name="newPost"
+                  onChange={handleChange}
+                  onClick={() => {
+                    console.log("here");
+                  }}
+                />
+                <div>
+                  <Button onClick={handleUpload}>upload</Button>
+                  <progress value={progress} max="100" />
+                </div>
+                <img alt={title} src={url} />
+
+                <Button onClick={puplish}>Puplish</Button>
+              </div>
+            </Box>
+          ) : (
+            ""
+          )}
+        </Center>
         <>
           {centers && centers.length
             ? centers.map((ele) => {
@@ -146,9 +228,9 @@ const Centers = () => {
                 return (
                   <Center key={ele._id}>
                     <Box
-                      w="70%"
                       p="5"
-                      m="5"
+                      w="80%"
+                      mt="5rem"
                       borderRadius="md"
                       boxShadow="base"
                       rounded="md"
@@ -158,7 +240,7 @@ const Centers = () => {
                     >
                       <Heading
                         mt="2"
-                        fontSize="xl"
+                        fontSize="md"
                         fontWeight="semibold"
                         lineHeight="short"
                         textAlign="center"
@@ -166,54 +248,42 @@ const Centers = () => {
                       >
                         {ele.title}
                       </Heading>
-                      {/* <Text>{ele.user.name}</Text> */}
-                      <Text>{ele.createdAt}</Text>
+                      <Center>
+                        <Flex
+                          alignItems="center"
+                          justifyContent="center"
+                          rounded="xl"
+                          shadow="lg"
+                          borderWidth="1px"
+                          m="0.5rem"
+                          h="25rem"
+                          mb="3rem"
+                        >
+                          <Box
+                            w="100%"
+                            height="200px"
+                            position="relative"
+                            overflow="hidden"
+                            roundedTop="lg"
+                            alignContent="center"
+                          >
+                            <Image
+                              src={ele.img}
+                              objectFit="cover"
+                              alt="img of center"
+                              layout="fill"
+                              boxSize="200px"
+                              ml="2rem"
+                            />
+                          </Box>
+                        </Flex>
+                      </Center>
                     </Box>
                   </Center>
                 );
               })
             : ""}
         </>
-        {state.logInReducer.role === "Admin" ? (
-          <Box m="20px">
-            <Heading as="h3" size="lg">
-              New Center
-            </Heading>
-            <Heading as="h4" size="md">
-              Title
-            </Heading>
-            <Input
-              placeholder="Title"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            ></Input>
-
-            <Heading as="h4" size="md">
-              Description
-            </Heading>
-            <Input
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-            ></Input>
-            <div>
-              <Input type="file" name="newPost" onChange={handleChange} />
-              <div>
-                <Button onClick={handleUpload}>upload</Button>
-                <progress value={progress} max="100" />
-              </div>
-              {/* <img alt={title} src={url} /> */}
-
-              <Button onClick={puplish}>Puplish</Button>
-            </div>
-          </Box>
-        ) : (
-          ""
-        )}
       </Box>
     </>
   );

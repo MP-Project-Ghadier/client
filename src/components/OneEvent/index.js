@@ -144,18 +144,24 @@ const OneEvent = () => {
             textAlign="center"
           >
             {state.logInReducer.role == "Admin" ? (
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<GiHamburgerMenu />}
-                  variant="outline"
-                />
-                <MenuList>
-                  <MenuItem onClick={() => setEdit(true)}>Edit Events</MenuItem>
-                  <MenuItem onClick={() => deletePost()}>Delete Event</MenuItem>
-                </MenuList>
-              </Menu>
+              <Box display="flex" flexDirection="row-reverse">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<GiHamburgerMenu />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => setEdit(true)}>
+                      Edit Events
+                    </MenuItem>
+                    <MenuItem onClick={() => deletePost()}>
+                      Delete Event
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
             ) : (
               ""
             )}

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../assests/imgs/logo.png";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import {
   useColorMode,
   Switch,
   Flex,
   Button,
   IconButton,
-  Link,
   Image,
   Box,
   Popover,
@@ -23,7 +21,9 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import axios from "axios";
+import "../../assests/style.css";
+import { logout } from "../../reducers/login";
+import { useSelector, useDispatch } from "react-redux";
 import "../../assests/style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -35,6 +35,7 @@ const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");
+
   const [profile, setProfile] = useState({
     _id: id,
     name: "",
@@ -43,29 +44,38 @@ const Navbar = () => {
     avatar: "",
   });
 
-  const getUser = async () => {
-    try {
-      const result = await axios.get(
-        `${BASE_URL}/profile/${state.logInReducer.userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${state.logInReducer.token}`,
-          },
-        }
-      );
-      // console.log(result.data);
-      setProfile(result.data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-
+  const dispatch = useDispatch();
   const state = useSelector((state) => {
-    return state;
+    return {
+      logInReducer: state.logInReducer,
+    };
   });
 
-  const logout = () => {
-    localStorage.clear();
+  // const getUser = async () => {
+  //   try {
+  //     const result = await axios.get(
+  //       `${BASE_URL}/profile/${state.logInReducer.userId}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${state.logInReducer.token}`,
+  //         },
+  //       }
+  //     );
+  //     // console.log(result.data);
+  //     setProfile(result.data);
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
+
+  const userLogout = () => {
+    dispatch(
+      logout({
+        role: "",
+        token: "",
+        user: "",
+      })
+    );
     navigate("/login");
   };
 
@@ -79,9 +89,6 @@ const Navbar = () => {
   };
   window.addEventListener("scroll", changeBackground);
 
-  useEffect(() => {
-    getUser();
-  }, []);
   return (
     <>
       <Box>
@@ -200,28 +207,29 @@ const Navbar = () => {
                                 alt="avatarImg"
                                 borderRadius="50%"
                                 boxSize="60px"
-                                src={profile.avatar}
+                                src={state.logInReducer.user.avatar}
                                 m="0.2rem"
                               />
                               <Box m="0.5rem">
-                                <Text fontSize="lg">{profile.name}</Text>
-                                <Text fontSize="lg">{profile.email}</Text>
+                                <Text fontSize="lg">
+                                  {state.logInReducer.user.name}
+                                </Text>
+                                <Text fontSize="lg">
+                                  {state.logInReducer.user.email}
+                                </Text>
                               </Box>
                             </Flex>
                           </PopoverHeader>
                           <Link
-                            href={`/profile/${state.logInReducer.userId}`}
-                            color="#2B6CB0"
-                            p="1"
-                            fontSize="lg"
-                            textAlign="center"
+                            to={`/profile/${state.logInReducer.user._id}`}
+                            className="manageLink"
                           >
                             manage your profile
                           </Link>
                           <PopoverCloseButton />
                           <PopoverBody>
                             <Center>
-                              <Button colorScheme="red" onClick={logout}>
+                              <Button colorScheme="red" onClick={userLogout}>
                                 Sign Out
                               </Button>
                             </Center>

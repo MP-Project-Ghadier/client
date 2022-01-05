@@ -16,6 +16,7 @@ import {
   Input,
   Button,
   Image,
+  AspectRatio,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
@@ -146,30 +147,39 @@ const OneCenter = () => {
             textAlign="center"
           >
             {state.logInReducer.role == "Admin" ? (
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<GiHamburgerMenu />}
-                  variant="outline"
-                />
-                <MenuList>
-                  <MenuItem onClick={() => setEdit(true)}>Edit Events</MenuItem>
-                  <MenuItem onClick={() => deletePost()}>Delete Event</MenuItem>
-                </MenuList>
-              </Menu>
+              <Box display="flex" flexDirection="row-reverse">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<GiHamburgerMenu />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => setEdit(true)}>
+                      Edit Events
+                    </MenuItem>
+                    <MenuItem onClick={() => deletePost()}>
+                      Delete Event
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
             ) : (
               ""
             )}
-
-            <Heading textAlign="center">{center.title}</Heading>
             <Center>
               <Image src={img} alt={title} boxSize="360px" />
             </Center>
+            <Center>
+              <p>{center.desc}</p>
+            </Center>
 
-            <Text p="5" m="5">
-              {center.desc}
-            </Text>
+            <Box m="3rem">
+              <AspectRatio ratio={16 / 9}>
+                <iframe src={center.title} alt="demo" />
+              </AspectRatio>
+            </Box>
           </Box>
           {isEdit ? (
             <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">

@@ -102,38 +102,47 @@ const Researches = () => {
           Autism and share it here with our community for help families to be
           more aware about Autism.
         </Text>
-        {state.logInReducer.role === "Admin" ||
-      state.logInReducer.role === "Specialist" ? (
-        <Box m="20px">
-          <Heading as="h3" size="lg">
-            New Research
-          </Heading>
-          <Heading as="h4" size="md">
-            Title
-          </Heading>
-          <Input
-            placeholder="Title"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          ></Input>
+        <Center>
+          {state.logInReducer.role === "Admin" ||
+          state.logInReducer.role === "Specialist" ? (
+            <Box
+              m="20px"
+              w="50rem"
+              boxShadow="base"
+              p="6"
+              rounded="md"
+              textAlign="center"
+            >
+              <Heading as="h3" size="lg">
+                New Research
+              </Heading>
+              <Heading as="h4" size="md">
+                Title
+              </Heading>
+              <Input
+                placeholder="Title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              ></Input>
 
-          <Heading as="h4" size="md">
-            Description
-          </Heading>
-          <Input
-            placeholder="Description"
-            value={desc}
-            onChange={(e) => {
-              setDesc(e.target.value);
-            }}
-          ></Input>
-          <Button onClick={puplish}>Puplish</Button>
-        </Box>
-      ) : (
-        ""
-      )}
+              <Heading as="h4" size="md">
+                Description
+              </Heading>
+              <Input
+                placeholder="Description"
+                value={desc}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+              ></Input>
+              <Button onClick={puplish}>Puplish</Button>
+            </Box>
+          ) : (
+            ""
+          )}
+        </Center>
         <>
           {researches && researches.length
             ? researches.map((ele) => {
@@ -170,7 +179,6 @@ const Researches = () => {
             : ""}
         </>
       </Box>
-      
     </>
   );
 };
