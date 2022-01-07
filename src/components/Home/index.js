@@ -4,8 +4,6 @@ import Navbar from "../Navbar";
 import Slideshow from "../Slideshow";
 
 const Home = () => {
-
-  useEffect(() => {}, []);
   return (
     <>
       <Slideshow />

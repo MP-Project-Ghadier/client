@@ -7,12 +7,12 @@ import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ChakraProvider>
+  <ChakraProvider>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ChakraProvider>
-  </Provider>,
+    </Provider>
+  </ChakraProvider>,
   document.getElementById("root")
 );

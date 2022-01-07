@@ -21,24 +21,29 @@ import {
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import Navbar from "../Navbar";
+import { storage } from "../firebase";
+
+import "../../assests/style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const OneCenter = () => {
-  const navigate = useNavigate();
   let postId = useParams().id;
-  const [center, setCenter] = useState([]);
-  const [userName, setUsername] = useState("");
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const navigate = useNavigate();
+  const [progress, setProgress] = useState(0);
   const [isEdit, setEdit] = useState(false);
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState(null);
+  const [center, setCenter] = useState({
+    title: "",
+    desc: "",
+    img: "",
+    location: "",
+  });
 
   const state = useSelector((state) => {
     return state;
   });
 
-  //postRouter.get("/getCenterById/:id", authentication, getCenterById);
   const oneCenter = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getCenterById/${postId}`, {
@@ -46,24 +51,18 @@ const OneCenter = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      // console.log(result.data.img);
-      setImg(result.data.img);
+      // console.log(result.data);
       setCenter(result.data);
-      setUsername(result.data.user.name);
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  //   postRouter.put("/updatePost/:id", authentication, authorization, updatePost);
   const updatePost = async () => {
     try {
       const result = await axios.put(
         `${BASE_URL}/updatePost/${postId}`,
-        {
-          title: title,
-          desc: desc,
-        },
+        center,
         {
           headers: {
             Authorization: `Bearer ${state.logInReducer.token}`,
@@ -72,7 +71,6 @@ const OneCenter = () => {
       );
       console.log(result.data);
       setCenter(result.data);
-      setUsername(result.data.user.name);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -93,8 +91,6 @@ const OneCenter = () => {
       }
     }
   };
-
-  //   postRouter.put("/deletePost/:id", authentication, deletePost);
 
   const deletePost = async () => {
     try {
@@ -129,91 +125,153 @@ const OneCenter = () => {
       }
     }
   };
+
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setCenter({ ...center, img });
+    }
+  };
+
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/${img.name}`).put(img);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(img.name)
+          .getDownloadURL()
+          .then((img) => {
+            setCenter({ ...center, img });
+          });
+      }
+    );
+  };
+
   useEffect(() => {
     oneCenter();
   }, []);
-
   return (
     <>
       <Navbar />
-      {center && (
-        <Center key={center._id}>
-          <Box
-            m="20px"
-            w="50rem"
-            boxShadow="base"
-            p="6"
-            rounded="md"
-            textAlign="center"
-          >
-            {state.logInReducer.role == "Admin" ? (
-              <Box display="flex" flexDirection="row-reverse">
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<GiHamburgerMenu />}
-                    variant="outline"
-                  />
-                  <MenuList>
-                    <MenuItem onClick={() => setEdit(true)}>
-                      Edit Events
-                    </MenuItem>
-                    <MenuItem onClick={() => deletePost()}>
-                      Delete Event
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+      <Box display="flex" flexDirection="column">
+        {center && (
+          <Center key={center._id}>
+            <Box
+              m="20px"
+              w="50rem"
+              boxShadow="base"
+              p="6"
+              rounded="md"
+              textAlign="center"
+            >
+              <Box>
+                {state.logInReducer.role == "Admin" ? (
+                  <Box display="flex" flexDirection="row-reverse">
+                    <Menu>
+                      <MenuButton
+                        as={IconButton}
+                        aria-label="Options"
+                        icon={<GiHamburgerMenu />}
+                        variant="outline"
+                      />
+                      <MenuList>
+                        <MenuItem onClick={() => setEdit(!isEdit)}>
+                          Edit Center
+                        </MenuItem>
+                        <MenuItem onClick={() => deletePost()}>
+                          Delete Center
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </Box>
+                ) : (
+                  ""
+                )}
+                <Box>
+                  <Center>
+                    <Image src={img} alt={center.title} boxSize="360px" />
+                  </Center>
+                  <Center>
+                    <Text className="p">{center.desc}</Text>
+                  </Center>
+                </Box>
+                <Box m="3rem">
+                  <AspectRatio ratio={16 / 9}>
+                    <iframe src={center.location} alt="demo" />
+                  </AspectRatio>
+                </Box>
+              </Box>
+            </Box>
+            {isEdit ? (
+              <Box w="50%">
+                <Heading as="h3" size="lg">
+                  Edit Center
+                </Heading>
+                <Heading as="h4" size="md">
+                  Title
+                </Heading>
+                <Input
+                  placeholder="Title"
+                  // value={title}
+                  onChange={(e) => {
+                    setCenter({ ...center, title: e.target.value });
+                  }}
+                ></Input>
+
+                <Heading as="h4" size="md">
+                  Description
+                </Heading>
+                <Input
+                  placeholder="Description"
+                  // value={desc}
+                  onChange={(e) => {
+                    setCenter({ ...center, desc: e.target.value });
+                  }}
+                ></Input>
+                <Heading as="h4" size="md">
+                  Location
+                </Heading>
+                <Input
+                  placeholder="Location"
+                  // value={location}
+                  onChange={(e) => {
+                    setCenter({ ...center, location: e.target.value });
+                  }}
+                ></Input>
+                <Box>
+                  <Text as="h4" size="md">
+                    New Avatar
+                  </Text>
+                  <div>
+                    <Input
+                      type="file"
+                      name="newAvatar"
+                      onChange={handleChange}
+                    />
+                    <div>
+                      <Button onClick={handleUpload}>upload</Button>
+                      <progress value={progress} max="100" />
+                    </div>
+                    <Button onClick={updatePost}>Save</Button>
+                  </div>
+                </Box>
               </Box>
             ) : (
               ""
             )}
-            <Center>
-              <Image src={img} alt={title} boxSize="360px" />
-            </Center>
-            <Center>
-              <p>{center.desc}</p>
-            </Center>
-
-            <Box m="3rem">
-              <AspectRatio ratio={16 / 9}>
-                <iframe src={center.title} alt="demo" />
-              </AspectRatio>
-            </Box>
-          </Box>
-          {isEdit ? (
-            <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">
-              <Heading as="h3" size="lg">
-                Edit Center
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              ></Input>
-
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <Button onClick={updatePost}>Save</Button>
-            </Box>
-          ) : (
-            ""
-          )}
-        </Center>
-      )}
+          </Center>
+        )}
+      </Box>
     </>
   );
 };

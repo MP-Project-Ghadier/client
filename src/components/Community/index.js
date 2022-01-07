@@ -35,7 +35,9 @@ const Posts = () => {
         }
       );
       allPosts();
-      console.log(result.status);
+      setTitle("");
+      setDesc("");
+      // console.log(result.status);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -75,6 +77,7 @@ const Posts = () => {
   };
 
   useEffect(() => {
+    if(posts === null) return;
     allPosts();
   }, []);
   return (
@@ -95,36 +98,44 @@ const Posts = () => {
           ""
         ) : (
           <Center>
+            <Box
+              m="20px"
+              w="50rem"
+              boxShadow="base"
+              p="6"
+              rounded="md"
+              textAlign="center"
+            >
+              <Heading as="h3" size="lg" m="2rem">
+                New Post
+              </Heading>
+              <Heading as="h4" size="md" m="0.5rem">
+                Title
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              ></Input>
 
-          <Box m="20px" w="50rem" boxShadow='base' p='6' rounded='md'textAlign="center">
-            <Heading as="h3" size="lg" m="0.5rem">
-              New Post
-            </Heading>
-            <Heading as="h4" size="md" m="0.5rem">
-              Title
-            </Heading>
-            <Input
-            m="0.5rem"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            ></Input>
-
-            <Heading as="h4" size="md" m="0.5rem">
-              Description
-            </Heading>
-            <Input
-            m="0.5rem"
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-            ></Input>
-            <Button onClick={newPost} m="0.5rem">Puplish</Button>
-          </Box>
+              <Heading as="h4" size="md" m="0.5rem">
+                Description
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Description"
+                value={desc}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+              ></Input>
+              <Button onClick={newPost} m="0.5rem">
+                Puplish
+              </Button>
+            </Box>
           </Center>
         )}
         <>

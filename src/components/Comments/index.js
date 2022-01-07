@@ -16,6 +16,8 @@ import {
   Input,
   Button,
   Image,
+  Flex,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
@@ -30,7 +32,6 @@ const Comments = () => {
   const state = useSelector((state) => {
     return state;
   });
-
   //postRouter.get("/postComments/:id", authentication, postComments);
   const postComment = async () => {
     try {
@@ -40,9 +41,7 @@ const Comments = () => {
         },
       });
       if (result.status === 200) {
-        // console.log(result.data[1]);
         setComments(result.data[1]);
-        // console.log(comments);
       }
     } catch (error) {
       console.log(error.response);
@@ -103,7 +102,26 @@ const Comments = () => {
         }
       );
       if (result.status === 200) {
-        postComment();
+        Swal.fire({
+          title: "Do you want to delete this comment?",
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: "Deleted",
+          denyButtonText: `Don't Delete`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setComment("");
+            deleteComment();
+            postComment();
+
+            Swal.fire("Deleted!", "", "success");
+          } else if (result.isDenied) {
+            Swal.fire("The comment is not Deleted", "", "info");
+            setComment("");
+          } else {
+            setComment("");
+          }
+        });
       }
     } catch (error) {
       console.log(error.response);
@@ -117,7 +135,6 @@ const Comments = () => {
   return (
     <>
       <Center>
-        {" "}
         <Heading>comments</Heading>
       </Center>
       <Center>
@@ -128,8 +145,16 @@ const Comments = () => {
                 // console.log(elem._id);
                 return (
                   <Center key={i}>
-                    <Box m={3}>
-                      {state.logInReducer.userId === elem.user._id ? (
+                    <Box
+                    w="45%"
+                      justifyContent="center"
+                      rounded="xl"
+                      shadow="lg"
+                      borderWidth="1px"
+                      m="0.5rem"
+                      mb="3rem"
+                    >
+                      {state.logInReducer.user._id === elem.user._id ? (
                         <IconButton
                           colorScheme="blue"
                           aria-label="comment btn"
@@ -143,33 +168,48 @@ const Comments = () => {
                       ) : (
                         ""
                       )}
-                      <Box textAlign="center" padding={5}>
-                        <Text>{elem.user.name}</Text>
-                        <Text>{elem.desc}</Text>
-                        <Text>{elem.createdAt}</Text>
+                      <Box textAlign="center" padding={3} m="1" >
+                        <Text fontSize="x-large">{elem.desc}</Text>
                       </Box>
+                      <SimpleGrid
+                        columns={2}
+                        padding={4}
+                        m="2"
+                      >
+                        <Box w="48%">
+                          <Text fontSize="lg" textAlign="left">
+                            Comment By : {elem.user.name}
+                          </Text>
+                        </Box>
+                        <Box w="48%">
+                          <Text
+                            fontSize="lg"
+                            textAlign="right"
+                            alignItems="flex-end"
+                          >
+                            At : {elem.createdAt}
+                          </Text>
+                        </Box>
+                      </SimpleGrid>
                     </Box>
                   </Center>
                 );
               })}
             </>
           )}
-          <Center>
-            <Box mb="4">
-              <Input
-                size="md"
-                w="400px"
-                h="80px"
-                mr="4"
-                m={20}
-                placeholder="write your comment here"
-                onChange={(e) => {
-                  setComment(e.target.value);
-                }}
-              />
-              <Button onClick={puplish}>add comment</Button>
-            </Box>
-          </Center>
+          <Box mb="4">
+            <Input
+              size="md"
+              w="400px"
+              h="80px"
+              m={8}
+              placeholder="write your comment here"
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            />
+            <Button onClick={puplish}>add comment</Button>
+          </Box>
         </Box>
       </Center>
     </>
