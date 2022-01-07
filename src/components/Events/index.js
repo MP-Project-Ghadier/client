@@ -11,6 +11,9 @@ import {
   Input,
   Text,
   Image,
+  Flex,
+  Link,
+  chakra,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
 import Navbar from "../Navbar";
@@ -136,104 +139,152 @@ const Events = () => {
   return (
     <>
       <Navbar />
-      <Box m="40" h="40vh">
-        <Heading as="h3" size="lg" m={3}>
+      <Box mt={4}>
+        <Heading as="h3" size="lg" p={5}>
           News & Events
         </Heading>
-        <Text fontSize="xl" m={3}>
-          Stay updated about our various activities, events, milestones and
-          achievements. At the Society for Autism Families, we are passionate
-          about spreading and showcasing our news updates, our sponsored events,
-          as well as our professional works and publications to keep interested
-          individuals informed about our growing programmes that mark a
-          memorable humanitarian impression.
-        </Text>
-        {state.logInReducer.role === "Admin" ? (
-          <Center>
-            <Box
-              m="20px"
-              w="50rem"
-              boxShadow="base"
-              p="6"
-              rounded="md"
-              textAlign="center"
-            >
-              <Heading as="h3" size="lg">
-                New Event
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              ></Input>
+        <Flex alignItems="center" p={5}>
+          <Flex alignItems="center">
+            <Text fontSize="xl" m={3}>
+              Stay updated about our various activities, events, milestones and
+              achievements. At the Society for Autism Families, we are
+              passionate about spreading and showcasing our news updates, our
+              sponsored events, as well as our professional works and
+              publications to keep interested individuals informed about our
+              growing programmes that mark a memorable humanitarian impression.
+            </Text>
+          </Flex>
+        </Flex>
+      </Box>
 
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <div>
-                <Input type="file" name="newPost" onChange={handleChange} />
-                <div>
-                  <Button onClick={handleUpload}>upload</Button>
-                  <progress value={progress} max="100" />
-                </div>
-                {/* <Image alt={title} src={url} /> */}
+      {state.logInReducer.role === "Admin" ? (
+        <Center>
+          <Box
+            m="20px"
+            w="50rem"
+            boxShadow="base"
+            p="6"
+            rounded="md"
+            textAlign="center"
+            key={state.logInReducer.user.name}
+          >
+            <Heading as="h3" size="lg" m="2rem">
+              New Event
+            </Heading>
+            <Heading as="h4" size="md" m="0.5rem">
+              Title
+            </Heading>
+            <Input
+              m="0.5rem"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            ></Input>
 
+            <Heading as="h4" size="md" m="0.5rem">
+              Description
+            </Heading>
+            <Input
+              m="0.5rem"
+              placeholder="Description"
+              value={desc}
+              onChange={(e) => {
+                setDesc(e.target.value);
+              }}
+            ></Input>
+            <Heading as="h4" size="md" m="0.5rem">
+              Event Image
+            </Heading>
+            <Box>
+              <Input
+                type="file"
+                name="newPost"
+                onChange={handleChange}
+                m="0.5rem"
+              />
+              <Box>
+                <Button onClick={handleUpload}>upload</Button>
+                <progress value={progress} max="100" />
+              </Box>
+
+              <Image alt={title} src={url} />
+              <Box>
                 <Button onClick={puplish}>Puplish</Button>
-              </div>
+              </Box>
             </Box>
-          </Center>
-        ) : (
-          ""
-        )}
-        <>
-          {events && events.length
-            ? events.map((ele) => {
-                console.log(ele);
-                return (
-                  <Center key={ele._id}>
-                    <Box
-                      w="100vh"
-                      p="5"
-                      m="5"
-                      borderRadius="md"
-                      boxShadow="base"
-                      rounded="md"
-                      onClick={() => {
-                        oneEvent(ele._id);
-                      }}
-                    >
-                      <Image w={320} src={ele.img} />
-                      <Text m={3}>{ele.createdAt}</Text>
+          </Box>
+        </Center>
+      ) : (
+        ""
+      )}
+      <Box display="flex" flexWrap="wrap" justifyContent="space-evenly">
+        {events && events.length
+          ? events.map((ele) => {
+              // console.log(ele);
+              return (
+                <Flex
+                  p={50}
+                  w="full"
+                  alignItems="center"
+                  justifyContent="center"
+                  key={ele._id}
+                >
+                  <Box mx="auto" rounded="lg" shadow="md" maxW="2xl">
+                    <Image
+                      roundedTop="lg"
+                      w="full"
+                      h={64}
+                      fit="cover"
+                      src={ele.img}
+                      alt="Article"
+                    />
+
+                    <Box p={6}>
                       <Box>
-                        <Heading
-                          mt="2"
-                          fontSize="xl"
-                          fontWeight="semibold"
-                          lineHeight="short"
-                          textAlign="center"
-                          pb="3"
+                        <chakra.span fontSize="xs" textTransform="uppercase">
+                          News & Events
+                        </chakra.span>
+                        <Link
+                          display="block"
+                          fontWeight="bold"
+                          fontSize="2xl"
+                          mt={2}
+                          _hover={{ color: "gray.600", textDecor: "underline" }}
+                          onClick={() => {
+                            oneEvent(ele._id);
+                          }}
                         >
                           {ele.title}
-                        </Heading>
+                        </Link>
+                      </Box>
+
+                      <Box mt={4}>
+                        <Flex alignItems="center">
+                          <Flex alignItems="center">
+                            <Image
+                              h={10}
+                              fit="cover"
+                              rounded="full"
+                              src={ele.user.avatar}
+                              alt="Avatar"
+                            />
+                            <Text mx={2} fontWeight="bold">
+                              {ele.user.name}
+                            </Text>
+                          </Flex>
+                          <chakra.span mx={1} fontSize="sm">
+                            {ele.createdAt}
+                          </chakra.span>
+                        </Flex>
                       </Box>
                     </Box>
-                  </Center>
-                );
-              })
-            : ""}
-        </>
+                  </Box>
+                </Flex>
+              );
+            })
+          : ""}
       </Box>
     </>
   );

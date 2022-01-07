@@ -53,7 +53,7 @@ const Slideshow = () => {
       </Box>
       <Box
         pos="absolute"
-        top="38rem"
+        top="36rem"
         left="0rem"
         p="1.5rem"
         borderRadius="sm"
@@ -61,8 +61,10 @@ const Slideshow = () => {
         rounded="md"
         bg=" rgba(255, 255, 255, 0.5)"
       >
-        <Text fontSize="5xl">Autism isn't a Disability, </Text>
-        <Text fontSize="5xl">It is a Different Ability</Text>
+        <h1 className="h1">Autism isn't a Disability, </h1>
+
+        <h1 className="h1"> It is a Different Ability</h1>
+
       </Box>
     </>
   );

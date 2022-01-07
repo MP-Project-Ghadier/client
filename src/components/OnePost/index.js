@@ -143,37 +143,46 @@ const OnePost = () => {
             rounded="md"
             textAlign="center"
           >
-            <Text
-              mt={2}
-              fontSize="xl"
-              fontWeight="semibold"
-              lineHeight="short"
-              textAlign="center"
-              pl="3"
-            >
-              {/* <h1>Posted By:</h1> */}
-              {userName}
-            </Text>
-            <Box display="flex" flexDirection="row-reverse">
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<GiHamburgerMenu />}
-                  variant="outline"
-                />
-                <MenuList>
-                  <MenuItem onClick={() => setEdit(true)}>Edit Post</MenuItem>
-                  <MenuItem onClick={() => deletePost()}>Delete Post</MenuItem>
-                </MenuList>
-              </Menu>
-            </Box>
-            <Heading textAlign="center">{post.title}</Heading>
-            <Text p="5" m="5">
-              {post.desc}
-            </Text>
-          </Box>
+            {state.logInReducer.user._id === post.user ? (
+              <Box display="flex" flexDirection="row-reverse">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<GiHamburgerMenu />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => setEdit(true)}>Edit Post</MenuItem>
+                    <MenuItem onClick={() => deletePost()}>
+                      Delete Post
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
+            ) : (
+              ""
+            )}
 
+            <Heading textAlign="center">{post.title}</Heading>
+
+            <Box>
+              <Text p="5" m="5">
+                {post.desc}
+              </Text>
+            </Box>
+            <Box>
+              <Text
+                mt={2}
+                fontSize="lg"
+                lineHeight="short"
+                textAlign="left"
+                pl="3"
+              >
+                Shared By: {userName}
+              </Text>
+            </Box>
+          </Box>
           {isEdit ? (
             <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">
               <Heading as="h3" size="lg">

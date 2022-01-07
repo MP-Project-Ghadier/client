@@ -42,28 +42,31 @@ const Centers = () => {
 
   const handleUpload = () => {
     console.log(img, "<=====");
-    const uploadTask = storage.ref(`images/${img.name}`).put(img);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(img.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrl(url);
-          });
-      }
-    );
+    if (!img) return console.log("there is no img uploaded");
+    else {
+      const uploadTask = storage.ref(`images/${img.name}`).put(img);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(img.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+            });
+        }
+      );
+    }
   };
   //postRouter.post("/newCenter", authentication, authorization, newCenter);
   const newCenter = async () => {
@@ -82,8 +85,8 @@ const Centers = () => {
           },
         }
       );
-      allCenters();
       console.log(result);
+      allCenters();
     } catch (error) {
       console.log(error.response);
     }
@@ -133,8 +136,10 @@ const Centers = () => {
     navigate(`/center/${id}`);
   };
   useEffect(() => {
+    if (centers === null) return;
     allCenters();
   }, []);
+
   return (
     <>
       <Navbar />
@@ -161,7 +166,7 @@ const Centers = () => {
               rounded="md"
               textAlign="center"
             >
-              <Heading as="h3" size="lg">
+              <Heading as="h3" size="lg" m="2rem">
                 New Center
               </Heading>
               <Heading as="h4" size="md">
@@ -193,12 +198,16 @@ const Centers = () => {
               </Heading>
               <Input
                 m="0.5rem"
-                placeholder="Description"
+                placeholder="location link"
                 value={location}
                 onChange={(e) => {
                   setLocation(e.target.value);
                 }}
               ></Input>
+
+              <Heading as="h4" size="md" m="0.5rem">
+                Event Image
+              </Heading>
               <div>
                 <input
                   type="file"
@@ -266,14 +275,14 @@ const Centers = () => {
                             overflow="hidden"
                             roundedTop="lg"
                             alignContent="center"
+                            justifyContent="center"
                           >
                             <Image
                               src={ele.img}
-                              objectFit="cover"
+                              objectFit="fill"
                               alt="img of center"
                               layout="fill"
-                              boxSize="200px"
-                              ml="2rem"
+                              boxSize="400px"
                             />
                           </Box>
                         </Flex>

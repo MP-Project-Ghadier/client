@@ -12,6 +12,7 @@ const Researches = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [researches, setResearches] = useState(null);
+  const [location, setLocation] = useState("");
 
   const state = useSelector((state) => {
     return {
@@ -26,6 +27,7 @@ const Researches = () => {
         {
           title: title,
           desc: desc,
+          locaation: location,
         },
         {
           headers: {
@@ -36,7 +38,7 @@ const Researches = () => {
       console.log(result);
       allResearches();
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   };
   const puplish = () => {
@@ -72,7 +74,7 @@ const Researches = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      //   console.log(result.data);
+        console.log(result.data);
       setResearches(result.data);
     } catch (error) {
       console.log(error.response);
@@ -113,13 +115,14 @@ const Researches = () => {
               rounded="md"
               textAlign="center"
             >
-              <Heading as="h3" size="lg">
+              <Heading as="h3" size="lg" m="2rem">
                 New Research
               </Heading>
               <Heading as="h4" size="md">
                 Title
               </Heading>
               <Input
+                m="0.5rem"
                 placeholder="Title"
                 value={title}
                 onChange={(e) => {
@@ -131,10 +134,22 @@ const Researches = () => {
                 Description
               </Heading>
               <Input
+                m="0.5rem"
                 placeholder="Description"
                 value={desc}
                 onChange={(e) => {
                   setDesc(e.target.value);
+                }}
+              ></Input>
+              <Heading as="h4" size="md">
+                Link
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="research link"
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
                 }}
               ></Input>
               <Button onClick={puplish}>Puplish</Button>

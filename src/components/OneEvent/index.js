@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
-  Text,
   Center,
   Heading,
   IconButton,
@@ -16,6 +15,10 @@ import {
   Input,
   Button,
   Image,
+  Flex,
+  Link,
+  chakra,
+  Text,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
@@ -165,17 +168,58 @@ const OneEvent = () => {
             ) : (
               ""
             )}
+            <Flex p={50} w="full" alignItems="center" justifyContent="center">
+              <Box mx="auto" rounded="lg" shadow="md" maxW="2xl">
+                <Image
+                  roundedTop="lg"
+                  w="full"
+                  h={64}
+                  fit="cover"
+                  src={event.img}
+                  alt="Article"
+                />
 
-            <Heading textAlign="center" m={5}>
-              {event.title}
-            </Heading>
-            <Center>
-              <Image src={img} alt={title} boxSize="360px" m={10} />
-            </Center>
-
-            <Text p="5" m="5">
-              {event.desc}
-            </Text>
+                <Box p={6}>
+                  <Box>
+                    <chakra.span fontSize="xs" textTransform="uppercase">
+                      News & Events
+                    </chakra.span>
+                    <Link
+                      display="block"
+                      fontWeight="bold"
+                      fontSize="2xl"
+                      mt={2}
+                      _hover={{ color: "gray.600", textDecor: "underline" }}
+                    >
+                      {event.title}
+                    </Link>
+                    <chakra.p mt={2} fontSize="xl">
+                      {event.desc}
+                    </chakra.p>
+                  </Box>
+                  {console.log(event.user)}
+                  <Box mt={4}>
+                    <Flex alignItems="center">
+                      <Flex alignItems="center">
+                        {/* <Image
+                          h={10}
+                          fit="cover"
+                          rounded="full"
+                          src={event.user.avatar}
+                          alt="Avatar"
+                        /> */}
+                        <Link mx={2} fontWeight="bold">
+                          {/* {event.user.name} */}
+                        </Link>
+                      </Flex>
+                      <chakra.span mx={1} fontSize="sm">
+                        {event.createdAt}
+                      </chakra.span>
+                    </Flex>
+                  </Box>
+                </Box>
+              </Box>
+            </Flex>
           </Box>
           {isEdit ? (
             <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">

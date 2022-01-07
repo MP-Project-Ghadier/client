@@ -48,10 +48,22 @@
 .navbar.active {
   background-color: gray;
 }
-
+.navbar {
+  background-color: white;
+}
 /* manageLink */
-.manageLink{
+.manageLink {
   text-align: center;
-  color: #2B6CB0  ;
+  color: #2b6cb0;
   margin: 1rem;
+}
+.h2 {
+  font-size: 1.5rem;
+}
+.p {
+  font-size: 1.3rem;
+  margin: 1rem;
+}
+.h1 {
+  font-size: 3.5vw;
 }

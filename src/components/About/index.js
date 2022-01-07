@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Center,
@@ -11,8 +12,12 @@ import {
   Tr,
   Th,
   Td,
+  Flex,
+  chakra,
+  Link,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import kid2 from "../../assests/imgs/kid2.jpg";
+// import kid2 from "../../assests/imgs/kid2.jpg";
 import specialist from "../../assests/imgs/specialist.jpg";
 import maternity from "../../assests/imgs/maternity.png";
 import chat from "../../assests/imgs/chat.png";
@@ -23,63 +28,81 @@ import presentation from "../../assests/imgs/presentation.png";
 import Xpresentation from "../../assests/imgs/Xpresentation.png";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  const toRegister = () => {
+    navigate("/newAccount");
+  };
   return (
     <>
-      <Box>
-        <Image
-          src={specialist}
-          alt="autismImg"
-          w="32rem"
-          overflow="hidden"
-          zIndex="-1"
-          pos="relative"
-          m="1rem"
-        />
-        <Box
-          pos="absolute"
-          top="70rem"
-          right="2rem"
-          m="1rem"
-          p="1rem"
-          w="50rem"
-        >
-          <Text fontSize="5xl">Community of Autism Families</Text>
-          <Text fontSize="5xl">And Specialists</Text>
-          <Text fontSize="3xl">
+      <Box
+        bg={useColorModeValue("white", "gray.800")}
+        mx={{ lg: 8 }}
+        display={{ lg: "flex" }}
+        maxW={{ lg: "12xl" }}
+        rounded={{ lg: "lg" }}
+      >
+        <Box w={{ lg: "50%" }}>
+          <Box
+            h={{ base: 64, lg: "full" }}
+            rounded={{ lg: "lg" }}
+            bgSize="cover"
+            style={{
+              backgroundImage: `url(${specialist})`,
+            }}
+          ></Box>
+        </Box>
+
+        <Box py={12} px={6} maxW={{ base: "xl", lg: "5xl" }} w={{ lg: "50%" }}>
+          <chakra.h2
+            fontSize={{ base: "2xl", md: "3xl" }}
+            color={useColorModeValue("gray.800", "white")}
+            fontWeight="bold"
+          >
+            Community of Autism Families And Specialists
+          </chakra.h2>
+          <chakra.p
+            mt={2}
+            color={useColorModeValue("gray.600", "gray.300")}
+            fontSize="2xl"
+          >
             An organization that brings together autism families‘s experiences
-            and multi-discipline expertise in counselling services,
-          </Text>
-          <Text fontSize="3xl">
-            awareness programs and last researches, news and events about
-            autism.
-          </Text>
-        </Box>
-      </Box>
-      <Box>
-        <Box>
-          <Image src={kid2} opacity="0.7" zIndex="hide" />
-        </Box>
-        <Box
-          pos="absolute"
-          top="123rem"
-          right="0"
-          m="1rem"
-          p="1rem"
-          bg=" rgba(255, 255, 255, 0.5)"
-        >
-          <Text fontSize="5xl">What is Autism?</Text>
-          <Box>
-            <Text fontSize="2xl">Autism, or Autism Spectrum Disorder,</Text>
-            <Text fontSize="2xl">is a known brain development condition</Text>
-            <Text fontSize="2xl">that manifests itself as difficulty</Text>
-            <Text fontSize="2xl">
-              in communicating or socializing with others
-            </Text>
-            <Text fontSize="2xl">and can affect an individual and</Text>
-            <Text fontSize="2xl">their family throughout their life.</Text>
+            and multi-discipline expertise in counselling services, awareness
+            programs and last researches, news and events about autism.
+          </chakra.p>
+
+          <Box mt={8}>
+            <Link
+              bg="gray.900"
+              color="gray.100"
+              px={5}
+              py={3}
+              fontWeight="semibold"
+              rounded="lg"
+              _hover={{ bg: "gray.800" }}
+              onClick={toRegister}
+            >
+              Join Us
+            </Link>
           </Box>
         </Box>
       </Box>
+
+      <Box>
+        <Box w="100%">
+          <Box
+            pos="absolute"
+            top="60rem"
+            right="2rem"
+            m="1rem"
+            p="1rem"
+            w="35%"
+          >
+            <Flex justifyContent="space-between" alignItems="center"></Flex>
+          </Box>
+        </Box>
+      </Box>
+
       <Box
         w="100%"
         bottom="0"
