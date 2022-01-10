@@ -34,7 +34,7 @@ const Profile = () => {
   const [progress, setProgress] = useState(0);
   const [img, setImg] = useState(null);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const state = useSelector((state) => {
     return state;
   });

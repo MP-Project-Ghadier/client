@@ -9,14 +9,14 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
+  useEffect(() => {
+    confirmAccount();
+  }, []);
+  
   const confirmAccount = async () => {
     const result = await axios.get(`${BASE_URL}/verifyEmail/${token}`);
     console.log(result);
   };
-
-  useEffect(() => {
-    confirmAccount();
-  }, []);
 
   return (
     <>

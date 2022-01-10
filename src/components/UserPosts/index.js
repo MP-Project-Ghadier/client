@@ -13,6 +13,10 @@ const UserPosts = () => {
     };
   });
 
+  useEffect(() => {
+    userPosts();
+  }, []);
+
   const userPosts = async () => {
     try {
       const result = await axios.get(
@@ -29,9 +33,7 @@ const UserPosts = () => {
     }
   };
   // postRouter.get("/getPostsByUserId", authentication, getPostsByUserId);
-  useEffect(() => {
-    userPosts();
-  }, []);
+
   return (
     <>
       <h1>userPosts</h1>

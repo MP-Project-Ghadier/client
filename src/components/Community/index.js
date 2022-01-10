@@ -19,6 +19,12 @@ const Posts = () => {
       logInReducer: state.logInReducer,
     };
   });
+
+  useEffect(() => {
+    if(posts === null) return;
+    allPosts();
+  }, []);
+  
   //postRouter.post("/newPost", authentication, newPost); //by any user
   const newPost = async () => {
     try {
@@ -76,10 +82,7 @@ const Posts = () => {
     navigate(`/post/${id}`);
   };
 
-  useEffect(() => {
-    if(posts === null) return;
-    allPosts();
-  }, []);
+
   return (
     <>
       <Navbar />

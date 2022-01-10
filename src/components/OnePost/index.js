@@ -37,6 +37,11 @@ const OnePost = () => {
   const state = useSelector((state) => {
     return state;
   });
+
+  useEffect(() => {
+    onePost();
+  }, []);
+  
   // postRouter.get("/getPostById/:id", authentication, getPostById);
   const onePost = async () => {
     try {
@@ -126,9 +131,6 @@ const OnePost = () => {
     }
   };
 
-  useEffect(() => {
-    onePost();
-  }, []);
 
   return (
     <>

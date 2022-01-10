@@ -19,6 +19,11 @@ const Researches = () => {
       logInReducer: state.logInReducer,
     };
   });
+
+  useEffect(() => {
+    allResearches();
+  }, []);
+  
   // postRouter.post("/newResearch", authentication, authorization, newResearch);
   const newResearch = async () => {
     try {
@@ -85,9 +90,7 @@ const Researches = () => {
     navigate(`/research/${id}`);
   };
 
-  useEffect(() => {
-    allResearches();
-  }, []);
+
   return (
     <>
       <Navbar />

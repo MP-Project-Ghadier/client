@@ -21,24 +21,23 @@ const App = () => {
   return (
     <>
       <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/newAccount" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/verifyEmail/:token" element={<VerifyEmail />} />
-          <Route exact path="/profile/:id" element={<Profile />} />
-          <Route exact path="/forgetPass" element={<ForgetPass />} />
-          <Route exact path="/resetPass/:id" element={<ResetPass />} />
-          <Route exact path="/research" element={<Research />} />
-          <Route exact path="/research/:id" element={<OneResearch />} />
-          <Route exact path="/news&events" element={<Events />} />
-          <Route exact path="/event/:id" element={<OneEvent />} />
-          <Route exact path="/community" element={<Community />} />
-          <Route exact path="/post/:id" element={<OnePost />} />
-          <Route exact path="/post/:id" element={<Comments />} />
-          <Route exact path="/centers" element={<Centers />} />
-          <Route exact path="/center/:id" element={<OneCenter />} />
-          <Route exact path="/Dashboard" element={<Dashboard />} />
-
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/newAccount" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/verifyEmail/:token" element={<VerifyEmail />} />
+        <Route exact path="/profile/:id" element={<Profile />} />
+        <Route exact path="/forgetPass" element={<ForgetPass />} />
+        <Route exact path="/resetPass/:id" element={<ResetPass />} />
+        <Route exact path="/research" element={<Research />} />
+        <Route exact path="/research/:id" element={<OneResearch />} />
+        <Route exact path="/news&events" element={<Events />} />
+        <Route exact path="/event/:id" element={<OneEvent />} />
+        <Route exact path="/community" element={<Community />} />
+        <Route exact path="/post/:id" element={<OnePost />} />
+        <Route exact path="/post/:id" element={<Comments />} />
+        <Route exact path="/centers" element={<Centers />} />
+        <Route exact path="/center/:id" element={<OneCenter />} />
+        <Route exact path="/Dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );

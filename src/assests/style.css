@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:wght@200&family=Lobster+Two&family=Patrick+Hand&display=swap');
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Literata', serif;
+  font-weight: bolder;
 }
 
 /* Slideshow */

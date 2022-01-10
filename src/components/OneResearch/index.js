@@ -34,6 +34,11 @@ const OneResearch = () => {
   const state = useSelector((state) => {
     return state;
   });
+
+  useEffect(() => {
+    postResearch();
+  }, []);
+
   // postRouter.get("/getResearchById/:id", authentication, getResearchById);
   const postResearch = async () => {
     try {
@@ -124,9 +129,7 @@ const OneResearch = () => {
       }
     }
   };
-  useEffect(() => {
-    postResearch();
-  }, []);
+
   return (
     <>
       <Navbar />

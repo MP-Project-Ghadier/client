@@ -12,7 +12,6 @@ import {
   Tr,
   Th,
   Td,
-  Flex,
   chakra,
   Link,
   useColorModeValue,
@@ -37,7 +36,7 @@ const About = () => {
     <>
       <Box
         bg={useColorModeValue("white", "gray.800")}
-        mx={{ lg: 8 }}
+        mx={{ lg: 12 }}
         display={{ lg: "flex" }}
         maxW={{ lg: "12xl" }}
         rounded={{ lg: "lg" }}
@@ -53,7 +52,7 @@ const About = () => {
           ></Box>
         </Box>
 
-        <Box py={12} px={6} maxW={{ base: "xl", lg: "5xl" }} w={{ lg: "50%" }}>
+        <Box py={3} px={6} maxW={{ base: "xl", lg: "5xl" }} w={{ lg: "50%" }}>
           <chakra.h2
             fontSize={{ base: "2xl", md: "3xl" }}
             color={useColorModeValue("gray.800", "white")}
@@ -88,189 +87,196 @@ const About = () => {
         </Box>
       </Box>
 
-      <Box>
-        <Box w="100%">
-          <Box
-            pos="absolute"
-            top="60rem"
-            right="2rem"
-            m="1rem"
-            p="1rem"
-            w="35%"
-          >
-            <Flex justifyContent="space-between" alignItems="center"></Flex>
-          </Box>
-        </Box>
-      </Box>
-
-      <Box
-        w="100%"
-        bottom="0"
-        right="0"
-        display="flex"
-        justifyContent="space-evenly"
-        textAlign="center"
-        p="1rem"
-      >
-        <Box w="25%" boxShadow="md" p="8" rounded="md" bgColor="#1A365D">
-          <Center>
-            <Image
-              src={maternity}
-              alt="maternity"
-              w="6rem"
-              p="1rem"
-              bgColor="white"
-              borderRadius="20%"
-            />
-          </Center>
-          <Text fontSize="3xl" color="white" m="1rem">
-            Autism affects One out of every 59 Children
-          </Text>
-        </Box>
-        <Box w="25%" boxShadow="md" p="8" rounded="md" bgColor="#1A365D">
-          <Center>
-            <Image
-              src={chat}
-              alt="chat"
-              w="6rem"
-              p="1rem"
-              bgColor="white"
-              borderRadius="20%"
-            />
-          </Center>
-          <Text fontSize="3xl" color="white" m="1rem">
-            40% of children with Autism do not speak
-          </Text>
-        </Box>
-        <Box w="25%" boxShadow="md" p="8" rounded="md" bgColor="#1A365D">
-          <Center>
-            <Image
-              src={children}
-              alt="children"
-              w="6rem"
-              p="0.5rem"
-              bgColor="white"
-              borderRadius="20%"
-            />
-          </Center>
-          <Text fontSize="3xl" color="white" m="1rem">
-            Boys are four times more likely to have autism than girls
-          </Text>
-        </Box>
-      </Box>
-      <Box display="flex" justifyContent="center" p="2rem" m="2rem">
+      <Center>
         <Box
-          w="35%"
+          bg={useColorModeValue("white", "gray.800")}
+          mx={{ lg: 8 }}
+          display={{ lg: "flex" }}
+          maxW={{ lg: "12xl" }}
+          rounded={{ lg: "lg" }}
           justifyContent="center"
-          textAlign="center"
-          m="1rem"
-          borderRadius="sm"
-          boxShadow="base"
-          p="6"
-          rounded="md"
-          bg="white"
         >
-          <Text fontSize="3xl" m="1rem" color="#1A365D">
-            Gender
-          </Text>
-          <Center>
-            <Box m="1rem">
+          <Box
+            py={12}
+            px={6}
+            maxW={{ base: "xl", lg: "5xl" }}
+            w={{ lg: "30%" }}
+          >
+            <Box boxShadow="md" p="8" rounded="md" bgColor="#1A365D" h="22rem">
               <Center>
                 <Image
-                  src={male}
-                  alt="male"
-                  w="9rem"
+                  src={maternity}
+                  alt="maternity"
+                  w="6rem"
                   p="1rem"
                   bgColor="white"
                   borderRadius="20%"
                 />
               </Center>
-              <Text color="#1A365D" fontSize="xl">
+              <Text fontSize="3xl" color="white" m="1rem" textAlign="center">
+                Autism affects one out of every 59 children
+              </Text>
+            </Box>
+          </Box>
+          <Box
+            py={12}
+            px={6}
+            maxW={{ base: "xl", lg: "5xl" }}
+            w={{ lg: "30%" }}
+          >
+            <Box boxShadow="md" p="8" rounded="md" bgColor="#1A365D" h="22rem">
+              <Center>
+                <Image
+                  src={chat}
+                  alt="chat"
+                  w="6rem"
+                  p="1rem"
+                  bgColor="white"
+                  borderRadius="20%"
+                />
+              </Center>
+              <Text fontSize="3xl" color="white" m="1rem" textAlign="center">
+                40% of children with Autism do not speak
+              </Text>
+            </Box>
+          </Box>
+          <Box
+            py={12}
+            px={6}
+            maxW={{ base: "xl", lg: "5xl" }}
+            w={{ lg: "30%" }}
+          >
+            <Box boxShadow="md" p="8" rounded="md" bgColor="#1A365D" h="22rem">
+              <Center>
+                <Image
+                  src={children}
+                  alt="children"
+                  w="6rem"
+                  p="0.5rem"
+                  bgColor="white"
+                  borderRadius="20%"
+                />
+              </Center>
+              <Text fontSize="3xl" color="white" m="1rem" textAlign="center">
+                Boys are four times more likely to have autism than girls
+              </Text>
+            </Box>
+          </Box>
+        </Box>
+      </Center>
+
+      <Box
+        bg={useColorModeValue("white", "gray.800")}
+        mx={{ lg: 8 }}
+        display={{ lg: "flex" }}
+        maxW={{ lg: "12xl" }}
+        rounded={{ lg: "lg" }}
+        justifyContent="center"
+        mt="1rem"
+      >
+        <Box boxShadow="md" p="8" rounded="md" h="22rem">
+          <Box>
+            <Text fontSize="3xl" m="1rem" color="#1A365D" textAlign="center">
+              Gender
+            </Text>
+          </Box>
+          <Center>
+            <Box m="1rem" textAlign="center">
+              <Image
+                src={male}
+                alt="male"
+                w="9rem"
+                p="1rem"
+                bgColor="white"
+                borderRadius="20%"
+              />
+              <Text color="#1A365D" fontSize="xl" textAlign="center">
                 Male
               </Text>
-              <Text color="#1A365D" fontSize="xl">
+              <Text color="#1A365D" fontSize="xl" textAlign="center">
                 79%
               </Text>
             </Box>
             <Box>
               <Center>
+                <Box m="1rem" textAlign="center">
+                  <Image
+                    src={female}
+                    alt="male"
+                    w="9rem"
+                    p="1rem"
+                    bgColor="white"
+                    borderRadius="20%"
+                  />
+                  <Text color="#1A365D" fontSize="xl">
+                    Female
+                  </Text>
+                  <Text color="#1A365D" fontSize="xl">
+                    21%
+                  </Text>
+                </Box>
+              </Center>
+            </Box>
+          </Center>
+        </Box>
+
+        <Box
+          bg={useColorModeValue("white", "gray.800")}
+          mx={{ lg: 8 }}
+          display={{ lg: "flex" }}
+          maxW={{ lg: "12xl" }}
+          rounded={{ lg: "lg" }}
+        >
+          <Box boxShadow="md" p="8" rounded="md" h="22rem">
+            <Box>
+              <Text fontSize="3xl" m="1rem" color="#1A365D" textAlign="center">
+                Enroll in Education
+              </Text>
+            </Box>
+            <Center>
+              <Box m="1rem" textAlign="center">
                 <Image
-                  src={female}
-                  alt="male"
+                  src={presentation}
+                  alt="presentation"
                   w="9rem"
                   p="1rem"
                   bgColor="white"
                   borderRadius="20%"
                 />
-              </Center>
-              <Text color="#1A365D" fontSize="xl">
-                Female
-              </Text>
-              <Text color="#1A365D" fontSize="xl">
-                21%
-              </Text>
-            </Box>
-          </Center>
-        </Box>
-        <Box
-          w="35%"
-          justifyContent="center"
-          textAlign="center"
-          bgColor="white"
-          m="1rem"
-          borderRadius="sm"
-          boxShadow="base"
-          p="6"
-          rounded="md"
-          bg="white"
-        >
-          <Box w="100%" justifyContent="center" textAlign="center">
-            <Text fontSize="3xl" m="1rem" color="#1A365D">
-              Enroll in education
-            </Text>
-            <Center>
-              <Box>
-                <Center>
-                  <Image
-                    src={presentation}
-                    alt="male"
-                    w="9rem"
-                    p="1rem"
-                    bgColor="white"
-                    borderRadius="20%"
-                  />
-                </Center>
-                <Text color="#1A365D" fontSize="xl">
+                <Text color="#1A365D" fontSize="xl" textAlign="center">
                   Enrolled
                 </Text>
-                <Text color="#1A365D" fontSize="xl">
+                <Text color="#1A365D" fontSize="xl" textAlign="center">
                   56%
                 </Text>
               </Box>
-              <Box m="1rem">
+              <Box>
                 <Center>
-                  <Image
-                    src={Xpresentation}
-                    alt="male"
-                    w="9rem"
-                    p="1rem"
-                    bgColor="white"
-                    borderRadius="20%"
-                  />
+                  <Box m="1rem" textAlign="center">
+                    <Image
+                      src={Xpresentation}
+                      alt="male"
+                      w="9rem"
+                      p="1rem"
+                      bgColor="white"
+                      borderRadius="20%"
+                    />
+                    <Text color="#1A365D" fontSize="xl">
+                      Not enrolled
+                    </Text>
+                    <Text color="#1A365D" fontSize="xl">
+                      44%
+                    </Text>
+                  </Box>
                 </Center>
-                <Text color="#1A365D" fontSize="xl">
-                  Not enrolled
-                </Text>
-                <Text color="#1A365D" fontSize="xl">
-                  44%
-                </Text>
               </Box>
             </Center>
           </Box>
         </Box>
       </Box>
-      <Box m="70" mb="3rem">
-        <Table variant="simple">
+
+      <Box>
+        <Table variant="simple" size="sm" textAlign="center" justifyContent="center" mt="6rem">
           <Thead>
             <Tr>
               <Th>Gender statistics</Th>
