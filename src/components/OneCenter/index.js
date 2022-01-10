@@ -157,9 +157,7 @@ const OneCenter = () => {
     );
   };
 
-  useEffect(() => {
-    oneCenter();
-  }, []);
+
   return (
     <>
       <Navbar />

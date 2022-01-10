@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -9,17 +9,17 @@ import {
   Center,
   Heading,
   IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
+  // Menu,
+  // MenuButton,
+  // MenuList,
+  // MenuItem,
   Input,
   Button,
-  Image,
-  Flex,
+  // Image,
+  // Flex,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { GiHamburgerMenu } from "react-icons/gi";
+// import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import { IoIosTrash } from "react-icons/io";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -32,6 +32,12 @@ const Comments = () => {
   const state = useSelector((state) => {
     return state;
   });
+
+
+  useEffect(() => {
+    postComment();
+  }, []);
+  
   //postRouter.get("/postComments/:id", authentication, postComments);
   const postComment = async () => {
     try {
@@ -128,9 +134,6 @@ const Comments = () => {
     }
   };
 
-  useEffect(() => {
-    postComment();
-  }, []);
 
   return (
     <>

@@ -72,7 +72,7 @@ const Navbar = () => {
   window.addEventListener("scroll", changeBackground);
 
   return (
-    <>
+    <div >
       <Box pos="block" m="2rem" p="2rem">
         <Flex
           position="fixed"
@@ -81,14 +81,14 @@ const Navbar = () => {
           align="center"
           zIndex="popover"
         >
-          <Box m="25px">
+          <Box m="25px" className={navbar? "navbar" : ""}>
             <Button onClick={isDark} onClick={toggleColorMode}>
               <Box p="0.5rem">
                 <img src="https://img.icons8.com/material/24/000000/do-not-disturb-2.png" />
               </Box>
             </Button>
           </Box>
-          <Box>
+          <Box  >
             <Image
               boxSize="8rem"
               pos="fixed"
@@ -102,7 +102,7 @@ const Navbar = () => {
           </Box>
 
           {/* Desktop */}
-          <Box>
+          <Box className="navbar" >
             <Flex display={["none", "none", "flex", "flex"]}>
               <Box>
                 <Button
@@ -347,7 +347,7 @@ const Navbar = () => {
           </Box>
         </Flex>
       </Box>
-    </>
+    </div>
   );
 };
 export default Navbar;

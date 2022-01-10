@@ -16,7 +16,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
-import Navbar from "../Navbar";
+// import Navbar from "../Navbar";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -34,6 +34,11 @@ const Events = () => {
       logInReducer: state.logInReducer,
     };
   });
+
+
+  useEffect(() => {
+    allEvents();
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -132,13 +137,11 @@ const Events = () => {
     navigate(`/event/${id}`);
   };
 
-  useEffect(() => {
-    allEvents();
-  }, []);
+  
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Box mt={4}>
         <Heading as="h3" size="lg" p={5}>
           News & Events

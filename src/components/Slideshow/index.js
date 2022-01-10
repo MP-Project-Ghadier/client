@@ -13,12 +13,6 @@ const Slideshow = () => {
   const imgs = [kid, kid3, community, childPlay];
   const delay = 3000;
 
-  function resetTimeout() {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-  }
-
   useEffect(() => {
     resetTimeout();
     timeoutRef.current = setTimeout(
@@ -33,6 +27,12 @@ const Slideshow = () => {
       resetTimeout();
     };
   }, [index]);
+
+  function resetTimeout() {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  }
 
   return (
     <>
@@ -64,7 +64,6 @@ const Slideshow = () => {
         <h1 className="h1">Autism isn't a Disability, </h1>
 
         <h1 className="h1"> It is a Different Ability</h1>
-
       </Box>
     </>
   );

@@ -39,6 +39,11 @@ const OneEvent = () => {
   const state = useSelector((state) => {
     return state;
   });
+
+  useEffect(() => {
+    oneEvent();
+  }, []);
+  
   // postRouter.get("/getResearchById/:id", authentication, getResearchById);
   const oneEvent = async () => {
     try {
@@ -56,6 +61,8 @@ const OneEvent = () => {
     }
   };
 
+
+
   //   postRouter.put("/updatePost/:id", authentication, authorization, updatePost);
   const updatePost = async () => {
     try {
@@ -71,7 +78,7 @@ const OneEvent = () => {
           },
         }
       );
-      console.log(result.data);
+      // console.log(result.data);
       setEvent(result.data);
       setUsername(result.data.user.name);
       if (result.status === 200) {
@@ -108,7 +115,7 @@ const OneEvent = () => {
           },
         }
       );
-      console.log(result.data);
+      // console.log(result.data);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -120,7 +127,7 @@ const OneEvent = () => {
         navigate("/news&events");
       }
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
       if (error.response.status === 400) {
         Swal.fire({
           icon: "error",
@@ -130,9 +137,7 @@ const OneEvent = () => {
       }
     }
   };
-  useEffect(() => {
-    oneEvent();
-  }, []);
+
   return (
     <>
       <Navbar />

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,
+  //  useEffect
+   } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -33,6 +35,11 @@ const Centers = () => {
       logInReducer: state.logInReducer,
     };
   });
+
+  // useEffect(() => {
+  //   if (centers === null) return;
+  //   allCenters();
+  // }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -135,10 +142,6 @@ const Centers = () => {
   const oneCenter = (id) => {
     navigate(`/center/${id}`);
   };
-  useEffect(() => {
-    if (centers === null) return;
-    allCenters();
-  }, []);
 
   return (
     <>
