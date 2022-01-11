@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import axios from "axios";
-import Navbar from "../Navbar";
+// import Navbar from "../Navbar";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Dashboard = () => {
@@ -145,7 +145,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Center>
         <Box w="80%" mt="5rem">
           <Heading textAlign="center">Specialists</Heading>

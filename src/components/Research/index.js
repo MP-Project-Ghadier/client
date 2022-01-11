@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
 import Navbar from "../Navbar";
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Researches = () => {
@@ -24,7 +25,6 @@ const Researches = () => {
     allResearches();
   }, []);
   
-  // postRouter.post("/newResearch", authentication, authorization, newResearch);
   const newResearch = async () => {
     try {
       const result = await axios.post(
@@ -71,7 +71,6 @@ const Researches = () => {
     });
   };
 
-  //   postRouter.get("/getResearch", authentication, getResearch);
   const allResearches = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getResearch`, {

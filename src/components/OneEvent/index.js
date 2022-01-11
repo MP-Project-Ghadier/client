@@ -202,7 +202,7 @@ const OneEvent = () => {
                       {event.desc}
                     </chakra.p>
                   </Box>
-                  {console.log(event.user)}
+                  {/* {console.log(event.user)} */}
                   <Box mt={4}>
                     <Flex alignItems="center">
                       <Flex alignItems="center">

@@ -1,6 +1,4 @@
-import React, { useState,
-  //  useEffect
-   } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -36,12 +34,12 @@ const Centers = () => {
     };
   });
 
-  // useEffect(() => {
-  //   if (centers === null) return;
-  //   allCenters();
-  // }, []);
+  useEffect(() => {
+    allCenters();
+  }, []);
 
   const handleChange = (e) => {
+    console.log(e)
     if (e.target.files[0]) {
       setImg(e.target.files[0]);
     }
@@ -75,7 +73,7 @@ const Centers = () => {
       );
     }
   };
-  //postRouter.post("/newCenter", authentication, authorization, newCenter);
+
   const newCenter = async () => {
     try {
       const result = await axios.post(
@@ -123,7 +121,6 @@ const Centers = () => {
     });
   };
 
-  //postRouter.get("/getCenter", authentication, getCenter);
 
   const allCenters = async () => {
     try {
@@ -236,7 +233,7 @@ const Centers = () => {
         <>
           {centers && centers.length
             ? centers.map((ele) => {
-                //   console.log(ele);
+                  // console.log(ele);
                 return (
                   <Center key={ele._id}>
                     <Box

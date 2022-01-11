@@ -3,7 +3,7 @@ import logo from "../../assests/imgs/logo.png";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import {
   useColorMode,
-  Switch,
+  Tooltip,
   Flex,
   Button,
   IconButton,
@@ -72,37 +72,35 @@ const Navbar = () => {
   window.addEventListener("scroll", changeBackground);
 
   return (
-    <div >
+    <div>
       <Box pos="block" m="2rem" p="2rem">
+        <Box boxSize="8rem" pos="absolute" top={0} left={0}>
+          <Image
+            src={logo}
+            alt="logoimg"
+            pointer="cursor"
+            onClick={() => navigate("/")}
+          />
+        </Box>
         <Flex
-          position="fixed"
+          position="absolute"
           top="1rem"
           right="1rem"
           align="center"
           zIndex="popover"
         >
-          <Box m="25px" className={navbar? "navbar" : ""}>
-            <Button onClick={isDark} onClick={toggleColorMode}>
-              <Box p="0.5rem">
-                <img src="https://img.icons8.com/material/24/000000/do-not-disturb-2.png" />
-              </Box>
-            </Button>
-          </Box>
-          <Box  >
-            <Image
-              boxSize="8rem"
-              pos="fixed"
-              top={0}
-              left={0}
-              src={logo}
-              alt="logoimg"
-              pointer="cursor"
-              onClick={() => navigate("/")}
-            />
+          <Box m="25px">
+            <Tooltip label="Dark mode">
+              <Button onClick={isDark} onClick={toggleColorMode}>
+                <Box p="0.5rem">
+                  <img src="https://img.icons8.com/material/24/000000/do-not-disturb-2.png" />
+                </Box>
+              </Button>
+            </Tooltip>
           </Box>
 
           {/* Desktop */}
-          <Box className="navbar" >
+          <Box>
             <Flex display={["none", "none", "flex", "flex"]}>
               <Box>
                 <Button
@@ -156,18 +154,32 @@ const Navbar = () => {
                 </Button>
               </Box>
               {state.logInReducer.token == "" ? (
-                <Box>
-                  <Button
-                    as="a"
-                    variant="ghost"
-                    aria-label="Register"
-                    my={5}
-                    w="100%"
-                    onClick={() => navigate("/newAccount")}
-                  >
-                    Sign Up
-                  </Button>
-                </Box>
+                <>
+                  <Box>
+                    <Button
+                      as="a"
+                      variant="ghost"
+                      aria-label="Register"
+                      my={5}
+                      w="100%"
+                      onClick={() => navigate("/login")}
+                    >
+                      Login
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button
+                      as="a"
+                      variant="ghost"
+                      aria-label="Register"
+                      my={5}
+                      w="100%"
+                      onClick={() => navigate("/newAccount")}
+                    >
+                      Sign up
+                    </Button>
+                  </Box>
+                </>
               ) : (
                 <>
                   <Popover>
