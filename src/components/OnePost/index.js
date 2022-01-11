@@ -32,7 +32,6 @@ const OnePost = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [isEdit, setEdit] = useState(false);
-  const [commentCounter, setCommentCounter] = useState(0);
 
   const state = useSelector((state) => {
     return state;
@@ -41,8 +40,7 @@ const OnePost = () => {
   useEffect(() => {
     onePost();
   }, []);
-  
-  // postRouter.get("/getPostById/:id", authentication, getPostById);
+
   const onePost = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getPostById/${postId}`, {
@@ -57,7 +55,6 @@ const OnePost = () => {
     }
   };
 
-  //   postRouter.put("/updatePost/:id", authentication, authorization, updatePost);
   const updatePost = async () => {
     try {
       const result = await axios.put(
@@ -74,7 +71,6 @@ const OnePost = () => {
       );
       console.log(result.data);
       setPost(result.data);
-      setUsername(result.data.user.name);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -96,7 +92,6 @@ const OnePost = () => {
     }
   };
 
-  //   postRouter.put("/deletePost/:id", authentication, deletePost);
   const deletePost = async () => {
     try {
       const result = await axios.put(
@@ -108,7 +103,6 @@ const OnePost = () => {
           },
         }
       );
-      console.log(result.data);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -131,7 +125,6 @@ const OnePost = () => {
     }
   };
 
-
   return (
     <>
       <Navbar />
@@ -145,7 +138,7 @@ const OnePost = () => {
             rounded="md"
             textAlign="center"
           >
-            {state.logInReducer.user._id === post.user ? (
+            {state.logInReducer.user.name == userName ? (
               <Box display="flex" flexDirection="row-reverse">
                 <Menu>
                   <MenuButton
@@ -164,6 +157,7 @@ const OnePost = () => {
               </Box>
             ) : (
               ""
+              // console.log(post.user)
             )}
 
             <Heading textAlign="center">{post.title}</Heading>

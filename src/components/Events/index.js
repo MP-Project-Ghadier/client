@@ -16,7 +16,7 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
-// import Navbar from "../Navbar";
+import Navbar from "../Navbar";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -34,7 +34,6 @@ const Events = () => {
       logInReducer: state.logInReducer,
     };
   });
-
 
   useEffect(() => {
     allEvents();
@@ -71,7 +70,6 @@ const Events = () => {
     );
   };
 
-  // postRouter.post("/newEvent", authentication, authorization, newEvent);
   const newEvent = async () => {
     try {
       const result = await axios.post(
@@ -117,8 +115,6 @@ const Events = () => {
     });
   };
 
-  //  postRouter.get("/getEvent", authentication, getEvent);
-
   const allEvents = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getEvent`, {
@@ -137,12 +133,10 @@ const Events = () => {
     navigate(`/event/${id}`);
   };
 
-  
-
   return (
     <>
-      {/* <Navbar /> */}
-      <Box mt={4}>
+      <Navbar />
+      <Box p={6}>
         <Heading as="h3" size="lg" p={5}>
           News & Events
         </Heading>
@@ -159,7 +153,7 @@ const Events = () => {
           </Flex>
         </Flex>
       </Box>
-
+      
       {state.logInReducer.role === "Admin" ? (
         <Center>
           <Box

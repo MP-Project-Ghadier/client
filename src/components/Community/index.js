@@ -3,8 +3,20 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Heading,
+  Input,
+  Text,
+  Flex,
+  chakra,
+  Image,
+  Tooltip,
+} from "@chakra-ui/react";
 import Navbar from "../Navbar";
+import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -13,6 +25,7 @@ const Posts = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [posts, setPosts] = useState(null);
+  const [add, setAdd] = useState(false);
 
   const state = useSelector((state) => {
     return {
@@ -21,11 +34,23 @@ const Posts = () => {
   });
 
   useEffect(() => {
-    if(posts === null) return;
     allPosts();
   }, []);
-  
-  //postRouter.post("/newPost", authentication, newPost); //by any user
+
+  const allPosts = async () => {
+    try {
+      const result = await axios.get(`${BASE_URL}/getPosts`, {
+        headers: {
+          Authorization: `Bearer ${state.logInReducer.token}`,
+        },
+      });
+      // console.log(result.data);
+      setPosts(result.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   const newPost = async () => {
     try {
       const result = await axios.post(
@@ -65,23 +90,9 @@ const Posts = () => {
     }
   };
 
-  const allPosts = async () => {
-    try {
-      const result = await axios.get(`${BASE_URL}/getPosts`, {
-        headers: {
-          Authorization: `Bearer ${state.logInReducer.token}`,
-        },
-      });
-      // console.log(result.data);
-      setPosts(result.data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
   const onePost = (id) => {
     navigate(`/post/${id}`);
   };
-
 
   return (
     <>
@@ -98,80 +109,129 @@ const Posts = () => {
           interests and concerns
         </Text>
         {state.logInReducer.token == null ? (
-          ""
+          <Box display="flex" justifyContent="flex-end">
+            <Tooltip label="Add new post!">
+              <PlusSquareIcon
+                boxSize={12}
+                _hover={{
+                  background: "white",
+                  color: "#2C5282",
+                }}
+                onClick={() => setAdd(!add)}
+              />
+            </Tooltip>
+          </Box>
         ) : (
-          <Center>
-            <Box
-              m="20px"
-              w="50rem"
-              boxShadow="base"
-              p="6"
-              rounded="md"
-              textAlign="center"
-            >
-              <Heading as="h3" size="lg" m="2rem">
-                New Post
-              </Heading>
-              <Heading as="h4" size="md" m="0.5rem">
-                Title
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              ></Input>
-
-              <Heading as="h4" size="md" m="0.5rem">
-                Description
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <Button onClick={newPost} m="0.5rem">
-                Puplish
-              </Button>
-            </Box>
-          </Center>
+          ""
         )}
+        <>
+          {add ? (
+            <Center>
+              <Box
+                m="40"
+                // m="20px"
+                w="50rem"
+                boxShadow="base"
+                p="6"
+                rounded="md"
+                textAlign="center"
+              >
+                <Heading as="h3" size="lg" m="2rem">
+                  New Post
+                </Heading>
+                <Heading as="h4" size="md" m="0.5rem">
+                  Title
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                ></Input>
+
+                <Heading as="h4" size="md" m="0.5rem">
+                  Description
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Description"
+                  value={desc}
+                  onChange={(e) => {
+                    setDesc(e.target.value);
+                  }}
+                ></Input>
+                <Button onClick={newPost} m="0.5rem">
+                  Puplish
+                </Button>
+              </Box>
+            </Center>
+          ) : (
+            ""
+          )}
+        </>
         <>
           {posts && posts.length
             ? posts.map((ele) => {
-                //   console.log(ele);
                 return (
-                  <Center key={ele._id}>
+                  <Flex
+                    p={8}
+                    w="full"
+                    alignItems="center"
+                    justifyContent="center"
+                    key={ele._id}
+                  >
                     <Box
-                      w="70%"
-                      p="5"
-                      m="5"
-                      borderRadius="md"
-                      boxShadow="base"
-                      rounded="md"
-                      onClick={() => {
-                        onePost(ele._id);
-                      }}
+                      mx="auto"
+                      px={8}
+                      py={4}
+                      rounded="lg"
+                      shadow="lg"
+                      w="50rem"
+                      maxW="50rem"
                     >
-                      <Heading
-                        mt="2"
-                        fontSize="xl"
-                        fontWeight="semibold"
-                        lineHeight="short"
-                        textAlign="center"
-                        pb="3"
+                      <Flex justifyContent="space-between" alignItems="center">
+                        <chakra.span fontSize="sm">{ele.createdAt}</chakra.span>
+                      </Flex>
+
+                      <Box mt={2}>
+                        <Text fontSize="2xl" fontWeight="700">
+                          {ele.title}
+                        </Text>
+                      </Box>
+
+                      <Flex
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mt={4}
                       >
-                        {ele.title}
-                      </Heading>
-                      <Text>{ele.user.name}</Text>
-                      <Text>{ele.createdAt}</Text>
+                        <Button
+                          onClick={() => {
+                            onePost(ele._id);
+                          }}
+                        >
+                          Read more
+                        </Button>
+
+                        <Flex alignItems="center">
+                          <Image
+                            mx={4}
+                            w={10}
+                            h={10}
+                            rounded="full"
+                            fit="cover"
+                            display={{ base: "none", sm: "block" }}
+                            src={ele.user.avatar}
+                            alt="avatar"
+                          />
+                          <Text mx={2} fontWeight="bold">
+                            {ele.user.name}
+                          </Text>
+                        </Flex>
+                      </Flex>
                     </Box>
-                  </Center>
+                  </Flex>
                 );
               })
             : ""}

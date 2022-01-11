@@ -5,21 +5,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
+  Flex,
+  Image,
+  chakra,
   Text,
   Center,
-  Heading,
-  IconButton,
-  // Menu,
-  // MenuButton,
-  // MenuList,
-  // MenuItem,
   Input,
+  Heading,
   Button,
-  // Image,
-  // Flex,
-  SimpleGrid,
+  IconButton,
 } from "@chakra-ui/react";
-// import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import { IoIosTrash } from "react-icons/io";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -33,12 +29,12 @@ const Comments = () => {
     return state;
   });
 
-
   useEffect(() => {
     postComment();
+    setComment("")
+
   }, []);
-  
-  //postRouter.get("/postComments/:id", authentication, postComments);
+
   const postComment = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/postComments/${postId}`, {
@@ -53,7 +49,7 @@ const Comments = () => {
       console.log(error.response);
     }
   };
-  // commentRouter.post("/newComment/:id", authentication, newComment);
+
   const newComment = async () => {
     try {
       const result = await axios.post(
@@ -95,7 +91,7 @@ const Comments = () => {
       }
     });
   };
-  // commentRouter.put("/deleteComment/:id", authentication, deleteComment);
+
   const deleteComment = async (id) => {
     try {
       const result = await axios.put(
@@ -134,87 +130,81 @@ const Comments = () => {
     }
   };
 
-
   return (
     <>
       <Center>
-        <Heading>comments</Heading>
+        <Heading>Comments</Heading>
       </Center>
-      <Center>
-        <Box>
-          {comments && (
-            <>
-              {comments.map((elem, i) => {
-                // console.log(elem._id);
-                return (
-                  <Center key={i}>
-                    <Box
-                    w="45%"
-                      justifyContent="center"
-                      rounded="xl"
-                      shadow="lg"
-                      borderWidth="1px"
-                      m="0.5rem"
-                      mb="3rem"
+      {comments && (
+        <>
+          {comments.map((elem, i) => {
+            return (
+              <Flex
+                p={50}
+                w="full"
+                alignItems="center"
+                justifyContent="center"
+                key={i}
+              >
+                <Box w="md" mx="auto" py={4} px={8} shadow="lg" rounded="lg">
+                  {state.logInReducer.user._id === elem.user._id ? (
+                    <IconButton
+                      colorScheme="blue"
+                      aria-label="comment btn"
+                      m="2"
+                      onClick={() => {
+                        deleteComment(elem._id);
+                      }}
+                      icon={<IoIosTrash />}
+                    />
+                  ) : (
+                    ""
+                  )}
+                  <Flex justifyContent={{ base: "center", md: "end" }} mt={-16}>
+                    <Image
+                      w={20}
+                      h={20}
+                      fit="cover"
+                      rounded="full"
+                      borderStyle="solid"
+                      borderWidth={2}
+                      alt="Testimonial avatar"
+                      src={elem.user.avatar}
+                    />
+                  </Flex>
+
+                  <chakra.p m={4} fontSize={{ base: "2xl", md: "m" }} fontWeight="bold">
+                    {elem.desc}
+                  </chakra.p>
+
+                  <Flex justifyContent="space-between" mt={4}>
+                    <chakra.h2
+                      fontSize={{ base: "lg", md: "m" }}
+                      mt={{ base: 2, md: 0 }}
                     >
-                      {state.logInReducer.user._id === elem.user._id ? (
-                        <IconButton
-                          colorScheme="blue"
-                          aria-label="comment btn"
-                          // size=""
-                          m="2"
-                          onClick={() => {
-                            deleteComment(elem._id);
-                          }}
-                          icon={<IoIosTrash />}
-                        />
-                      ) : (
-                        ""
-                      )}
-                      <Box textAlign="center" padding={3} m="1" >
-                        <Text fontSize="x-large">{elem.desc}</Text>
-                      </Box>
-                      <SimpleGrid
-                        columns={2}
-                        padding={4}
-                        m="2"
-                      >
-                        <Box w="48%">
-                          <Text fontSize="lg" textAlign="left">
-                            Comment By : {elem.user.name}
-                          </Text>
-                        </Box>
-                        <Box w="48%">
-                          <Text
-                            fontSize="lg"
-                            textAlign="right"
-                            alignItems="flex-end"
-                          >
-                            At : {elem.createdAt}
-                          </Text>
-                        </Box>
-                      </SimpleGrid>
-                    </Box>
-                  </Center>
-                );
-              })}
-            </>
-          )}
-          <Box mb="4">
-            <Input
-              size="md"
-              w="400px"
-              h="80px"
-              m={8}
-              placeholder="write your comment here"
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-            />
-            <Button onClick={puplish}>add comment</Button>
-          </Box>
-        </Box>
-      </Center>
+                      {elem.createdAt}
+                    </chakra.h2>
+                    <Text fontSize="xl">{elem.user.name}</Text>
+                  </Flex>
+                </Box>
+              </Flex>
+            );
+          })}
+        </>
+      )}
+      <Box mb="4">
+        <Input
+          size="md"
+          w="400px"
+          h="80px"
+          m={8}
+          placeholder="write your comment here"
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
+        />
+        <Button onClick={puplish}>add comment</Button>
+      </Box>
     </>
   );
 };

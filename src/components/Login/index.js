@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import LoginGoogle from "../LoginGoogle/index";
+import LoginGoogle from "../LoginGoogle/index";
 import { login } from "../../reducers/login";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -97,7 +97,7 @@ const Login = () => {
         <Stack
           boxShadow="2xl"
           p="6"
-          mb="40px"
+          m="80px"
           rounded="md"
           w="50%"
           justifyContent="center"
@@ -158,7 +158,7 @@ const Login = () => {
               Sign Up
             </Link>
           </Text>
-          {/* <LoginGoogle /> */}
+          <LoginGoogle />
         </Stack>
       </Center>
     </>

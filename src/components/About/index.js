@@ -174,8 +174,8 @@ const About = () => {
         justifyContent="center"
         mt="1rem"
       >
-        <Box boxShadow="md" p="8" rounded="md" h="22rem">
-          <Box>
+        <Box boxShadow="md" p="8" rounded="md" h="22rem" bgColor="white">
+          <Box >
             <Text fontSize="3xl" m="1rem" color="#1A365D" textAlign="center">
               Gender
             </Text>
@@ -227,7 +227,7 @@ const About = () => {
           maxW={{ lg: "12xl" }}
           rounded={{ lg: "lg" }}
         >
-          <Box boxShadow="md" p="8" rounded="md" h="22rem">
+          <Box boxShadow="md" p="8" rounded="md" h="22rem" bgColor="white">
             <Box>
               <Text fontSize="3xl" m="1rem" color="#1A365D" textAlign="center">
                 Enroll in Education
@@ -276,7 +276,7 @@ const About = () => {
       </Box>
 
       <Box>
-        <Table variant="simple" size="sm" textAlign="center" justifyContent="center" mt="6rem">
+        <Table variant="simple" size="sm" textAlign="center" justifyContent="center" mt="6rem" mb="3rem">
           <Thead>
             <Tr>
               <Th>Gender statistics</Th>

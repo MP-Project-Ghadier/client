@@ -116,13 +116,13 @@ const Register = () => {
 
   return (
     <>
-      <Center>
-        <Navbar />
+      <Navbar />
 
+      <Center>
         <Stack
           boxShadow="2xl"
           p="6"
-          m="160px"
+          m="60px"
           rounded="md"
           w="50%"
           justifyContent="center"
@@ -135,8 +135,8 @@ const Register = () => {
             {/* should be 2 options user || specialist */}
             <Tabs isFitted variant="enclosed">
               <TabList mb="1em">
-                <Tab >User</Tab>
-                <Tab >Specialist</Tab>
+                <Tab>User</Tab>
+                <Tab>Specialist</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
@@ -317,10 +317,7 @@ const Register = () => {
             <Box>
               <Text fontSize="2xl">
                 You Already Have an Account?
-                <Button
-                ml="1rem"
-                  onClick={() => navigate("/login")}
-                >
+                <Button ml="1rem" onClick={() => navigate("/login")}>
                   Login
                 </Button>
               </Text>

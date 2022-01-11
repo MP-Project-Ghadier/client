@@ -144,22 +144,24 @@ const OneResearch = () => {
             rounded="md"
           >
             {state.logInReducer.role == "Admin" ? (
-              <Menu>
-                <MenuButton
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<GiHamburgerMenu />}
-                  variant="outline"
-                />
-                <MenuList>
-                  <MenuItem onClick={() => setEdit(true)}>
-                    Edit Research
-                  </MenuItem>
-                  <MenuItem onClick={() => deletePost()}>
-                    Delete Research
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              <Box display="flex" flexDirection="row-reverse">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<GiHamburgerMenu />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => setEdit(true)}>
+                      Edit Research
+                    </MenuItem>
+                    <MenuItem onClick={() => deletePost()}>
+                      Delete Research
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
             ) : (
               ""
             )}

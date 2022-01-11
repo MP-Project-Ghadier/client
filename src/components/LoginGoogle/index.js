@@ -24,10 +24,8 @@ const LoginGoogle = () => {
         dispatch(
           login({
             token: response.tokenId,
-            userId: response.profileObj.googleId,
-            userEmail: response.profileObj.email,
-            userName: response.profileObj.givenName,
-            userAvatar: response.profileObj.imageUrl,
+            role: result.data.result.role,
+            user: result.data.result,
           })
         );
         navigate("/");
