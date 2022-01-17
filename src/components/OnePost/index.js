@@ -31,7 +31,7 @@ const OnePost = () => {
   const [userName, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [isEdit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const state = useSelector((state) => {
     return state;
@@ -60,8 +60,8 @@ const OnePost = () => {
       const result = await axios.put(
         `${BASE_URL}/updatePost/${postId}`,
         {
-          title: title,
-          desc: desc,
+          title: title.length > 0 ? title : post.title,
+          desc: desc.length > 0 ? desc : post.desc,
         },
         {
           headers: {
@@ -69,7 +69,6 @@ const OnePost = () => {
           },
         }
       );
-      console.log(result.data);
       setPost(result.data);
       if (result.status === 200) {
         Swal.fire({
@@ -79,6 +78,7 @@ const OnePost = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setEdit(false);
       }
     } catch (error) {
       console.log(error.response);
@@ -90,6 +90,29 @@ const OnePost = () => {
         });
       }
     }
+  };
+  const puplish = () => {
+    Swal.fire({
+      title: "Do you want to puplish a new event?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Puplish",
+      denyButtonText: `Don't Puplish`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updatePost();
+        setTitle("");
+        setDesc("");
+        Swal.fire("Puplished!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("The event is not puplished", "", "info");
+        setTitle("");
+        setDesc("");
+      } else {
+        setTitle("");
+        setDesc("");
+      }
+    });
   };
 
   const deletePost = async () => {
@@ -138,7 +161,8 @@ const OnePost = () => {
             rounded="md"
             textAlign="center"
           >
-            {state.logInReducer.user.name == userName ? (
+            {state.logInReducer.user.name == userName ||
+            state.logInReducer.role == "Admin" ? (
               <Box display="flex" flexDirection="row-reverse">
                 <Menu>
                   <MenuButton
@@ -148,7 +172,9 @@ const OnePost = () => {
                     variant="outline"
                   />
                   <MenuList>
-                    <MenuItem onClick={() => setEdit(true)}>Edit Post</MenuItem>
+                    <MenuItem onClick={() => setEdit(!edit)}>
+                      Edit Post
+                    </MenuItem>
                     <MenuItem onClick={() => deletePost()}>
                       Delete Post
                     </MenuItem>
@@ -159,60 +185,72 @@ const OnePost = () => {
               ""
               // console.log(post.user)
             )}
+            {edit ? (
+              <Center>
+                <Box
+                  m="4"
+                  w="50rem"
+                  boxShadow="base"
+                  p="3"
+                  rounded="md"
+                  textAlign="center"
+                >
+                  <Heading as="h3" size="lg" m="2rem">
+                    Edit Post
+                  </Heading>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Title
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  ></Input>
 
-            <Heading textAlign="center">{post.title}</Heading>
-
-            <Box>
-              <Text p="5" m="5">
-                {post.desc}
-              </Text>
-            </Box>
-            <Box>
-              <Text
-                mt={2}
-                fontSize="lg"
-                lineHeight="short"
-                textAlign="left"
-                pl="3"
-              >
-                Shared By: {userName}
-              </Text>
-            </Box>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Description
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Description"
+                    value={desc}
+                    onChange={(e) => {
+                      setDesc(e.target.value);
+                    }}
+                  ></Input>
+                  <Button onClick={puplish} m="0.5rem">
+                    Update
+                  </Button>
+                </Box>
+              </Center>
+            ) : (
+              <>
+                <Heading textAlign="center">{post.title}</Heading>
+                <Box>
+                  <Text p="5" m="5">
+                    {post.desc}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text
+                    mt={2}
+                    fontSize="lg"
+                    lineHeight="short"
+                    textAlign="left"
+                    pl="3"
+                  >
+                    Shared By: {userName}
+                  </Text>
+                </Box>
+              </>
+            )}
           </Box>
-          {isEdit ? (
-            <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">
-              <Heading as="h3" size="lg">
-                Edit Post
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              ></Input>
-
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <Button onClick={updatePost}>Save</Button>
-            </Box>
-          ) : (
-            ""
-          )}
         </Center>
       )}
-      <Box m="1rem">
+      <Box border="oldlace">
         <Comments />
       </Box>
     </>

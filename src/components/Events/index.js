@@ -14,9 +14,11 @@ import {
   Flex,
   Link,
   chakra,
+  Tooltip,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
 import Navbar from "../Navbar";
+import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -28,6 +30,7 @@ const Events = () => {
   const [img, setImg] = useState(null);
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
+  const [add, setAdd] = useState(false);
 
   const state = useSelector((state) => {
     return {
@@ -136,99 +139,111 @@ const Events = () => {
   return (
     <>
       <Navbar />
-      <Box p={6}>
-        <Heading as="h3" size="lg" p={5}>
+      <Box p="20" h="40vh">
+        <Heading as="h3" size="lg" p={3}>
           News & Events
         </Heading>
-        <Flex alignItems="center" p={5}>
-          <Flex alignItems="center">
-            <Text fontSize="xl" m={3}>
-              Stay updated about our various activities, events, milestones and
-              achievements. At the Society for Autism Families, we are
-              passionate about spreading and showcasing our news updates, our
-              sponsored events, as well as our professional works and
-              publications to keep interested individuals informed about our
-              growing programmes that mark a memorable humanitarian impression.
-            </Text>
-          </Flex>
-        </Flex>
-      </Box>
-      
-      {state.logInReducer.role === "Admin" ? (
-        <Center>
-          <Box
-            m="20px"
-            w="50rem"
-            boxShadow="base"
-            p="6"
-            rounded="md"
-            textAlign="center"
-            key={state.logInReducer.user.name}
-          >
-            <Heading as="h3" size="lg" m="2rem">
-              New Event
-            </Heading>
-            <Heading as="h4" size="md" m="0.5rem">
-              Title
-            </Heading>
-            <Input
-              m="0.5rem"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            ></Input>
-
-            <Heading as="h4" size="md" m="0.5rem">
-              Description
-            </Heading>
-            <Input
-              m="0.5rem"
-              placeholder="Description"
-              value={desc}
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
-            ></Input>
-            <Heading as="h4" size="md" m="0.5rem">
-              Event Image
-            </Heading>
-            <Box>
-              <Input
-                type="file"
-                name="newPost"
-                onChange={handleChange}
-                m="0.5rem"
+        <Text fontSize="xl" m={3}>
+          Stay updated about our various activities, events, milestones and
+          achievements. At the Society for Autism Families, we are passionate
+          about spreading and showcasing our news updates, our sponsored events,
+          as well as our professional works and publications to keep interested
+          individuals informed about our growing programmes that mark a
+          memorable humanitarian impression.
+        </Text>
+        {state.logInReducer.role === "Admin" ? (
+          <Box display="flex" justifyContent="flex-end">
+            <Tooltip label="Add new event!">
+              <PlusSquareIcon
+                boxSize={12}
+                _hover={{
+                  background: "white",
+                  color: "#2C5282",
+                }}
+                onClick={() => setAdd(!add)}
               />
-              <Box>
-                <Button onClick={handleUpload}>upload</Button>
-                <progress value={progress} max="100" />
-              </Box>
+            </Tooltip>
+          </Box>
+        ) : (
+          ""
+        )}
+      </Box>
+      <>
+        {add ? (
+          <Center>
+            <Box
+                m="4"
+                w="50rem"
+                boxShadow="base"
+                p="3"
+                rounded="md"
+                textAlign="center"
+            >
+              <Heading as="h3" size="lg" m="2rem">
+                New Event
+              </Heading>
+              <Heading as="h4" size="md" m="0.5rem">
+                Title
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              ></Input>
 
-              <Image alt={title} src={url} />
+              <Heading as="h4" size="md" m="0.5rem">
+                Description
+              </Heading>
+              <Input
+                m="0.5rem"
+                placeholder="Description"
+                value={desc}
+                onChange={(e) => {
+                  setDesc(e.target.value);
+                }}
+              ></Input>
+              <Heading as="h4" size="md" m="0.5rem">
+                Event Image
+              </Heading>
               <Box>
-                <Button onClick={puplish}>Puplish</Button>
+                <Input
+                  type="file"
+                  name="newPost"
+                  onChange={handleChange}
+                  m="0.5rem"
+                />
+                <Box>
+                  <Button onClick={handleUpload}>upload</Button>
+                  <progress value={progress} max="100" />
+                </Box>
+
+                <Image alt={title} src={url} />
+                <Box>
+                  <Button onClick={puplish}>Puplish</Button>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Center>
-      ) : (
-        ""
-      )}
+          </Center>
+        ) : (
+          ""
+        )}
+      </>
       <Box display="flex" flexWrap="wrap" justifyContent="space-evenly">
         {events && events.length
           ? events.map((ele) => {
               // console.log(ele);
               return (
                 <Flex
-                  p={50}
+                  p={8}
                   w="full"
                   alignItems="center"
                   justifyContent="center"
                   key={ele._id}
                 >
-                  <Box mx="auto" rounded="lg" shadow="md" maxW="2xl">
+                  <Box  w = "300rem" mx="auto" rounded="lg" shadow="md" maxW="2xl" >
                     <Image
                       roundedTop="lg"
                       w="full"

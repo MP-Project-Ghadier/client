@@ -31,18 +31,21 @@ const OneCenter = () => {
   let postId = useParams().id;
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
-  const [isEdit, setEdit] = useState(false);
+  const [url, setUrl] = useState("");
+  const [edit, setEdit] = useState(false);
+  const [center, setCenter] = useState([]);
   const [img, setImg] = useState(null);
-  const [center, setCenter] = useState({
-    title: "",
-    desc: "",
-    img: "",
-    location: "",
-  });
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [locationLink, setlocation] = useState("");
 
   const state = useSelector((state) => {
     return state;
   });
+
+  useEffect(() => {
+    oneCenter();
+  }, []);
 
   const oneCenter = async () => {
     try {
@@ -51,7 +54,6 @@ const OneCenter = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      // console.log(result.data);
       setCenter(result.data);
     } catch (error) {
       console.log(error.response);
@@ -62,14 +64,20 @@ const OneCenter = () => {
     try {
       const result = await axios.put(
         `${BASE_URL}/updatePost/${postId}`,
-        center,
+        {
+          title: title.length > 0 ? title : center.title,
+          desc: desc.length > 0 ? desc : center.desc,
+          img: img ? img : center.img,
+          locationLink:
+            locationLink.length > 0 ? locationLink : center.location,
+        },
         {
           headers: {
             Authorization: `Bearer ${state.logInReducer.token}`,
           },
         }
       );
-      console.log(result.data);
+      // console.log(result.data);
       setCenter(result.data);
       if (result.status === 200) {
         Swal.fire({
@@ -80,16 +88,45 @@ const OneCenter = () => {
           timer: 1500,
         });
       }
+      setEdit(!edit);
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
       if (error.response.status === 400) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Make sure to fill all fields! try again",
+          text: "There is something went wrong, ask the admin",
         });
       }
+      setEdit(!edit);
     }
+  };
+
+  const puplish = () => {
+    Swal.fire({
+      title: "Do you want to puplish a new event?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Puplish",
+      denyButtonText: `Don't Puplish`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updatePost();
+        setTitle("");
+        setDesc("");
+        setImg("");
+        Swal.fire("Puplished!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("The event is not puplished", "", "info");
+        setTitle("");
+        setDesc("");
+        setImg("");
+      } else {
+        setTitle("");
+        setDesc("");
+        setImg("");
+      }
+    });
   };
 
   const deletePost = async () => {
@@ -103,7 +140,6 @@ const OneCenter = () => {
           },
         }
       );
-      // console.log(result.data);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -128,7 +164,7 @@ const OneCenter = () => {
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
-      setCenter({ ...center, img });
+      setImg(e.target.files[0]);
     }
   };
 
@@ -150,54 +186,115 @@ const OneCenter = () => {
           .ref("images")
           .child(img.name)
           .getDownloadURL()
-          .then((img) => {
-            setCenter({ ...center, img });
+          .then((url) => {
+            setUrl(url);
           });
       }
     );
   };
 
-
   return (
     <>
       <Navbar />
-      <Box display="flex" flexDirection="column">
-        {center && (
-          <Center key={center._id}>
-            <Box
-              m="20px"
-              w="50rem"
-              boxShadow="base"
-              p="6"
-              rounded="md"
-              textAlign="center"
-            >
-              <Box>
-                {state.logInReducer.role == "Admin" ? (
-                  <Box display="flex" flexDirection="row-reverse">
-                    <Menu>
-                      <MenuButton
-                        as={IconButton}
-                        aria-label="Options"
-                        icon={<GiHamburgerMenu />}
-                        variant="outline"
-                      />
-                      <MenuList>
-                        <MenuItem onClick={() => setEdit(!isEdit)}>
-                          Edit Center
-                        </MenuItem>
-                        <MenuItem onClick={() => deletePost()}>
-                          Delete Center
-                        </MenuItem>
-                      </MenuList>
-                    </Menu>
+      {center && (
+        <Center key={center._id}>
+          <Box
+            m="20px"
+            w="50rem"
+            boxShadow="base"
+            p="6"
+            rounded="md"
+            textAlign="center"
+          >
+            {state.logInReducer.role == "Admin" ? (
+              <Box display="flex" flexDirection="row-reverse">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<GiHamburgerMenu />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => setEdit(!edit)}>
+                      Edit Center
+                    </MenuItem>
+                    <MenuItem onClick={() => deletePost()}>
+                      Delete Center
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              </Box>
+            ) : (
+              ""
+            )}
+            {edit ? (
+              <Center>
+                <Box
+                  m="4"
+                  w="50rem"
+                  boxShadow="base"
+                  p="3"
+                  rounded="md"
+                  textAlign="center"
+                >
+                  <Heading as="h3" size="lg" m="2rem">
+                    Update Center
+                  </Heading>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Title
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  ></Input>
+
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Description
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Description"
+                    value={desc}
+                    onChange={(e) => {
+                      setDesc(e.target.value);
+                    }}
+                  ></Input>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Center Image
+                  </Heading>
+                  <Box>
+                    <Input
+                      type="file"
+                      name="newPost"
+                      onChange={handleChange}
+                      m="0.5rem"
+                    />
+                    <Box>
+                      <Button onClick={handleUpload}>upload</Button>
+                      <progress value={progress} max="100" />
+                    </Box>
+
+                    <Image alt={title} src={url} />
+                    <Box>
+                      <Button onClick={puplish}>ْUpdate</Button>
+                    </Box>
                   </Box>
-                ) : (
-                  ""
-                )}
+                </Box>
+              </Center>
+            ) : (
+              <>
                 <Box>
                   <Center>
-                    <Image src={img} alt={center.title} boxSize="360px" />
+                    <Image
+                      src={center.img}
+                      alt={center.title}
+                      boxSize="360px"
+                    />
                   </Center>
                   <Center>
                     <Text className="p">{center.desc}</Text>
@@ -208,68 +305,11 @@ const OneCenter = () => {
                     <iframe src={center.location} alt="demo" />
                   </AspectRatio>
                 </Box>
-              </Box>
-            </Box>
-            {isEdit ? (
-              <Box w="50%">
-                <Heading as="h3" size="lg">
-                  Edit Center
-                </Heading>
-                <Heading as="h4" size="md">
-                  Title
-                </Heading>
-                <Input
-                  placeholder="Title"
-                  // value={title}
-                  onChange={(e) => {
-                    setCenter({ ...center, title: e.target.value });
-                  }}
-                ></Input>
-
-                <Heading as="h4" size="md">
-                  Description
-                </Heading>
-                <Input
-                  placeholder="Description"
-                  // value={desc}
-                  onChange={(e) => {
-                    setCenter({ ...center, desc: e.target.value });
-                  }}
-                ></Input>
-                <Heading as="h4" size="md">
-                  Location
-                </Heading>
-                <Input
-                  placeholder="Location"
-                  // value={location}
-                  onChange={(e) => {
-                    setCenter({ ...center, location: e.target.value });
-                  }}
-                ></Input>
-                <Box>
-                  <Text as="h4" size="md">
-                    New Avatar
-                  </Text>
-                  <div>
-                    <Input
-                      type="file"
-                      name="newAvatar"
-                      onChange={handleChange}
-                    />
-                    <div>
-                      <Button onClick={handleUpload}>upload</Button>
-                      <progress value={progress} max="100" />
-                    </div>
-                    <Button onClick={updatePost}>Save</Button>
-                  </div>
-                </Box>
-              </Box>
-            ) : (
-              ""
+              </>
             )}
-          </Center>
-        )}
-      </Box>
+          </Box>
+        </Center>
+      )}
     </>
   );
 };

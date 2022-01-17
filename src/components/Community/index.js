@@ -97,8 +97,8 @@ const Posts = () => {
   return (
     <>
       <Navbar />
-      <Box m="40" h="40vh">
-        <Heading as="h3" size="lg" m={3}>
+      <Box p="20" h="40vh">
+        <Heading as="h3" size="lg" p={3}>
           Community
         </Heading>
         <Text fontSize="xl" m={3}>
@@ -109,6 +109,8 @@ const Posts = () => {
           interests and concerns
         </Text>
         {state.logInReducer.token == null ? (
+          ""
+        ) : (
           <Box display="flex" justifyContent="flex-end">
             <Tooltip label="Add new post!">
               <PlusSquareIcon
@@ -121,18 +123,15 @@ const Posts = () => {
               />
             </Tooltip>
           </Box>
-        ) : (
-          ""
         )}
         <>
           {add ? (
             <Center>
               <Box
-                m="40"
-                // m="20px"
+                m="4"
                 w="50rem"
                 boxShadow="base"
-                p="6"
+                p="3"
                 rounded="md"
                 textAlign="center"
               >
@@ -172,69 +171,76 @@ const Posts = () => {
           )}
         </>
         <>
-          {posts && posts.length
-            ? posts.map((ele) => {
-                return (
-                  <Flex
-                    p={8}
-                    w="full"
-                    alignItems="center"
-                    justifyContent="center"
-                    key={ele._id}
-                  >
-                    <Box
-                      mx="auto"
-                      px={8}
-                      py={4}
-                      rounded="lg"
-                      shadow="lg"
-                      w="50rem"
-                      maxW="50rem"
+          <Box display="flex" flexWrap="wrap" justifyContent="space-evenly">
+            {posts && posts.length
+              ? posts.map((ele) => {
+                  return (
+                    <Flex
+                      p={8}
+                      w="full"
+                      alignItems="center"
+                      justifyContent="center"
+                      key={ele._id}
                     >
-                      <Flex justifyContent="space-between" alignItems="center">
-                        <chakra.span fontSize="sm">{ele.createdAt}</chakra.span>
-                      </Flex>
-
-                      <Box mt={2}>
-                        <Text fontSize="2xl" fontWeight="700">
-                          {ele.title}
-                        </Text>
-                      </Box>
-
-                      <Flex
-                        justifyContent="space-between"
-                        alignItems="center"
-                        mt={4}
+                      <Box
+                        mx="auto"
+                        px={8}
+                        py={4}
+                        rounded="lg"
+                        shadow="lg"
+                        w="50rem"
+                        maxW="50rem"
                       >
-                        <Button
-                          onClick={() => {
-                            onePost(ele._id);
-                          }}
+                        <Flex
+                          justifyContent="space-between"
+                          alignItems="center"
                         >
-                          Read more
-                        </Button>
-
-                        <Flex alignItems="center">
-                          <Image
-                            mx={4}
-                            w={10}
-                            h={10}
-                            rounded="full"
-                            fit="cover"
-                            display={{ base: "none", sm: "block" }}
-                            src={ele.user.avatar}
-                            alt="avatar"
-                          />
-                          <Text mx={2} fontWeight="bold">
-                            {ele.user.name}
-                          </Text>
+                          <chakra.span fontSize="sm">
+                            {ele.createdAt}
+                          </chakra.span>
                         </Flex>
-                      </Flex>
-                    </Box>
-                  </Flex>
-                );
-              })
-            : ""}
+
+                        <Box mt={2}>
+                          <Text fontSize="2xl" fontWeight="700">
+                            {ele.title}
+                          </Text>
+                        </Box>
+
+                        <Flex
+                          justifyContent="space-between"
+                          alignItems="center"
+                          mt={4}
+                        >
+                          <Button
+                            onClick={() => {
+                              onePost(ele._id);
+                            }}
+                          >
+                            Read more
+                          </Button>
+
+                          <Flex alignItems="center">
+                            <Image
+                              mx={4}
+                              w={10}
+                              h={10}
+                              rounded="full"
+                              fit="cover"
+                              display={{ base: "none", sm: "block" }}
+                              src={ele.user.avatar}
+                              alt="avatar"
+                            />
+                            <Text mx={2} fontWeight="bold">
+                              {ele.user.name}
+                            </Text>
+                          </Flex>
+                        </Flex>
+                      </Box>
+                    </Flex>
+                  );
+                })
+              : ""}
+          </Box>
         </>
       </Box>
     </>

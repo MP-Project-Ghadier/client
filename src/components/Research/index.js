@@ -3,8 +3,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { Box, Button, Center, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Tooltip,
+  Button,
+  Center,
+  Heading,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import Navbar from "../Navbar";
+import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -13,7 +22,8 @@ const Researches = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [researches, setResearches] = useState(null);
-  const [location, setLocation] = useState("");
+  const [link, setLink] = useState("");
+  const [add, setAdd] = useState(false);
 
   const state = useSelector((state) => {
     return {
@@ -24,7 +34,7 @@ const Researches = () => {
   useEffect(() => {
     allResearches();
   }, []);
-  
+
   const newResearch = async () => {
     try {
       const result = await axios.post(
@@ -32,7 +42,7 @@ const Researches = () => {
         {
           title: title,
           desc: desc,
-          locaation: location,
+          location: link,
         },
         {
           headers: {
@@ -40,7 +50,6 @@ const Researches = () => {
           },
         }
       );
-      console.log(result);
       allResearches();
     } catch (error) {
       console.log(error.response);
@@ -54,7 +63,6 @@ const Researches = () => {
       confirmButtonText: "Puplish",
       denyButtonText: `Don't Puplish`,
     }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         newResearch();
         setTitle("");
@@ -78,7 +86,7 @@ const Researches = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-        console.log(result.data);
+      // console.log(result.data);
       setResearches(result.data);
     } catch (error) {
       console.log(error.response);
@@ -89,11 +97,10 @@ const Researches = () => {
     navigate(`/research/${id}`);
   };
 
-
   return (
     <>
       <Navbar />
-      <Box m="40" h="40vh">
+      <Box p="20" h="40vh">
         <Heading as="h3" size="lg" m={3}>
           Research Studies
         </Heading>
@@ -106,60 +113,80 @@ const Researches = () => {
           Autism and share it here with our community for help families to be
           more aware about Autism.
         </Text>
-        <Center>
-          {state.logInReducer.role === "Admin" ||
-          state.logInReducer.role === "Specialist" ? (
-            <Box
-              m="20px"
-              w="50rem"
-              boxShadow="base"
-              p="6"
-              rounded="md"
-              textAlign="center"
-            >
-              <Heading as="h3" size="lg" m="2rem">
-                New Research
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
+        {state.logInReducer.role === "Admin" ||
+        state.logInReducer.role === "Specialist" ? (
+          <Box display="flex" justifyContent="flex-end">
+            <Tooltip label="Add new event!">
+              <PlusSquareIcon
+                boxSize={12}
+                _hover={{
+                  background: "white",
+                  color: "#2C5282",
                 }}
-              ></Input>
+                onClick={() => setAdd(!add)}
+              />
+            </Tooltip>
+          </Box>
+        ) : (
+          ""
+        )}
+        <>
+          {add ? (
+            <Center>
+              <Box
+                m="4"
+                w="50rem"
+                boxShadow="base"
+                p="3"
+                rounded="md"
+                textAlign="center"
+              >
+                <Heading as="h3" size="lg" m="2rem">
+                  New Research
+                </Heading>
+                <Heading as="h4" size="md" m="0.5rem">
+                  Title
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                ></Input>
 
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <Heading as="h4" size="md">
-                Link
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="research link"
-                value={location}
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
-              ></Input>
-              <Button onClick={puplish}>Puplish</Button>
-            </Box>
+                <Heading as="h4" size="md" m="0.5rem">
+                  Description
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Description"
+                  value={desc}
+                  onChange={(e) => {
+                    setDesc(e.target.value);
+                  }}
+                ></Input>
+                 <Heading as="h4" size="md" m="0.5rem">
+                  Link
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Title"
+                  value={link}
+                  onChange={(e) => {
+                    setLink(e.target.value);
+                  }}
+                ></Input>
+                <Button onClick={puplish} m="0.5rem">
+                  Puplish
+                </Button>
+              </Box>
+            </Center>
           ) : (
             ""
           )}
-        </Center>
+        </>
         <>
           {researches && researches.length
             ? researches.map((ele) => {

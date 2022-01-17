@@ -29,7 +29,8 @@ const OneResearch = () => {
   const [userName, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [isEdit, setEdit] = useState(false);
+  const [link, setLink] = useState("");
+  const [edit, setEdit] = useState(false);
 
   const state = useSelector((state) => {
     return state;
@@ -47,7 +48,6 @@ const OneResearch = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      //   console.log(result.data);
       setResearch(result.data);
       setUsername(result.data.user.name);
     } catch (error) {
@@ -61,8 +61,9 @@ const OneResearch = () => {
       const result = await axios.put(
         `${BASE_URL}/updatePost/${postId}`,
         {
-          title: title,
-          desc: desc,
+          title: title.length > 0 ? title : research.title,
+          desc: desc.length > 0 ? desc : research.desc,
+          location: link.length > 0 ? link : research.location,
         },
         {
           headers: {
@@ -81,6 +82,7 @@ const OneResearch = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setEdit(false);
       }
     } catch (error) {
       console.log(error.response);
@@ -94,7 +96,32 @@ const OneResearch = () => {
     }
   };
 
-  //   postRouter.put("/deletePost/:id", authentication, deletePost);
+  const puplish = () => {
+    Swal.fire({
+      title: "Do you want to puplish a new event?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Puplish",
+      denyButtonText: `Don't Puplish`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updatePost();
+        setTitle("");
+        setDesc("");
+        setLink("");
+        Swal.fire("Puplished!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("The event is not puplished", "", "info");
+        setTitle("");
+        setDesc("");
+        setLink("");
+      } else {
+        setTitle("");
+        setDesc("");
+        setLink("");
+      }
+    });
+  };
 
   const deletePost = async () => {
     try {
@@ -135,72 +162,95 @@ const OneResearch = () => {
       <Navbar />
       {research && (
         <Center key={research._id}>
-          <Box
-            p="5"
-            maxW="50%"
-            borderWidth="1px"
-            boxShadow="2xl"
-            p="6"
-            rounded="md"
-          >
-            {state.logInReducer.role == "Admin" ? (
-              <Box display="flex" flexDirection="row-reverse">
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<GiHamburgerMenu />}
-                    variant="outline"
-                  />
-                  <MenuList>
-                    <MenuItem onClick={() => setEdit(true)}>
-                      Edit Research
-                    </MenuItem>
-                    <MenuItem onClick={() => deletePost()}>
-                      Delete Research
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+          {edit ? (
+            <Center>
+              <Box
+                m="4"
+                w="50rem"
+                boxShadow="base"
+                p="3"
+                rounded="md"
+                textAlign="center"
+              >
+                <Heading as="h3" size="lg" m="2rem">
+                  Update Research
+                </Heading>
+                <Heading as="h4" size="md" m="0.5rem">
+                  Title
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                ></Input>
+
+                <Heading as="h4" size="md" m="0.5rem">
+                  Description
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Description"
+                  value={desc}
+                  onChange={(e) => {
+                    setDesc(e.target.value);
+                  }}
+                ></Input>
+                <Heading as="h4" size="md" m="0.5rem">
+                  Link
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Title"
+                  value={link}
+                  onChange={(e) => {
+                    setLink(e.target.value);
+                  }}
+                ></Input>
+                <Button onClick={puplish} m="0.5rem">
+                  Update
+                </Button>
               </Box>
-            ) : (
-              ""
-            )}
-
-            <Heading textAlign="center">{research.title}</Heading>
-            <Text p="5" m="5">
-              {research.desc}
-            </Text>
-          </Box>
-          {isEdit ? (
-            <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">
-              <Heading as="h3" size="lg">
-                Edit Research
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              ></Input>
-
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <Button onClick={updatePost}>Save</Button>
-            </Box>
+            </Center>
           ) : (
-            ""
+            <Box
+              p="5"
+              maxW="50%"
+              borderWidth="1px"
+              boxShadow="2xl"
+              p="6"
+              rounded="md"
+            >
+              {state.logInReducer.role == "Admin" ? (
+                <Box display="flex" flexDirection="row-reverse">
+                  <Menu>
+                    <MenuButton
+                      as={IconButton}
+                      aria-label="Options"
+                      icon={<GiHamburgerMenu />}
+                      variant="outline"
+                    />
+                    <MenuList>
+                      <MenuItem onClick={() => setEdit(!edit)}>
+                        Edit Research
+                      </MenuItem>
+                      <MenuItem onClick={() => deletePost()}>
+                        Delete Research
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Box>
+              ) : (
+                ""
+              )}
+
+              <Heading textAlign="center">{research.title}</Heading>
+              <Text p="5" m="5">
+                {research.desc}
+              </Text>
+            </Box>
           )}
         </Center>
       )}
