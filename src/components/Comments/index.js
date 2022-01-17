@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -31,8 +30,7 @@ const Comments = () => {
 
   useEffect(() => {
     postComment();
-    setComment("")
-
+    setComment("");
   }, []);
 
   const postComment = async () => {
@@ -135,76 +133,93 @@ const Comments = () => {
       <Center>
         <Heading>Comments</Heading>
       </Center>
-      {comments && (
-        <>
-          {comments.map((elem, i) => {
-            return (
-              <Flex
-                p={50}
-                w="full"
-                alignItems="center"
-                justifyContent="center"
-                key={i}
-              >
-                <Box w="md" mx="auto" py={4} px={8} shadow="lg" rounded="lg">
-                  {state.logInReducer.user._id === elem.user._id ? (
-                    <IconButton
-                      colorScheme="blue"
-                      aria-label="comment btn"
-                      m="2"
-                      onClick={() => {
-                        deleteComment(elem._id);
-                      }}
-                      icon={<IoIosTrash />}
-                    />
-                  ) : (
-                    ""
-                  )}
-                  <Flex justifyContent={{ base: "center", md: "end" }} mt={-16}>
-                    <Image
-                      w={20}
-                      h={20}
-                      fit="cover"
-                      rounded="full"
-                      borderStyle="solid"
-                      borderWidth={2}
-                      alt="Testimonial avatar"
-                      src={elem.user.avatar}
-                    />
-                  </Flex>
 
-                  <chakra.p m={4} fontSize={{ base: "2xl", md: "m" }} fontWeight="bold">
-                    {elem.desc}
-                  </chakra.p>
-
-                  <Flex justifyContent="space-between" mt={4}>
-                    <chakra.h2
-                      fontSize={{ base: "lg", md: "m" }}
-                      mt={{ base: 2, md: 0 }}
+        <Box flexDirection="column">
+        <Box mb="4" textAlign="center">
+          <Input
+            size="md"
+            w="400px"
+            h="80px"
+            m={8}
+            placeholder="write your comment here"
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+          />
+          <Button onClick={puplish}>add comment</Button>
+        </Box>
+          {comments && (
+            <>
+              {comments.map((elem, i) => {
+                return (
+                  <Flex
+                    p={50}
+                    w="full"
+                    alignItems="center"
+                    justifyContent="center"
+                    key={i}
+                  >
+                    <Box
+                      w="50rem"
+                      mx="auto"
+                      py={4}
+                      px={8}
+                      shadow="lg"
+                      rounded="lg"
                     >
-                      {elem.createdAt}
-                    </chakra.h2>
-                    <Text fontSize="xl">{elem.user.name}</Text>
+                      {state.logInReducer.user._id === elem.user._id ? (
+                        <IconButton
+                          colorScheme="blue"
+                          aria-label="comment btn"
+                          m="2"
+                          onClick={() => {
+                            deleteComment(elem._id);
+                          }}
+                          icon={<IoIosTrash />}
+                        />
+                      ) : (
+                        ""
+                      )}
+                      <Flex
+                        justifyContent={{ base: "center", md: "end" }}
+                        mt={-16}
+                      >
+                        <Image
+                          w={20}
+                          h={20}
+                          fit="cover"
+                          rounded="full"
+                          borderStyle="solid"
+                          borderWidth={2}
+                          alt="Testimonial avatar"
+                          src={elem.user.avatar}
+                        />
+                      </Flex>
+
+                      <chakra.p
+                        m={4}
+                        fontSize={{ base: "2xl", md: "m" }}
+                        fontWeight="bold"
+                      >
+                        {elem.desc}
+                      </chakra.p>
+
+                      <Flex justifyContent="space-between" mt={4}>
+                        <chakra.p
+                          fontSize={{ base: "lg", md: "m" }}
+                          mt={{ base: 2, md: 0 }}
+                        >
+                          {elem.createdAt}
+                        </chakra.p>
+                        <Text fontSize="xl">{elem.user.name}</Text>
+                      </Flex>
+                    </Box>
                   </Flex>
-                </Box>
-              </Flex>
-            );
-          })}
-        </>
-      )}
-      <Box mb="4">
-        <Input
-          size="md"
-          w="400px"
-          h="80px"
-          m={8}
-          placeholder="write your comment here"
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-        />
-        <Button onClick={puplish}>add comment</Button>
-      </Box>
+                );
+              })}
+            </>
+          )}
+        </Box>
     </>
   );
 };

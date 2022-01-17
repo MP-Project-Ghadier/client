@@ -23,6 +23,7 @@ import {
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import Navbar from "../Navbar";
+import { storage } from "../firebase";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -33,8 +34,10 @@ const OneEvent = () => {
   const [userName, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [isEdit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [img, setImg] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [url, setUrl] = useState("");
 
   const state = useSelector((state) => {
     return state;
@@ -43,8 +46,7 @@ const OneEvent = () => {
   useEffect(() => {
     oneEvent();
   }, []);
-  
-  // postRouter.get("/getResearchById/:id", authentication, getResearchById);
+
   const oneEvent = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getEventById/${postId}`, {
@@ -52,7 +54,6 @@ const OneEvent = () => {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      //   console.log(result.data);
       setImg(result.data.img);
       setEvent(result.data);
       setUsername(result.data.user.name);
@@ -61,16 +62,45 @@ const OneEvent = () => {
     }
   };
 
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setImg(e.target.files[0]);
+    }
+  };
 
+  const handleUpload = () => {
+    const uploadTask = storage.ref(`images/${img.name}`).put(img);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(img.name)
+          .getDownloadURL()
+          .then((url) => {
+            setUrl(url);
+          });
+      }
+    );
+  };
 
-  //   postRouter.put("/updatePost/:id", authentication, authorization, updatePost);
   const updatePost = async () => {
     try {
       const result = await axios.put(
         `${BASE_URL}/updatePost/${postId}`,
         {
-          title: title,
-          desc: desc,
+          title: title.length > 0 ? title : event.title,
+          desc: desc.length > 0 ? desc : event.desc,
+          img: img.length > 0 ? img : event.img,
         },
         {
           headers: {
@@ -78,7 +108,6 @@ const OneEvent = () => {
           },
         }
       );
-      // console.log(result.data);
       setEvent(result.data);
       setUsername(result.data.user.name);
       if (result.status === 200) {
@@ -89,6 +118,7 @@ const OneEvent = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        setEdit(false);
       }
     } catch (error) {
       console.log(error.response);
@@ -102,7 +132,29 @@ const OneEvent = () => {
     }
   };
 
-  //   postRouter.put("/deletePost/:id", authentication, deletePost);
+  const puplish = () => {
+    Swal.fire({
+      title: "Do you want to puplish a new event?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Puplish",
+      denyButtonText: `Don't Puplish`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updatePost();
+        setTitle("");
+        setDesc("");
+        Swal.fire("Puplished!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("The event is not puplished", "", "info");
+        setTitle("");
+        setDesc("");
+      } else {
+        setTitle("");
+        setDesc("");
+      }
+    });
+  };
 
   const deletePost = async () => {
     try {
@@ -115,7 +167,6 @@ const OneEvent = () => {
           },
         }
       );
-      // console.log(result.data);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -161,7 +212,7 @@ const OneEvent = () => {
                     variant="outline"
                   />
                   <MenuList>
-                    <MenuItem onClick={() => setEdit(true)}>
+                    <MenuItem onClick={() => setEdit(!edit)}>
                       Edit Events
                     </MenuItem>
                     <MenuItem onClick={() => deletePost()}>
@@ -173,90 +224,109 @@ const OneEvent = () => {
             ) : (
               ""
             )}
-            <Flex p={50} w="full" alignItems="center" justifyContent="center">
-              <Box mx="auto" rounded="lg" shadow="md" maxW="2xl">
-                <Image
-                  roundedTop="lg"
-                  w="full"
-                  h={64}
-                  fit="cover"
-                  src={event.img}
-                  alt="Article"
-                />
+            {edit ? (
+              <Center>
+                <Box
+                  m="4"
+                  w="50rem"
+                  boxShadow="base"
+                  p="3"
+                  rounded="md"
+                  textAlign="center"
+                >
+                  <Heading as="h3" size="lg" m="2rem">
+                    Update Event
+                  </Heading>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Title
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  ></Input>
 
-                <Box p={6}>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Description
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Description"
+                    value={desc}
+                    onChange={(e) => {
+                      setDesc(e.target.value);
+                    }}
+                  ></Input>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Event Image
+                  </Heading>
                   <Box>
-                    <chakra.span fontSize="xs" textTransform="uppercase">
-                      News & Events
-                    </chakra.span>
-                    <Link
-                      display="block"
-                      fontWeight="bold"
-                      fontSize="2xl"
-                      mt={2}
-                      _hover={{ color: "gray.600", textDecor: "underline" }}
-                    >
-                      {event.title}
-                    </Link>
-                    <chakra.p mt={2} fontSize="xl">
-                      {event.desc}
-                    </chakra.p>
-                  </Box>
-                  {/* {console.log(event.user)} */}
-                  <Box mt={4}>
-                    <Flex alignItems="center">
-                      <Flex alignItems="center">
-                        {/* <Image
-                          h={10}
-                          fit="cover"
-                          rounded="full"
-                          src={event.user.avatar}
-                          alt="Avatar"
-                        /> */}
-                        <Link mx={2} fontWeight="bold">
-                          {/* {event.user.name} */}
-                        </Link>
-                      </Flex>
-                      <chakra.span mx={1} fontSize="sm">
-                        {event.createdAt}
-                      </chakra.span>
-                    </Flex>
+                    <Input
+                      type="file"
+                      name="newPost"
+                      onChange={handleChange}
+                      m="0.5rem"
+                    />
+                    <Box>
+                      <Button onClick={handleUpload}>upload</Button>
+                      <progress value={progress} max="100" />
+                    </Box>
+
+                    <Image alt={title} src={url} />
+                    <Box>
+                      <Button onClick={puplish}>ْUpdate</Button>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            </Flex>
-          </Box>
-          {isEdit ? (
-            <Box m="20px" p="10px" pos="absolute" top="50" left="0" w="20%">
-              <Heading as="h3" size="lg">
-                Edit Event
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              ></Input>
+              </Center>
+            ) : (
+              <Flex p={50} w="full" alignItems="center" justifyContent="center">
+                <Box mx="auto" rounded="lg" shadow="md" maxW="2xl">
+                  <Image
+                    roundedTop="lg"
+                    w="full"
+                    h={64}
+                    fit="cover"
+                    src={event.img}
+                    alt="Article"
+                  />
 
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-              <Button onClick={updatePost}>Save</Button>
-            </Box>
-          ) : (
-            ""
-          )}
+                  <Box p={6}>
+                    <Box>
+                      <chakra.span fontSize="xs" textTransform="uppercase">
+                        News & Events
+                      </chakra.span>
+                      <Link
+                        display="block"
+                        fontWeight="bold"
+                        fontSize="2xl"
+                        mt={2}
+                        _hover={{ color: "gray.600", textDecor: "underline" }}
+                      >
+                        {event.title}
+                      </Link>
+                      <chakra.p mt={2} fontSize="xl">
+                        {event.desc}
+                      </chakra.p>
+                    </Box>
+                    <Box mt={4}>
+                      <Flex alignItems="center">
+                        <Flex alignItems="center">
+                          <Link mx={2} fontWeight="bold"></Link>
+                        </Flex>
+                        <chakra.span mx={1} fontSize="sm">
+                          {event.createdAt}
+                        </chakra.span>
+                      </Flex>
+                    </Box>
+                  </Box>
+                </Box>
+              </Flex>
+            )}
+          </Box>
         </Center>
       )}
     </>

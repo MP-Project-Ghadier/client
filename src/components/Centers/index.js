@@ -12,9 +12,12 @@ import {
   Input,
   Text,
   Image,
+  chakra,
+  Tooltip,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
 import Navbar from "../Navbar";
+import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -27,6 +30,7 @@ const Centers = () => {
   const [location, setLocation] = useState("");
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState("");
+  const [add, setAdd] = useState(false);
 
   const state = useSelector((state) => {
     return {
@@ -39,7 +43,7 @@ const Centers = () => {
   }, []);
 
   const handleChange = (e) => {
-    console.log(e)
+    console.log(e);
     if (e.target.files[0]) {
       setImg(e.target.files[0]);
     }
@@ -121,7 +125,6 @@ const Centers = () => {
     });
   };
 
-
   const allCenters = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getCenter`, {
@@ -143,7 +146,7 @@ const Centers = () => {
   return (
     <>
       <Navbar />
-      <Box m="40" h="40vh">
+      <Box p="20" h="40vh">
         <Heading as="h3" size="lg" m={3}>
           Centers
         </Heading>
@@ -156,139 +159,163 @@ const Centers = () => {
           find the nearest center to diagnosing and provide the health care to
           autistic individuals.
         </Text>
-        <Center>
-          {state.logInReducer.role === "Admin" ? (
-            <Box
-              m="20px"
-              w="50rem"
-              boxShadow="base"
-              p="6"
-              rounded="md"
-              textAlign="center"
-            >
-              <Heading as="h3" size="lg" m="2rem">
-                New Center
-              </Heading>
-              <Heading as="h4" size="md">
-                Title
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
+        {state.logInReducer.role === "Admin" ? (
+          <Box display="flex" justifyContent="flex-end">
+            <Tooltip label="Add new event!">
+              <PlusSquareIcon
+                boxSize={12}
+                _hover={{
+                  background: "white",
+                  color: "#2C5282",
                 }}
-              ></Input>
-
-              <Heading as="h4" size="md">
-                Description
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="Description"
-                value={desc}
-                onChange={(e) => {
-                  setDesc(e.target.value);
-                }}
-              ></Input>
-
-              <Heading as="h4" size="md">
-                Location
-              </Heading>
-              <Input
-                m="0.5rem"
-                placeholder="location link"
-                value={location}
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
-              ></Input>
-
-              <Heading as="h4" size="md" m="0.5rem">
-                Event Image
-              </Heading>
-              <div>
-                <input
-                  type="file"
-                  name="newPost"
-                  onChange={handleChange}
-                  onClick={() => {
-                    console.log("here");
+                onClick={() => setAdd(!add)}
+              />
+            </Tooltip>
+          </Box>
+        ) : (
+          ""
+        )}
+        <>
+          <Center>
+            {add ? (
+              <Box
+                m="20px"
+                w="50rem"
+                boxShadow="base"
+                p="6"
+                rounded="md"
+                textAlign="center"
+              >
+                <Heading as="h3" size="lg" m="2rem">
+                  New Center
+                </Heading>
+                <Heading as="h4" size="md">
+                  Title
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
                   }}
-                />
-                <div>
-                  <Button onClick={handleUpload}>upload</Button>
-                  <progress value={progress} max="100" />
-                </div>
-                <img alt={title} src={url} />
+                ></Input>
 
-                <Button onClick={puplish}>Puplish</Button>
-              </div>
-            </Box>
-          ) : (
-            ""
-          )}
-        </Center>
+                <Heading as="h4" size="md">
+                  Description
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="Description"
+                  value={desc}
+                  maxLength="400"
+                  onChange={(e) => {
+                    setDesc(e.target.value);
+                  }}
+                ></Input>
+
+                <Heading as="h4" size="md">
+                  Location
+                </Heading>
+                <Input
+                  m="0.5rem"
+                  placeholder="location link"
+                  value={location}
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                  }}
+                ></Input>
+
+                <Heading as="h4" size="md" m="0.5rem">
+                  Event Image
+                </Heading>
+                <div>
+                  <input
+                    type="file"
+                    name="newPost"
+                    onChange={handleChange}
+                    onClick={() => {
+                      console.log("here");
+                    }}
+                  />
+                  <div>
+                    <Button onClick={handleUpload}>upload</Button>
+                    <progress value={progress} max="100" />
+                  </div>
+                  <img alt={title} src={url} />
+
+                  <Button onClick={puplish}>Puplish</Button>
+                </div>
+              </Box>
+            ) : (
+              ""
+            )}
+          </Center>
+        </>
         <>
           {centers && centers.length
             ? centers.map((ele) => {
-                  // console.log(ele);
                 return (
-                  <Center key={ele._id}>
+                  <Flex
+                    p={50}
+                    w="full"
+                    alignItems="center"
+                    justifyContent="center"
+                    key={ele._id}
+                  >
                     <Box
-                      p="5"
-                      w="80%"
-                      mt="5rem"
-                      borderRadius="md"
-                      boxShadow="base"
-                      rounded="md"
-                      onClick={() => {
-                        oneCenter(ele._id);
-                      }}
+                      mx={{ lg: 8 }}
+                      display={{ lg: "flex" }}
+                      maxW={{ lg: "5xl" }}
+                      shadow={{ lg: "lg" }}
+                      rounded={{ lg: "lg" }}
                     >
-                      <Heading
-                        mt="2"
-                        fontSize="md"
-                        fontWeight="semibold"
-                        lineHeight="short"
-                        textAlign="center"
-                        pb="3"
+                      <Box w={{ lg: "50%" }}>
+                        <Box
+                          h={{ base: 64, lg: "full" }}
+                          rounded={{ lg: "lg" }}
+                          bgSize="contain"
+                          bgRepeat="no-repeat"
+                          style={{
+                            backgroundImage: `url(${ele.img})`,
+                          }}
+                        ></Box>
+                      </Box>
+
+                      <Box
+                        py={12}
+                        px={6}
+                        maxW={{ base: "xl", lg: "5xl" }}
+                        w={{ lg: "50%" }}
                       >
-                        {ele.title}
-                      </Heading>
-                      <Center>
-                        <Flex
-                          alignItems="center"
-                          justifyContent="center"
-                          rounded="xl"
-                          shadow="lg"
-                          borderWidth="1px"
-                          m="0.5rem"
-                          h="25rem"
-                          mb="3rem"
+                        <chakra.h2
+                          fontSize={{ base: "2xl", md: "3xl" }}
+                          fontWeight="bold"
                         >
-                          <Box
-                            w="100%"
-                            height="200px"
-                            position="relative"
-                            overflow="hidden"
-                            roundedTop="lg"
-                            alignContent="center"
-                            justifyContent="center"
+                          {ele.title}
+                        </chakra.h2>
+                        <chakra.p mt={4}>{ele.desc}</chakra.p>
+
+                        <Box mt={8}>
+                          <Text
+                            bg="gray.900"
+                            color="gray.100"
+                            px={5}
+                            py={3}
+                            fontWeight="semibold"
+                            rounded="lg"
+                            textAlign="center"
+                            _hover={{ bg: "gray.800" }}
+                            onClick={() => {
+                              oneCenter(ele._id);
+                            }}
                           >
-                            <Image
-                              src={ele.img}
-                              objectFit="fill"
-                              alt="img of center"
-                              layout="fill"
-                              boxSize="400px"
-                            />
-                          </Box>
-                        </Flex>
-                      </Center>
+                            Location
+                          </Text>
+                        </Box>
+                      </Box>
                     </Box>
-                  </Center>
+                  </Flex>
                 );
               })
             : ""}
