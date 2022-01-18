@@ -19,9 +19,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { ImEye } from "react-icons/im";
-
 import Swal from "sweetalert2";
-// import Navbar from "../Navbar";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -89,7 +87,6 @@ const Login = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       <Center>
         <Stack
           boxShadow="2xl"

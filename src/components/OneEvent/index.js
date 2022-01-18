@@ -21,7 +21,6 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
-// import Navbar from "../Navbar";
 import { storage } from "../firebase";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -192,7 +191,6 @@ const OneEvent = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       {event && (
         <Center key={event._id}>
           <Box

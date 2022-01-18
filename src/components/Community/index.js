@@ -15,7 +15,6 @@ import {
   Image,
   Tooltip,
 } from "@chakra-ui/react";
-// import Navbar from "../Navbar";
 import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -97,7 +96,6 @@ const Posts = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       <Box p="20" h="40vh">
         <Heading as="h3" size="lg" p={3}>
           Community

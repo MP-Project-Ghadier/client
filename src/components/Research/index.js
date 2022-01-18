@@ -12,7 +12,6 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-// import Navbar from "../Navbar";
 import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -101,7 +100,6 @@ const Researches = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       <Box p="20" h="40vh">
         <Heading as="h3" size="lg" m={3}>
           Research Studies

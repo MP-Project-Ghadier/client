@@ -20,7 +20,6 @@ const ForgetPass = () => {
           showConfirmButton: false,
           timer: 2500,
         });
-
       }
     } catch (error) {
       console.log(error.response);
@@ -43,9 +42,6 @@ const ForgetPass = () => {
           <Button onClick={forgetPass}>Send</Button>
         </Stack>
       </Center>
-      {/* <Box mt="3rem">
-        <Footer />
-      </Box> */}
     </>
   );
 };

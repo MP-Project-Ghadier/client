@@ -20,7 +20,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 // import { IoIosTrash } from "react-icons/io";
 import Comments from "../Comments";
-// import Navbar from "../Navbar";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -151,7 +150,6 @@ const OnePost = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       {post && (
         <Center key={post._id} m={10}>
           <Box

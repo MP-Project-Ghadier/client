@@ -18,7 +18,6 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-// import Navbar from "../Navbar";
 import axios from "axios";
 import { storage } from "../firebase";
 // import UserPosts from "../UserPosts";
@@ -125,7 +124,6 @@ const Profile = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
       <Center>
         <Box w="60%" borderWidth="1px" boxShadow="2xl" p="6" m="8">
           <Box>
