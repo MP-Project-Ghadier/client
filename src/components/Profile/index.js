@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { updateUserInfo } from "../../reducers/login";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+// import { updateUserInfo } from "../../reducers/login";
 import {
   Image,
   Center,
@@ -27,9 +27,7 @@ import "../../assests/style.css";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Profile = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
-
   const [edit, setEdit] = useState(false);
   const [progress, setProgress] = useState(0);
   const [img, setImg] = useState(null);
@@ -137,6 +135,7 @@ const Profile = () => {
             <Image
               borderRadius="md"
               alt="avatarImg"
+              // eslint-disable-next-line
               borderRadius="50%"
               boxSize="150px"
               src={state.logInReducer.user.avatar}

@@ -58,7 +58,6 @@ const Login = () => {
         token: result.data.token,
         user: result.data.result,
       };
-      // console.log("result", result.status);
       if (result.status === 200) {
         Swal.fire({
           position: "center",
@@ -69,10 +68,8 @@ const Login = () => {
         });
         navigate(`/`);
       }
-      // console.log(data);
       dispatch(login(data));
     } catch (error) {
-      // console.log(error.response.status);
       if (error.response.status === 400) {
         Swal.fire({
           icon: "error",
@@ -135,7 +132,6 @@ const Login = () => {
                   size="sm"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {" "}
                   <ImEye />
                 </Button>
               </InputRightElement>

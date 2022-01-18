@@ -33,10 +33,12 @@ const Researches = () => {
 
   useEffect(() => {
     allResearches();
+    // eslint-disable-next-line
   }, []);
 
   const newResearch = async () => {
     try {
+      // eslint-disable-next-line
       const result = await axios.post(
         `${BASE_URL}/newResearch`,
         {

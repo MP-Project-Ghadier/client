@@ -14,7 +14,7 @@ import {
   Button,
   IconButton,
 } from "@chakra-ui/react";
-import { GiHamburgerMenu } from "react-icons/gi";
+// import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
 import { IoIosTrash } from "react-icons/io";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -31,6 +31,7 @@ const Comments = () => {
   useEffect(() => {
     postComment();
     setComment("");
+    // eslint-disable-next-line
   }, []);
 
   const postComment = async () => {

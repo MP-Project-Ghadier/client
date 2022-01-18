@@ -3,7 +3,7 @@ import kid from "../../assests/imgs/kid.jpg";
 import kid3 from "../../assests/imgs/kid3.jpg";
 import community from "../../assests/imgs/community.jpg";
 import childPlay from "../../assests/imgs/childPlay.jpg";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
 
 import "../../assests/style.css";
 
@@ -26,6 +26,7 @@ const Slideshow = () => {
     return () => {
       resetTimeout();
     };
+    // eslint-disable-next-line
   }, [index]);
 
   function resetTimeout() {

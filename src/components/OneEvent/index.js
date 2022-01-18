@@ -18,7 +18,6 @@ import {
   Flex,
   Link,
   chakra,
-  Text,
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
@@ -31,6 +30,7 @@ const OneEvent = () => {
   const navigate = useNavigate();
   let postId = useParams().id;
   const [event, setEvent] = useState([]);
+    // eslint-disable-next-line
   const [userName, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -45,6 +45,7 @@ const OneEvent = () => {
 
   useEffect(() => {
     oneEvent();
+      // eslint-disable-next-line
   }, []);
 
   const oneEvent = async () => {
@@ -202,7 +203,7 @@ const OneEvent = () => {
             rounded="md"
             textAlign="center"
           >
-            {state.logInReducer.role == "Admin" ? (
+            {state.logInReducer.role === "Admin" ? (
               <Box display="flex" flexDirection="row-reverse">
                 <Menu>
                   <MenuButton

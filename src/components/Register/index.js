@@ -23,7 +23,6 @@ import {
   TabPanel,
   useColorMode,
   Text,
-  Link,
 } from "@chakra-ui/react";
 import { ImEye } from "react-icons/im";
 
@@ -37,7 +36,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  // eslint-disable-next-line
   const { colorMode, toggleColorMode } = useColorMode();
+  // eslint-disable-next-line
   const isDark = colorMode === "dark";
 
   const signUpAsSpecialist = async () => {

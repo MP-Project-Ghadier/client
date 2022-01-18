@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from "../../assests/imgs/logo.png";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import {
@@ -25,16 +25,16 @@ import { logout } from "../../reducers/login";
 import { useSelector, useDispatch } from "react-redux";
 import "../../assests/style.css";
 
-// const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 const Navbar = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  // eslint-disable-next-line
   const [navbar, setNavbar] = useState(false);
+  // eslint-disable-next-line
   const { colorMode, toggleColorMode } = useColorMode();
-  const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");
 
+  // eslint-disable-next-line
   const [profile, setProfile] = useState({
     _id: id,
     name: "",
@@ -72,7 +72,6 @@ const Navbar = () => {
   window.addEventListener("scroll", changeBackground);
 
   return (
-    <div>
       <Box pos="block" m="2rem" p="2rem">
         <Box boxSize="8rem" pos="absolute" top={0} left={0}>
           <Image
@@ -91,9 +90,10 @@ const Navbar = () => {
         >
           <Box m="25px">
             <Tooltip label="Dark mode">
-              <Button onClick={isDark} onClick={toggleColorMode}>
+              <Button onClick={toggleColorMode}>
                 <Box p="0.5rem">
-                  <img src="https://img.icons8.com/material/24/000000/do-not-disturb-2.png" />
+                  
+                  <Image src="https://img.icons8.com/material/24/000000/do-not-disturb-2.png" />
                 </Box>
               </Button>
             </Tooltip>
@@ -153,7 +153,7 @@ const Navbar = () => {
                   Centers
                 </Button>
               </Box>
-              {state.logInReducer.token == "" ? (
+              {state.logInReducer.token === "" ? (
                 <>
                   <Box>
                     <Button
@@ -200,7 +200,6 @@ const Navbar = () => {
                         <PopoverHeader>
                           <Flex>
                             <Image
-                              borderRadius="md"
                               alt="avatarImg"
                               borderRadius="50%"
                               boxSize="60px"
@@ -259,7 +258,6 @@ const Navbar = () => {
           pos="fixed"
           top="0"
           left="0"
-          zIndex={20}
           overflowY="auto"
           flexDir="column"
         >
@@ -359,7 +357,6 @@ const Navbar = () => {
           </Box>
         </Flex>
       </Box>
-    </div>
   );
 };
 export default Navbar;

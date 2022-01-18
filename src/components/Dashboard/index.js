@@ -23,7 +23,7 @@ const Dashboard = () => {
     return state;
   });
 
-  // "/getUsers"
+  // eslint-disable-next-line
   const allUsers = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getUsers`, {
@@ -39,6 +39,7 @@ const Dashboard = () => {
 
   const approveSpecialist = async (approveEmail) => {
     try {
+      // eslint-disable-next-line
       const result = await axios.put(
         `${BASE_URL}/approveSpecialist`,
         { email: approveEmail },
@@ -57,6 +58,7 @@ const Dashboard = () => {
 
   const rejectSpecialist = async (rejectEmail) => {
     try {
+      // eslint-disable-next-line
       const result = await axios.put(
         `${BASE_URL}/rejectSpecialist`,
         { email: rejectEmail },
@@ -75,6 +77,7 @@ const Dashboard = () => {
 
   const deleteUser = async (deleteEmail) => {
     try {
+      // eslint-disable-next-line
       const result = await axios.put(
         `${BASE_URL}/deleteUser`,
         { email: deleteEmail },
@@ -111,7 +114,8 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-  //   postRouter.put("/approvePost", authentication, authorization, approvePost);
+
+  // eslint-disable-next-line
   const approvePost = async () => {
     try {
       const result = await axios.put(
@@ -129,18 +133,11 @@ const Dashboard = () => {
     }
   };
 
-  //   postRouter.put("/deletePost/:id", authentication, authorization, deletePost);
-
-  // commentRouter.put(
-  //     "/deleteComment/:id",
-  //     authentication,
-  //     authorization,
-  //     deleteComment
-  //   );
 
   useEffect(() => {
     // allUsers();
     reseachNeedApprove();
+    // eslint-disable-next-line
   }, []);
 
   return (

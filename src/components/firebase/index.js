@@ -8,6 +8,7 @@ const firebaseConfig = {
   storageBucket: "community-515f9.appspot.com",
   messagingSenderId: "1069157429425",
   appId: "1:1069157429425:web:3c62e9e999e3ed2e3a7290",
+  // eslint-disable-next-line
   measurementId: "${config.measurementId}",
 };
 
