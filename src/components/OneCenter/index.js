@@ -37,6 +37,7 @@ const OneCenter = () => {
   const [img, setImg] = useState(null);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  // eslint-disable-next-line
   const [locationLink, setlocation] = useState("");
 
   const state = useSelector((state) => {
@@ -45,6 +46,7 @@ const OneCenter = () => {
 
   useEffect(() => {
     oneCenter();
+    // eslint-disable-next-line
   }, []);
 
   const oneCenter = async () => {
@@ -206,7 +208,7 @@ const OneCenter = () => {
             rounded="md"
             textAlign="center"
           >
-            {state.logInReducer.role == "Admin" ? (
+            {state.logInReducer.role === "Admin" ? (
               <Box display="flex" flexDirection="row-reverse">
                 <Menu>
                   <MenuButton

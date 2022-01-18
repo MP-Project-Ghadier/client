@@ -40,6 +40,7 @@ const Events = () => {
 
   useEffect(() => {
     allEvents();
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (e) => {
@@ -106,14 +107,17 @@ const Events = () => {
         newEvent();
         setTitle("");
         setDesc("");
+        setImg(null);
         Swal.fire("Puplished!", "", "success");
       } else if (result.isDenied) {
         Swal.fire("The event is not puplished", "", "info");
         setTitle("");
         setDesc("");
+        setImg(null);
       } else {
         setTitle("");
         setDesc("");
+        setImg(null);
       }
     });
   };
@@ -172,12 +176,12 @@ const Events = () => {
         {add ? (
           <Center>
             <Box
-                m="4"
-                w="50rem"
-                boxShadow="base"
-                p="3"
-                rounded="md"
-                textAlign="center"
+              m="4"
+              w="50rem"
+              boxShadow="base"
+              p="3"
+              rounded="md"
+              textAlign="center"
             >
               <Heading as="h3" size="lg" m="2rem">
                 New Event
@@ -220,7 +224,7 @@ const Events = () => {
                   <progress value={progress} max="100" />
                 </Box>
 
-                <Image alt={title} src={url} />
+                {/* <Image alt={title} src={url} /> */}
                 <Box>
                   <Button onClick={puplish}>Puplish</Button>
                 </Box>
@@ -243,7 +247,7 @@ const Events = () => {
                   justifyContent="center"
                   key={ele._id}
                 >
-                  <Box  w = "300rem" mx="auto" rounded="lg" shadow="md" maxW="2xl" >
+                  <Box w="300rem" mx="auto" rounded="lg" shadow="md" maxW="2xl">
                     <Image
                       roundedTop="lg"
                       w="full"

@@ -11,7 +11,6 @@ import {
   Heading,
   Input,
   Text,
-  Image,
   chakra,
   Tooltip,
 } from "@chakra-ui/react";
@@ -40,6 +39,7 @@ const Centers = () => {
 
   useEffect(() => {
     allCenters();
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (e) => {

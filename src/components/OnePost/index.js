@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
-import { IoIosTrash } from "react-icons/io";
+// import { IoIosTrash } from "react-icons/io";
 import Comments from "../Comments";
 import Navbar from "../Navbar";
 
@@ -39,6 +39,7 @@ const OnePost = () => {
 
   useEffect(() => {
     onePost();
+    // eslint-disable-next-line
   }, []);
 
   const onePost = async () => {
@@ -161,8 +162,8 @@ const OnePost = () => {
             rounded="md"
             textAlign="center"
           >
-            {state.logInReducer.user.name == userName ||
-            state.logInReducer.role == "Admin" ? (
+            {state.logInReducer.user.name === userName ||
+            state.logInReducer.role === "Admin" ? (
               <Box display="flex" flexDirection="row-reverse">
                 <Menu>
                   <MenuButton

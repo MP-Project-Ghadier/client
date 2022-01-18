@@ -1,21 +1,17 @@
 import React, { useState } from "react";
-import { Input, Heading, Stack, Center, Text, Button,Box } from "@chakra-ui/react";
+import { Input, Heading, Stack, Center, Text, Button } from "@chakra-ui/react";
 import axios from "axios";
 import Swal from "sweetalert2";
-// import Footer from "../Footer";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const ForgetPass = () => {
   const [email, setEmail] = useState("");
 
-  // userRouter.post("/forgetPass", forgetPass);
   const forgetPass = async () => {
     try {
-      //   console.log(email);
       const result = await axios.post(`${BASE_URL}/forgetPass`, {
         email: email,
       });
-      //   console.log(result);
       if (result.status === 200) {
         Swal.fire({
           position: "center",

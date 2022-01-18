@@ -11,6 +11,7 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     confirmAccount();
+    // eslint-disable-next-line
   }, []);
   
   const confirmAccount = async () => {

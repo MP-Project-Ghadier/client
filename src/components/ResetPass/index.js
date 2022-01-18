@@ -8,7 +8,6 @@ import {
   Button,
   InputRightElement,
   InputGroup,
-  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Swal from "sweetalert2";

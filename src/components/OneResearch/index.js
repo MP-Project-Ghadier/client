@@ -26,6 +26,7 @@ const OneResearch = () => {
   const navigate = useNavigate();
   let postId = useParams().id;
   const [research, setResearch] = useState([]);
+  // eslint-disable-next-line
   const [userName, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -38,9 +39,9 @@ const OneResearch = () => {
 
   useEffect(() => {
     postResearch();
+    // eslint-disable-next-line
   }, []);
 
-  // postRouter.get("/getResearchById/:id", authentication, getResearchById);
   const postResearch = async () => {
     try {
       const result = await axios.get(`${BASE_URL}/getResearchById/${postId}`, {
@@ -162,96 +163,97 @@ const OneResearch = () => {
       <Navbar />
       {research && (
         <Center key={research._id}>
-          {edit ? (
-            <Center>
-              <Box
-                m="4"
-                w="50rem"
-                boxShadow="base"
-                p="3"
-                rounded="md"
-                textAlign="center"
-              >
-                <Heading as="h3" size="lg" m="2rem">
-                  Update Research
-                </Heading>
-                <Heading as="h4" size="md" m="0.5rem">
-                  Title
-                </Heading>
-                <Input
-                  m="0.5rem"
-                  placeholder="Title"
-                  value={title}
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                  }}
-                ></Input>
-
-                <Heading as="h4" size="md" m="0.5rem">
-                  Description
-                </Heading>
-                <Input
-                  m="0.5rem"
-                  placeholder="Description"
-                  value={desc}
-                  onChange={(e) => {
-                    setDesc(e.target.value);
-                  }}
-                ></Input>
-                <Heading as="h4" size="md" m="0.5rem">
-                  Link
-                </Heading>
-                <Input
-                  m="0.5rem"
-                  placeholder="Title"
-                  value={link}
-                  onChange={(e) => {
-                    setLink(e.target.value);
-                  }}
-                ></Input>
-                <Button onClick={puplish} m="0.5rem">
-                  Update
-                </Button>
+          <Box
+            m="20px"
+            w="50rem"
+            boxShadow="base"
+            p="6"
+            rounded="md"
+            textAlign="center"
+          >
+            {state.logInReducer.role === "Admin" ? (
+              <Box display="flex" flexDirection="row-reverse">
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<GiHamburgerMenu />}
+                    variant="outline"
+                  />
+                  <MenuList>
+                    <MenuItem onClick={() => setEdit(!edit)}>
+                      Edit Research
+                    </MenuItem>
+                    <MenuItem onClick={() => deletePost()}>
+                      Delete Research
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </Box>
-            </Center>
-          ) : (
-            <Box
-              p="5"
-              maxW="50%"
-              borderWidth="1px"
-              boxShadow="2xl"
-              p="6"
-              rounded="md"
-            >
-              {state.logInReducer.role == "Admin" ? (
-                <Box display="flex" flexDirection="row-reverse">
-                  <Menu>
-                    <MenuButton
-                      as={IconButton}
-                      aria-label="Options"
-                      icon={<GiHamburgerMenu />}
-                      variant="outline"
-                    />
-                    <MenuList>
-                      <MenuItem onClick={() => setEdit(!edit)}>
-                        Edit Research
-                      </MenuItem>
-                      <MenuItem onClick={() => deletePost()}>
-                        Delete Research
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Box>
-              ) : (
-                ""
-              )}
+            ) : (
+              ""
+            )}
+            {edit ? (
+              <Center>
+                <Box
+                  m="4"
+                  w="50rem"
+                  boxShadow="base"
+                  p="3"
+                  rounded="md"
+                  textAlign="center"
+                >
+                  <Heading as="h3" size="lg" m="2rem">
+                    Update Research
+                  </Heading>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Title
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                  ></Input>
 
-              <Heading textAlign="center">{research.title}</Heading>
-              <Text p="5" m="5">
-                {research.desc}
-              </Text>
-            </Box>
-          )}
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Description
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Description"
+                    value={desc}
+                    onChange={(e) => {
+                      setDesc(e.target.value);
+                    }}
+                  ></Input>
+                  <Heading as="h4" size="md" m="0.5rem">
+                    Link
+                  </Heading>
+                  <Input
+                    m="0.5rem"
+                    placeholder="Title"
+                    value={link}
+                    onChange={(e) => {
+                      setLink(e.target.value);
+                    }}
+                  ></Input>
+                  <Button onClick={puplish} m="0.5rem">
+                    Update
+                  </Button>
+                </Box>
+              </Center>
+            ) : (
+              <Box>
+                <Heading textAlign="center">{research.title}</Heading>
+                <Text p="5" m="5">
+                  {research.desc}
+                </Text>
+              </Box>
+            )}
+          </Box>
         </Center>
       )}
     </>
