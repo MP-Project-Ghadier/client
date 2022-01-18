@@ -17,7 +17,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { storage } from "../firebase";
-import Navbar from "../Navbar";
+// import Navbar from "../Navbar";
 import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -142,7 +142,7 @@ const Events = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Box p="20" h="40vh">
         <Heading as="h3" size="lg" p={3}>
           News & Events

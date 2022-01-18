@@ -17,9 +17,11 @@ import Centers from "./components/Centers";
 import OneCenter from "./components/OneCenter";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
+// import Navbar from "./components/Navbar";
 const App = () => {
   return (
     <>
+      {/* <Navbar /> */}
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/newAccount" element={<Register />} />

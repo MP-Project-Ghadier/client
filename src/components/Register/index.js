@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 // import LoginGoogle from "../LoginGoogle/index";
-import Navbar from "../Navbar";
+// import Navbar from "../Navbar";
 
 import {
   FormControl,
@@ -117,7 +117,7 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <Center>
         <Stack

@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
-import Navbar from "../Navbar";
+// import Navbar from "../Navbar";
 import { storage } from "../firebase";
 
 import "../../assests/style.css";
@@ -197,7 +197,7 @@ const OneCenter = () => {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       {center && (
         <Center key={center._id}>
           <Box

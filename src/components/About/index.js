@@ -16,7 +16,6 @@ import {
   Link,
   useColorModeValue,
 } from "@chakra-ui/react";
-// import kid2 from "../../assests/imgs/kid2.jpg";
 import specialist from "../../assests/imgs/specialist.jpg";
 import maternity from "../../assests/imgs/maternity.png";
 import chat from "../../assests/imgs/chat.png";
