@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { storage } from "../firebase";
 import axios from "axios";
 import {
   Box,
@@ -20,8 +21,6 @@ import {
 } from "@chakra-ui/react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Swal from "sweetalert2";
-import { storage } from "../firebase";
-
 import "../../assests/style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;

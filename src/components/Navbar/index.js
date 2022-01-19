@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import logo from "../../assests/imgs/logo.png";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../reducers/login";
 import {
   useColorMode,
   Tooltip,
@@ -21,35 +22,44 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { logout } from "../../reducers/login";
-import { useSelector, useDispatch } from "react-redux";
+// import axios from "axios";
+import logo from "../../assests/imgs/logo.png";
 import "../../assests/style.css";
 
+// const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 const Navbar = () => {
+  // let userId = useParams().id;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const { id } = useParams();
-  // eslint-disable-next-line
-  const [navbar, setNavbar] = useState(false);
   // eslint-disable-next-line
   const { colorMode, toggleColorMode } = useColorMode();
   const [display, changeDisplay] = useState("none");
 
-  // eslint-disable-next-line
-//   const [profile, setProfile] = useState({
-//     _id: id,
-//     name: "",
-//     email: "",
-//     password: "",
-//     avatar: "",
-//   });
+  // const [profile, setProfile] = useState({});
 
   const state = useSelector((state) => {
-    return {
-      logInReducer: state.logInReducer,
-    };
+    return state;
   });
+
+  // useEffect(() => {
+  //   userProfile();
+  //   // eslint-disable-next-line
+  // }, []);
+
+  // const userProfile = async () => {
+  //   try {
+  //     const result = await axios.get(`${BASE_URL}/profile/${userId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${state.logInReducer.token}`,
+  //       },
+  //     });
+  //     console.log(result.data);
+  //     // setProfile(result.data);
+  //   } catch (error) {
+  //     console.log(error.response);
+  //   }
+  // };
 
   const userLogout = async () => {
     dispatch(
@@ -63,8 +73,8 @@ const Navbar = () => {
   };
 
   return (
-    <>
-      <Box boxSize="8rem" pos="absolute" top={0} left={0}>
+    <Box boxSize="7.3rem" top={0} left={0}>
+      <Box boxSize="7rem" pos="absolute" top={0} left={0}>
         <Image
           src={logo}
           alt="logoimg"
@@ -346,7 +356,7 @@ const Navbar = () => {
           </Flex>
         </Box>
       </Flex>
-    </>
+    </Box>
   );
 };
 export default Navbar;
