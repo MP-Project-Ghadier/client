@@ -93,8 +93,13 @@ const Centers = () => {
           },
         }
       );
-      console.log(result);
+      // console.log(result);
       allCenters();
+      setTitle("");
+      setDesc("");
+      setImg(null);
+      setLocation("");
+      setAdd(false);
     } catch (error) {
       console.log(error.response);
     }
@@ -240,7 +245,7 @@ const Centers = () => {
                     <Button onClick={handleUpload}>upload</Button>
                     <progress value={progress} max="100" />
                   </div>
-                  <img alt={title} src={url} />
+                  {/* <img alt={title} src={url} /> */}
 
                   <Button onClick={puplish}>Puplish</Button>
                 </div>

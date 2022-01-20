@@ -56,22 +56,21 @@ const Register = () => {
           timer: 2500,
         });
       }
-    } catch (error) {
-      // console.log(error.response.status);
-      if (error.response.status === 409) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "This email is already exist!",
-        });
-      }
-      if (error.response.status === 400) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Please fill name, email and password fields",
-        });
-      }
+      // if (error.response.status === 409) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Oops...",
+      //     text: "This email is already exist!",
+      //   });
+      // }
+      // if (error.response.status === 400) {
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Oops...",
+      //     text: "Please fill name, email and password fields",
+      //   });
+      // }
+    } catch  (error) {
       console.log(error);
     }
   };

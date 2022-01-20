@@ -89,7 +89,11 @@ const Events = () => {
         }
       );
       allEvents();
-      console.log(result);
+      setTitle("");
+      setDesc("");
+      setImg(null);
+      setAdd(false);
+      // console.log(result);
     } catch (error) {
       console.log(error.response);
     }
