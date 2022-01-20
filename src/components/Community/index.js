@@ -68,6 +68,7 @@ const Posts = () => {
       allPosts();
       setTitle("");
       setDesc("");
+      setAdd(false);
       // console.log(result.status);
       if (result.status === 200) {
         Swal.fire({

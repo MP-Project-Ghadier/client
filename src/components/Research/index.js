@@ -52,6 +52,10 @@ const Researches = () => {
         }
       );
       allResearches();
+      setTitle("");
+      setDesc("");
+      setLink("");
+      setAdd(false);
     } catch (error) {
       console.log(error.response);
     }
@@ -167,7 +171,7 @@ const Researches = () => {
                     setDesc(e.target.value);
                   }}
                 ></Input>
-                 <Heading as="h4" size="md" m="0.5rem">
+                <Heading as="h4" size="md" m="0.5rem">
                   Link
                 </Heading>
                 <Input
