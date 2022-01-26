@@ -1,71 +1,61 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // import { updateUserInfo } from "../../reducers/login";
 import {
-  Image,
   Center,
   Box,
   Text,
   Input,
   Button,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  IconButton,
-  useEditableControls,
-  ButtonGroup,
+  chakra,
   Flex,
 } from "@chakra-ui/react";
-import { EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { storage } from "../firebase";
-// import UserPosts from "../UserPosts";
 import "../../assests/style.css";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const Profile = () => {
-  const { id } = useParams();
+  const [profile, setProfile] = useState(null);
   const [edit, setEdit] = useState(false);
   const [progress, setProgress] = useState(0);
   const [img, setImg] = useState(null);
 
-  // const dispatch = useDispatch();
   const state = useSelector((state) => {
     return state;
   });
 
-  const [profile, setProfile] = useState({
-    _id: id,
-    name: state.logInReducer.user.name,
-    email: state.logInReducer.user.email,
-    avatar: state.logInReducer.user.avatar,
-  });
+  useEffect(() => {
+    userProfile();
+    // eslint-disable-next-line
+  }, []);
 
-  // const getUser = async () => {
-  //   try {
-  //     const result = await axios.get(`${BASE_URL}/profile/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${state.logInReducer.token}`,
-  //       },
-  //     });
-  //     localStorage.setItem("user", JSON.stringify(result.data));
-  //     dispatch(updateUserInfo(result.data));
-  //   } catch (error) {
-  //     console.log(error.response);
-  //   }
-  // };
+  const userProfile = async () => {
+    try {
+      const result = await axios.get(
+        `${BASE_URL}/profile/${state.logInReducer.user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${state.logInReducer.token}`,
+          },
+        }
+      );
+      setProfile(result.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   const editProfile = async () => {
     try {
+      // eslint-disable-next-line
       const result = await axios.put(`${BASE_URL}/updateProfile`, profile, {
         headers: {
           Authorization: `Bearer ${state.logInReducer.token}`,
         },
       });
-      console.log(result);
-      // getUser();
+      // console.log(result);
     } catch (error) {
       console.log(error.response);
     }
@@ -101,99 +91,105 @@ const Profile = () => {
       }
     );
   };
+  // userRouter.put("/deleteUser", authentication, authorization, deleteUser);
 
-  function EditableControls() {
-    const {
-      isEditing,
-      getSubmitButtonProps,
-      getCancelButtonProps,
-      getEditButtonProps,
-    } = useEditableControls();
-
-    return isEditing ? (
-      <ButtonGroup justifyContent="center" size="sm">
-        <IconButton icon={<CheckIcon />} {...getSubmitButtonProps()} />
-        <IconButton icon={<CloseIcon />} {...getCancelButtonProps()} />
-      </ButtonGroup>
-    ) : (
-      <Flex justifyContent="center">
-        <IconButton size="sm" icon={<EditIcon />} {...getEditButtonProps()} />
-      </Flex>
-    );
-  }
-
+  const deleteAccount = async () => {
+    try {
+      const result = await axios.put(
+        `${BASE_URL}/deleteAccount`,
+        {
+          headers: {
+            Authorization: `Bearer ${state.logInReducer.token}`,
+          },
+        }
+      );
+      console.log(result);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   return (
     <>
-      <Center>
-        <Box w="60%" borderWidth="1px" boxShadow="2xl" p="6" m="8">
-          <Box>
-            <Button onClick={() => setEdit(!edit)}>Update</Button>
-          </Box>
-          <Box display="flex" p="6" m="8">
-            <Image
-              borderRadius="md"
-              alt="avatarImg"
-              // eslint-disable-next-line
-              borderRadius="50%"
-              boxSize="150px"
-              src={state.logInReducer.user.avatar}
-            />
-
-            <Box>
-              <Box m="3rem" display="flex" justifyContent="space-between">
-                <Box mr="3rem">
-                  <h2 className="h2">Your Name</h2>
-                </Box>
-                <Editable
-                  textAlign="center"
-                  defaultValue={state.logInReducer.user.name}
-                  fontSize="2xl"
-                  isPreviewFocusable={false}
-                >
-                  <EditablePreview />
-                  <EditableInput />
-                  <EditableControls />
-                </Editable>
-              </Box>
+      {profile ? (
+        <Flex p={50} w="full" alignItems="center" justifyContent="center">
+          <Flex
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            w="sm"
+            mx="auto"
+          >
+            <Box
+              bg="gray.300"
+              h={64}
+              w="full"
+              rounded="lg"
+              shadow="md"
+              bgSize="cover"
+              bgPos="center"
+              style={{
+                backgroundImage: `url(${profile.avatar})`,
+              }}
+            ></Box>
+            <Box w="sm" shadow="lg" rounded="lg" overflow="hidden">
+              <chakra.h3
+                py={2}
+                textAlign="center"
+                fontWeight="bold"
+                textTransform="uppercase"
+                letterSpacing={1}
+              >
+                {profile.name}
+              </chakra.h3>
+              <Flex alignItems="center" justifyContent="center" py={2} px={3}>
+                <chakra.span fontWeight="bold">{profile.email}</chakra.span>
+              </Flex>
+              <Flex alignItems="center" justifyContent="center" py={2} px={3}>
+                <Button onClick={() => setEdit(!edit)}>Update Profile</Button>
+              </Flex>
+              <Flex alignItems="center" justifyContent="center" py={2} px={3}>
+                <Button onClick={()=> deleteAccount()}>Delete Account</Button>
+              </Flex>
             </Box>
-          </Box>
-        </Box>
-        <Center>
-          <Box>
-            {edit ? (
-              <Box m="20px" textAlign="center">
-                <Text as="h3" size="lg">
-                  Update Profile
-                </Text>
-                <Text as="h4" size="md">
-                  Name
-                </Text>
-                <Input
-                  placeholder="name"
-                  onChange={(e) => {
-                    setProfile({ ...profile, name: e.target.value });
-                  }}
-                ></Input>
-                <Text as="h4" size="md">
-                  New Avatar
-                </Text>
-                <div>
-                  <Input type="file" name="newAvatar" onChange={handleChange} />
-                  <div>
-                    <Button onClick={handleUpload}>upload</Button>
-                    <progress value={progress} max="100" />
-                  </div>
-                  <Button onClick={editProfile}>Save Changes</Button>
-                </div>
-              </Box>
-            ) : (
-              ""
-            )}
-          </Box>
-        </Center>
-      </Center>
+          </Flex>
+        </Flex>
+      ) : (
+        ""
+      )}
 
-      {/* <UserPosts /> */}
+      <Center>
+        <Box>
+          {edit ? (
+            <Box m="20px" textAlign="center">
+              <Text as="h3" size="lg">
+                Update Profile
+              </Text>
+              <Text as="h4" size="md">
+                Name
+              </Text>
+              <Input
+                placeholder="name"
+                onChange={(e) => {
+                  setProfile({ ...profile, name: e.target.value });
+                }}
+              ></Input>
+              <Text as="h4" size="md">
+                New Avatar
+              </Text>
+              <div>
+                <Input type="file" name="newAvatar" onChange={handleChange} />
+                <div>
+                  <Button onClick={handleUpload}>upload</Button>
+                  <progress value={progress} max="100" />
+                </div>
+                <Button onClick={editProfile}>Save Changes</Button>
+              </div>
+            </Box>
+          ) : (
+            ""
+          )}
+        </Box>
+      </Center>
     </>
   );
 };

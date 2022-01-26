@@ -68,6 +68,7 @@ const Login = () => {
       }
       dispatch(login(data));
     } catch (error) {
+      console.log(error);
       if (error.response.status === 400) {
         Swal.fire({
           icon: "error",
